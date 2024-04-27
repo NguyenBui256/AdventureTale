@@ -43,30 +43,31 @@ public class MenuScreen implements Screen {
 			main.batch.draw(playButtonClick, xPlay, yPlay, playButtonWidth, playButtonHeight);
 			if (Gdx.input.isTouched()) {
 				this.dispose();
-				main.setScreen(new LevelScreen(main));
+				main.setScreen(new GameScreen(main));
 			}
 		} else {
 			main.batch.draw(playButton, xPlay, yPlay, playButtonWidth, playButtonHeight);
 		}
-		if (Gdx.input.getX() >= 12 && Gdx.input.getX() <= 12 + iconSize && Gdx.input.getY() >= 12 && Gdx.input.getY() <= 12 + iconSize) {
+		int xSound = 12;
+		if (Gdx.input.getX() >= xSound && Gdx.input.getX() <= xSound + iconSize && Gdx.input.getY() >= xSound && Gdx.input.getY() <= xSound + iconSize) {
 			if (checkSound) {
-				main.batch.draw(soundOnButtonClick, 12, 12, iconSize, iconSize);
+				main.batch.draw(soundOnButtonClick, xSound, xSound, iconSize, iconSize);
 				if (Gdx.input.isTouched()) {
 					checkSound = false;
-					main.batch.draw(soundOffButtonClick, 12, 12, iconSize, iconSize);
+					main.batch.draw(soundOffButtonClick, xSound, xSound, iconSize, iconSize);
 				}
 			} else {
-				main.batch.draw(soundOffButtonClick, 12, 12, iconSize, iconSize);
+				main.batch.draw(soundOffButtonClick, xSound, xSound, iconSize, iconSize);
 				if (Gdx.input.isTouched()) {
 					checkSound = true;
-					main.batch.draw(soundOnButtonClick, 12, 12, iconSize, iconSize);
+					main.batch.draw(soundOnButtonClick, xSound, xSound, iconSize, iconSize);
 				}
 			}
 		} else {
 			if (checkSound) {
-				main.batch.draw(soundOnButton, 12, 12, iconSize, iconSize);
+				main.batch.draw(soundOnButton, xSound, xSound, iconSize, iconSize);
 			} else {
-				main.batch.draw(soundOffButton, 12, 12, iconSize, iconSize);
+				main.batch.draw(soundOffButton, xSound, xSound, iconSize, iconSize);
 			}
 		}
 		main.batch.end();
@@ -99,7 +100,6 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void dispose () {
-		main.batch.dispose();
 		playButton.dispose();
 		playButtonClick.dispose();
 		soundOffButton.dispose();

@@ -90,6 +90,5 @@ public class LevelScreen implements Screen {
 
     @Override
     public void dispose() {
-        main.batch.dispose();
     }
 }
