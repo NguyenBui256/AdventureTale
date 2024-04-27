@@ -1,64 +1,106 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import helper.DrawText;
 
 import java.util.ArrayList;
 
+import static helper.Constants.BonusSound;
+import static helper.Constants.APP_HEIGHT;
+import static helper.Constants.ICON_SIZE;
+
 public class LevelScreen implements Screen {
-    ArrayList<Texture> list;
+    public static ArrayList<Boolean> point;
+    Texture level, levelClick, lock, soundOffButton, soundOffButtonClick, soundOnButton, soundOnButtonClick, back, backClick;
     float levelWidth = 100;
-    float levelHeight = 110;
+    float levelHeight = 100;
     float space = 30;
+    public static Texture background;
     Main main;
+    DrawText drawText;
+    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound));
+
     public LevelScreen(Main main) {
         this.main = main;
-        Texture level = new Texture("Dummy@0.5x.png");
-        Texture levelLocked = new Texture("Locked@0.5x.png");
-        list = new ArrayList<>();
-        list.add(level);
-        for (int i = 0; i < 11; ++i) {
-            list.add(levelLocked);
+        drawText = new DrawText(main);
+        level = new Texture("Default@2x-1.png");
+        levelClick = new Texture("Hover@2x.png");
+        lock = new Texture("lock (1).png");
+        background = new Texture("bg3.png");
+        soundOffButton = new Texture("soundOff.png");
+        soundOffButtonClick = new Texture("soundOffPress.png");
+        soundOnButton = new Texture("soundOn.png");
+        soundOnButtonClick = new Texture("soundOnPress.png");
+        back = new Texture("back.png");
+        backClick = new Texture("backClick.png");
+        point = new ArrayList<>();
+        for (int i = 0; i < 12; ++i) {
+            point.add(false);
+        }
+
+        bonusSound.setVolume(0.4f);
+    }
+    public void update() {
+        for (int i = 0; i < Main.level; ++i) {
+            point.set(i, true);
         }
     }
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        update();
         main.batch.begin();
-        float xBegin = (float) MenuScreen.Width / 2 - 2 * levelWidth - 3 * space / 2;
-        float yBegin = MenuScreen.Height - (MenuScreen.Height - 3 * levelHeight - 2 * space) / 2 - levelHeight + space;
+        main.batch.draw(background, 0, 0, MenuScreen.WIDTH, MenuScreen.HEIGHT);
+        float xBegin = (float) MenuScreen.WIDTH / 2 - 2 * levelWidth - 3 * space / 2;
+        float yBegin = MenuScreen.HEIGHT - (MenuScreen.HEIGHT - 3 * levelHeight - 2 * space) / 2 - levelHeight + space;
         int d = 0;
-        for (int i = 0; i < 4; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                main.batch.draw(list.get(d), xBegin + i * (levelWidth + space), yBegin - j * (levelHeight + space), levelWidth, levelHeight);
+        for (int j = 0; j < 3; ++j) {
+            for (int i = 0; i < 4; ++i) {
+                if (!point.get(d)) {
+                    main.batch.draw(lock, xBegin + i * (levelWidth + space), yBegin - j * (levelHeight + space), levelWidth, levelHeight);
+                } else {
+                    main.batch.draw(level, xBegin + i * (levelWidth + space), yBegin - j * (levelHeight + space), levelWidth, levelHeight);
+                    drawText.drText("font/Unnamed.fnt", Color.RED, (d + 1) + "",
+                            xBegin + i * (levelWidth + space) + levelWidth / 2 - 8 - (float) (d + 1 + "").length() /2,
+                            yBegin - j * (levelHeight + space) + levelHeight / 2 + 16, 0.4f);
+                }
+                ++d;
             }
         }
-        if (Gdx.input.getX() >= 12 && Gdx.input.getX() <= 12 + MenuScreen.iconSize && Gdx.input.getY() >= 12 && Gdx.input.getY() <= 12 + MenuScreen.iconSize) {
-            if (MenuScreen.checkSound) {
-                main.batch.draw(MenuScreen.soundOnButtonClick, 12, 12, MenuScreen.iconSize, MenuScreen.iconSize);
-                if (Gdx.input.isTouched()) {
-                    MenuScreen.checkSound = false;
-                    main.batch.draw(MenuScreen.soundOffButtonClick, 12, 12, MenuScreen.iconSize, MenuScreen.iconSize);
+        d = 0;
+        for (int j = 0; j < 3; ++j) {
+            for (int i = 0; i < 4; ++i) {
+                if (point.get(d) && Gdx.input.getX() >= xBegin + i * (levelWidth + space) && Gdx.input.getX() <= xBegin + i * (levelWidth + space) + levelWidth
+                        && Gdx.input.getY() <= MenuScreen.HEIGHT - (yBegin - j * (levelHeight + space)) && Gdx.input.getY() >= MenuScreen.HEIGHT - (yBegin - j * (levelHeight + space) + levelHeight)){
+                    main.batch.draw(levelClick, xBegin + i * (levelWidth + space), yBegin - j * (levelHeight + space), levelWidth, levelHeight);
+                    if (Gdx.input.isTouched()) {
+                        Main.chooseLevel = d + 1;
+                        this.hide();
+                        bonusSound.play();
+                        main.gameScreen = new GameScreen(main, this);
+                        main.setScreen(main.gameScreen);
+                        main.menuScreen.menu.bgMusic.stop();
+                    }
                 }
-            } else {
-                main.batch.draw(MenuScreen.soundOffButtonClick, 12, 12, MenuScreen.iconSize, MenuScreen.iconSize);
-                if (Gdx.input.isTouched()) {
-                    MenuScreen.checkSound = true;
-                    main.batch.draw(MenuScreen.soundOnButtonClick, 12, 12, MenuScreen.iconSize, MenuScreen.iconSize);
-                }
+                ++d;
+            }
+        }
+        int xBack = 20;
+        if (Gdx.input.getX() >= xBack && Gdx.input.getX() <= xBack + ICON_SIZE && Gdx.input.getY() <= xBack + ICON_SIZE && Gdx.input.getY() >= xBack) {
+            main.batch.draw(backClick, xBack, APP_HEIGHT - 3 * xBack, ICON_SIZE, ICON_SIZE);
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                bonusSound.play();
+                main.setScreen(main.menuScreen);
             }
         } else {
-            if (MenuScreen.checkSound) {
-                main.batch.draw(MenuScreen.soundOnButton, 12, 12, MenuScreen.iconSize, MenuScreen.iconSize);
-            } else {
-                main.batch.draw(MenuScreen.soundOffButton, 12, 12, MenuScreen.iconSize, MenuScreen.iconSize);
-            }
+            main.batch.draw(back, xBack, APP_HEIGHT - 3 * xBack, ICON_SIZE, ICON_SIZE);
         }
         main.batch.end();
     }
@@ -90,6 +132,5 @@ public class LevelScreen implements Screen {
 
     @Override
     public void dispose() {
-        main.batch.dispose();
     }
 }
