@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,6 +38,19 @@ public class LevelScreen implements Screen {
         for (int i = 0; i < 4; ++i) {
             for (int j = 0; j < 3; ++j) {
                 main.batch.draw(list.get(d), xBegin + i * (levelWidth + space), yBegin - j * (levelHeight + space), levelWidth, levelHeight);
+                main.font.setColor(Color.RED);
+                ++d;
+                main.font.draw(main.batch, d + "", xBegin + i * (levelWidth + space) + levelWidth / 2, yBegin - j * (levelHeight + space) + levelHeight / 2);
+            }
+        }
+        if (Gdx.input.isTouched()) {
+            System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
+        }
+        if (Gdx.input.getX() >= xBegin + 0 * (levelWidth + space) && Gdx.input.getX() <= xBegin + 0 * (levelWidth + space) + levelWidth
+                && Gdx.input.getY() <= MenuScreen.Height - (yBegin - 0 * (levelHeight + space)) && Gdx.input.getY() >= MenuScreen.Height - (yBegin - 0 * (levelHeight + space) + levelHeight)) {
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                main.setScreen(new GameScreen(main));
             }
         }
         if (Gdx.input.getX() >= 12 && Gdx.input.getX() <= 12 + MenuScreen.iconSize && Gdx.input.getY() >= 12 && Gdx.input.getY() <= 12 + MenuScreen.iconSize) {

@@ -43,13 +43,14 @@ public class MenuScreen implements Screen {
 			main.batch.draw(playButtonClick, xPlay, yPlay, playButtonWidth, playButtonHeight);
 			if (Gdx.input.isTouched()) {
 				this.dispose();
-				main.setScreen(new GameScreen(main));
+				main.setScreen(new LevelScreen(main));
 			}
 		} else {
 			main.batch.draw(playButton, xPlay, yPlay, playButtonWidth, playButtonHeight);
 		}
 		int xSound = 12;
-		if (Gdx.input.getX() >= xSound && Gdx.input.getX() <= xSound + iconSize && Gdx.input.getY() >= xSound && Gdx.input.getY() <= xSound + iconSize) {
+		if (Gdx.input.getX() >= xSound && Gdx.input.getX() <= xSound + iconSize && Gdx.input.getY() >= Height - (xSound + iconSize) && Gdx.input.getY() <= Height - xSound) {
+
 			if (checkSound) {
 				main.batch.draw(soundOnButtonClick, xSound, xSound, iconSize, iconSize);
 				if (Gdx.input.isTouched()) {
@@ -65,6 +66,7 @@ public class MenuScreen implements Screen {
 			}
 		} else {
 			if (checkSound) {
+
 				main.batch.draw(soundOnButton, xSound, xSound, iconSize, iconSize);
 			} else {
 				main.batch.draw(soundOffButton, xSound, xSound, iconSize, iconSize);
