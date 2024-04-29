@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MenuScreen implements Screen {
-	public static final int Width = 720;
+	public static final int Width = 780;
 	public static final int Height = 480;
 	float playButtonWidth = 150;
 	float playButtonHeight = 70;
@@ -43,6 +43,7 @@ public class MenuScreen implements Screen {
 			main.batch.draw(playButtonClick, xPlay, yPlay, playButtonWidth, playButtonHeight);
 			if (Gdx.input.isTouched()) {
 				this.dispose();
+				main.setScreen(new LevelScreen(main));
 				main.setScreen(new LevelScreen(main));
 			}
 		} else {

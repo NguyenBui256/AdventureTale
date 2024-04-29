@@ -12,16 +12,15 @@ public class Main extends Game {
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
-//        font = new BitmapFont(Gdx.files.internal("iCiel Crocante.otf"));
-//        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("iCiel Crocante.otf"));
-//        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-//        parameter.size = 24; // Cỡ chữ
-//        font = generator.generateFont(parameter);
-//        generator.dispose(); // Lưu ý giải phóng tài nguyên generator sau khi sử dụng
         this.setScreen(new MenuScreen(this));
     }
     @Override
     public void render() {
         super.render();
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+        super.resize(i, i1);
     }
 }
