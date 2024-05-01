@@ -1,0 +1,57 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "map2.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "#box": {
+            "scaleInEditor": 1
+        },
+        "#tilemap": {
+            "scaleInEditor": 3
+        },
+        "map2.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.66666666666663,
+                "y": 236.66666666666663
+            }
+        },
+        "map2.tmx#Decorations (32x32)": {
+            "scaleInDock": 1
+        },
+        "map2.tmx#Idle": {
+            "scaleInDock": 1.5
+        },
+        "map2.tmx#tileset": {
+            "scaleInDock": 1.5
+        }
+    },
+    "last.exportedFilePath": "C:/Users/buiph/Desktop/CODE/yo wtf/PGJ-Adventure-Tale/[ProPTIT] Adventure Tale/assets",
+    "last.imagePath": "C:/Users/buiph/Desktop/CODE/yo wtf/PGJ-Adventure-Tale/[ProPTIT] Adventure Tale/assets/tileset/Sprites/14-TileSets",
+    "map.height": 25,
+    "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 40,
+    "openFiles": [
+        "map2.tmx"
+    ],
+    "project": "testproject.tiled-project",
+    "recentFiles": [
+        "map2.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    }
+}

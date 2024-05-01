@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="15" height="11" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <editorsettings>
+  <export format="tmx"/>
+ </editorsettings>
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="247" columns="19">
+  <image source="tileset/Terrain (32x32).png" width="608" height="416"/>
+ </tileset>
+ <tileset firstgid="248" name="Idle" tilewidth="46" tileheight="56" tilecount="1" columns="1">
+  <image source="tileset/Sprites/11-Door/Idle.png" width="46" height="56"/>
+ </tileset>
+ <tileset firstgid="249" name="Decorations (32x32)" tilewidth="32" tileheight="32" tilecount="42" columns="7">
+  <image source="tileset/Sprites/14-TileSets/Decorations (32x32).png" width="224" height="192"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="15" height="11">
+  <data encoding="csv">
+272,273,0,0,0,0,0,0,0,0,0,0,0,0,0,
+279,280,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,2,2,0,0,0,0,0,0,0,0,0,40,
+0,0,0,2,248,0,0,0,0,0,0,0,0,0,40,
+22,22,22,22,22,22,22,22,22,24,0,0,0,0,40,
+0,0,0,0,0,0,0,0,0,0,0,101,101,101,40,
+0,0,0,0,0,0,0,0,0,0,101,101,101,101,40,
+0,0,0,0,0,0,0,0,0,101,101,101,101,101,40,
+0,0,0,0,0,0,0,0,101,101,101,101,101,101,40,
+0,0,0,0,0,0,0,101,101,101,101,101,101,101,40,
+22,22,22,22,22,22,22,22,22,22,22,22,22,22,47
+</data>
+ </layer>
+</map>

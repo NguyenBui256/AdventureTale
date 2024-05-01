@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" source="tileset/Terrain (32x32).tsx"/>
+ <layer id="1" name="Tile Layer 1" width="40" height="25">
+  <data encoding="base64" compression="zstd">
+   KLUv/WCgDnUBAFgAKAAWZWVlZRZlAA2gsPgBYAM3B7fzH598GkPBoIigWZEGpmZYHEm9kQqYisQ=
+  </data>
+ </layer>
+</map>
