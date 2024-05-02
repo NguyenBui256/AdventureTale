@@ -23,6 +23,7 @@ public class Box extends Sprite {
     public Box() {
         coordinates.x = 100;
         coordinates.y = 100;
+//        img = new Texture("green.png");
         img = new Texture("Tank_Movement (32 x 32).png");
         roll = 0;
         rolls = new Animation[1];
@@ -32,8 +33,9 @@ public class Box extends Sprite {
 
     @Override
     public void draw(Batch batch, float delta) {
-        stateTime += delta;
+//        System.out.println("xe tang: " + coordinates.x + " " + coordinates.y);
         batch.draw((TextureRegion) rolls[roll].getKeyFrame(stateTime, true), coordinates.x, coordinates.y, 100, 100);
         //game.batch.draw(img, x, y);
+//        batch.draw(img, coordinates.x, coordinates.y);
     }
 }
