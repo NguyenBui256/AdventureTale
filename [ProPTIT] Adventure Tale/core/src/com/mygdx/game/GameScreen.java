@@ -7,47 +7,55 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class GameScreen implements Screen {
+    Player player;
 
     public TiledMap map;
     public OrthogonalTiledMapRenderer renderer;
 
     public OrthographicCamera camera;
 
-    float speed = 120;
+    public static float speed = 120;
     Main game;
-    Texture img;
-    float x;
-    float y;
-    int roll;
-    float stateTime;
-    Animation[] rolls;
+    Box box;
     public GameScreen (Main game){
         this.game = game;
-        img = new Texture("Running (32 x 32).png");
-        roll = 0;
-        rolls = new Animation[1];
-        TextureRegion[][] rollSpriteSheet = TextureRegion.split(img, 32, 32);
-        rolls[roll] = new Animation(0.2f, rollSpriteSheet[0]);
+    }
+    public void parseMapObjects (MapObjects mapObjects) {
+        for (MapObject mapObject : mapObjects) {
+            if (mapObject instanceof PolygonMapObject) {
+                float[] vertices = ((PolygonMapObject) mapObject).getPolygon().getTransformedVertices();
+                System.out.println(vertices.length);
+            }
+        }
     }
     @Override
     public void show() {
         map = new TmxMapLoader().load("map2.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
+//        parseMapObjects(map.getLayers().get("objects").getObjects());
         camera = new OrthographicCamera();
-
+        box = new Box();
+        player = new Player(box);
     }
 
     @Override
     public void resize(int i, int i1) {
         camera.viewportWidth = i;
         camera.viewportHeight = i1;
-        camera.position.set(i / 3, i1 / 3, 0);
+        camera.position.set(i / 2, i1 / 2, 0);
         camera.update();
     }
 
@@ -59,26 +67,11 @@ public class GameScreen implements Screen {
         renderer.setView(camera);
         renderer.render();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            y += speed * Gdx.graphics.getDeltaTime();
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            y -= speed * Gdx.graphics.getDeltaTime();
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            x -= speed * Gdx.graphics.getDeltaTime();
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            x += speed * Gdx.graphics.getDeltaTime();
-        }
-        stateTime += delta;
         game.batch.begin();
-        game.batch.draw((TextureRegion) rolls[roll].getKeyFrame(stateTime, true), x, y, 100, 100);
-        //game.batch.draw(img, x, y);
+        player.draw(game.batch, delta);
+        box.draw(game.batch, delta);
         game.batch.end();
     }
-
-
 
     @Override
     public void pause() {
@@ -99,5 +92,6 @@ public class GameScreen implements Screen {
     public void dispose() {
         map.dispose();
         renderer.dispose();
+        player.getTexture().dispose();
     }
 }

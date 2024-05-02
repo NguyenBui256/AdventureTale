@@ -43,9 +43,6 @@ public class LevelScreen implements Screen {
                 main.font.draw(main.batch, d + "", xBegin + i * (levelWidth + space) + levelWidth / 2, yBegin - j * (levelHeight + space) + levelHeight / 2);
             }
         }
-        if (Gdx.input.isTouched()) {
-            System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
-        }
         if (Gdx.input.getX() >= xBegin + 0 * (levelWidth + space) && Gdx.input.getX() <= xBegin + 0 * (levelWidth + space) + levelWidth
                 && Gdx.input.getY() <= MenuScreen.Height - (yBegin - 0 * (levelHeight + space)) && Gdx.input.getY() >= MenuScreen.Height - (yBegin - 0 * (levelHeight + space) + levelHeight)) {
             if (Gdx.input.isTouched()) {
