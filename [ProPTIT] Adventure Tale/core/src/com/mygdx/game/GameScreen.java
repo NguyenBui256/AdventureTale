@@ -32,7 +32,12 @@ public class GameScreen implements Screen {
 
     float speed = 10f;
     Main game;
-    Texture img;
+    Texture IdleRight;
+    Texture IdleLeft;
+    Texture RunningLeft;
+    Texture RunningRight;
+    Texture JumpingLeft;
+    Texture JumpingRight;
     float x = 0;
     float y = 0;
     int roll;
@@ -44,11 +49,27 @@ public class GameScreen implements Screen {
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
-        img = new Texture("Running (32 x 32).png");
+        IdleRight = new Texture("IdleRight.png");
+        IdleLeft = new Texture("IdleLeft.png");
+        RunningRight = new Texture("RunningRight.png");
+        RunningLeft = new Texture("RunningLeft.png");
+        JumpingLeft = new Texture("JumpingLeft.png");
+        JumpingRight = new Texture("JumpingRight.png");
         roll = 0;
-        rolls = new Animation[1];
-        TextureRegion[][] rollSpriteSheet = TextureRegion.split(img, 32, 32);
-        rolls[roll] = new Animation(0.2f, rollSpriteSheet[0]);
+        rolls = new Animation[10];
+        TextureRegion[][] idleRight = TextureRegion.split(IdleRight, 32, 32);
+        TextureRegion[][] idleLeft = TextureRegion.split(IdleLeft, 32, 32);
+        TextureRegion[][] runningRight = TextureRegion.split(RunningRight, 32, 32);
+        TextureRegion[][] runningLeft = TextureRegion.split(RunningLeft, 32, 32);
+        TextureRegion[][] jumpingLeft = TextureRegion.split(JumpingLeft, 32, 32);
+        TextureRegion[][] jumpingRight = TextureRegion.split(JumpingRight, 32, 32);
+
+        rolls[0] = new Animation(0.5f, idleRight[0]);
+        rolls[1] = new Animation(0.5f, idleLeft[0]);
+        rolls[2] = new Animation(0.2f, runningLeft[0]);
+        rolls[3] = new Animation(0.2f, runningRight[0]);
+        rolls[4] = new Animation(0.2f, jumpingLeft[0]);
+        rolls[5] = new Animation(0.2f, jumpingRight[0]);
     }
     @Override
     public void show() {
@@ -78,7 +99,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         this.update();
-
+        roll = player.getRoll();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

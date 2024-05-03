@@ -51,7 +51,7 @@ public class TileMapHelper {
                             false,
                             gameScreen.world
                     );
-                    gameScreen.player = new Player(rectangle.getWidth(), rectangle.getWidth(), body, "Running (32 x 32).png");
+                    gameScreen.player = new Player(rectangle.getWidth(), rectangle.getWidth(), body, "IdleRight.png", 0);
                 }
             }
         }

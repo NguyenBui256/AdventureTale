@@ -15,7 +15,7 @@ public abstract class GameEntity {
     protected Animation[] rolls;
     protected int roll;
 
-    public GameEntity(float width, float height, Body body, String imgPath) {
+    public GameEntity(float width, float height, Body body, String imgPath, int roll) {
         this.x = body.getPosition().x;
         this.y = body.getPosition().y;
         this.width = width;
@@ -26,7 +26,7 @@ public abstract class GameEntity {
         this.speed = 0;
 //        this.img = new Texture(imgPath);
 //        this.region = TextureRegion.split(img, 32, 32);
-//        this.roll = 0;
+        this.roll = 0;
 //        this.rolls = new Animation[1];
 //        rolls[roll] = new Animation(0.2f, region[0]);
     }
