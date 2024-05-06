@@ -44,15 +44,6 @@ public class TileMapHelper {
                 String rectangleName = mapObject.getName();
 
                 if(rectangleName.equals("player")) {
-//                    Body body = BodyHelperService.createBody(
-//                            rectangle.getX() + rectangle.getWidth() / 2,
-//                            rectangle.getY() + rectangle.getHeight() / 2,
-//                            rectangle.getWidth(),
-//                            rectangle.getHeight(),
-//                            false,
-//                            gameScreen.world,
-//                            0
-//                    );
                     Body body = BodyHelperService.createBody(
                             rectangle.getX() + rectangle.getWidth() / 2,
                             rectangle.getY() + rectangle.getHeight() / 2,
