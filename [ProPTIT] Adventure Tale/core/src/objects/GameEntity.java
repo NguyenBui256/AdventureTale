@@ -1,21 +1,16 @@
 package objects;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public abstract class GameEntity {
+public abstract class GameEntity extends Sprite {
     protected float x, y, velX, velY, speed;
     protected float width, height;
     protected Body body;
-    protected Texture img;
-    protected TextureRegion[][] region;
-    protected Animation[] rolls;
-    protected int roll;
 
-    public GameEntity(float width, float height, Body body) {
+    public GameEntity(float width, float height, Body body, TextureRegion region) {
+        super(region);
         this.x = body.getPosition().x;
         this.y = body.getPosition().y;
         this.width = width;
@@ -32,5 +27,9 @@ public abstract class GameEntity {
 
     public Body getBody(){
         return body;
+    }
+
+    public void setBody(Body body){
+        this.body = body;
     }
 }
