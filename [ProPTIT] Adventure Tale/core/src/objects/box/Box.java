@@ -2,6 +2,8 @@ package objects.box;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,14 +16,18 @@ import static helper.Constants.PPM;
 public class Box extends Sprite {
     public World world;
     public Body body;
-    public TextureRegion region;
+    public TextureRegion[][] region;
+
+    public Texture texture;
     public float speed, velX, velY;
     public Box(GameScreen screen, Body body) {
-        super(new TextureAtlas("box.pack").findRegion("images"));
         this.world = screen.world;
-        region = new TextureRegion(getTexture(), 0,0,225,225);
+        texture = new Texture("box.png");
+        region = TextureRegion.split(texture, 225, 225);
+        Animation animation = new Animation(0.3f, region[0]);
+        setRegion((TextureRegion) animation.getKeyFrame(screen.stateTime));
+
         setBounds(body.getPosition().x,body.getPosition().y,32/PPM, 32/PPM);
-        setRegion(region);
         this.body = body;
         MassData massData = new MassData();
         massData.mass = 15;
