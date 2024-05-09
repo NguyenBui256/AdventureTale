@@ -23,7 +23,6 @@ public class Player extends Sprite {
     public State previousState;
     public World world;
     public Body body;
-    public Animation[] rolls = new Animation[10];
     public float speed, velX, stateTimer;
 
     public Player(GameScreen screen, Body body) {
@@ -35,12 +34,12 @@ public class Player extends Sprite {
 
         nhanVat = NhanVat.CUCAI;
         NhanVatCuCai = new CuCai(
-                "IdleRight.png", 32, 32,
-                "IdleLeft.png", 32, 32,
-                "RunningRight.png", 32, 32,
-                "RunningLeft.png", 32, 32,
-                "JumpingLeft.png", 32, 32,
-                "JumpingRight.png", 32, 32
+                "IdleRight.png",
+                "IdleLeft.png",
+                "RunningRight.png",
+                "RunningLeft.png",
+                "JumpingLeft.png",
+                "JumpingRight.png"
         );
 //        NhanVatBachTuoc = new BachTuoc();
 
@@ -52,7 +51,7 @@ public class Player extends Sprite {
         checkUserInput();
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 4);
         if(nhanVat == NhanVat.CUCAI) setRegion(getFrame(NhanVatCuCai,dt));
-        else if(nhanVat == NhanVat.BACHTUOC) setRegion(getFrame(NhanVatBachTuoc,dt));
+//        else if(nhanVat == NhanVat.BACHTUOC) setRegion(getFrame(NhanVatBachTuoc,dt));
 //        else if(nhanVat == NhanVat.CUCDA) setRegion(getFrame(NhanVatCucDa, dt));
     }
 

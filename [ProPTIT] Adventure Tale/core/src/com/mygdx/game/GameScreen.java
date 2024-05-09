@@ -32,7 +32,6 @@ public class GameScreen implements Screen {
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         box2DDebugRenderer.setDrawJoints(false);
         box2DDebugRenderer.setDrawBodies(false);
-        box2DDebugRenderer.setDrawAABBs(false);
         box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
@@ -71,8 +70,6 @@ public class GameScreen implements Screen {
         renderer.render();
         box2DDebugRenderer.render(world, playerCamera.combined.scl(PPM));
         box2DDebugRenderer.render(world, staticCamera.combined.scl(PPM));
-//        box2DDebugRenderer.setDrawJoints(false);
-//        box2DDebugRenderer.setDrawBodies(false);
 
         stateTime += delta;
 
