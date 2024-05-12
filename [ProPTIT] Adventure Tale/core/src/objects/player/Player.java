@@ -5,35 +5,52 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GameScreen;
+import com.mygdx.game.Main;
+import org.w3c.dom.Text;
 
 import static helper.Constants.PPM;
 
 public class Player extends Sprite {
     public enum State {IDLELEFT, IDLERIGHT, RUNNINGLEFT, RUNNINGRIGHT, JUMPINGLEFT, JUMPINGRIGHT};
     public enum NhanVat {CUCAI, BACHTUOC, CUCDA};
-    public NhanVat nhanVat;
-    public CuCai NhanVatCuCai;
+    public NhanVat nhanVat, previousNhanVat;
+    public Character NhanVatCuCai, NhanVatCucDa;
     public BachTuoc NhanVatBachTuoc;
     public State currentState;
     public State previousState;
+    public Main game;
     public World world;
     public Body body;
     public float speed, velX, stateTimer;
 
+    public Texture boxTexture, smokeTexture;
+    public TextureRegion[][] boxRegion, smokeRegion;
+    public Animation boxAnimation, smokeAnimation;
+    public boolean isTransition = false;
+
+    public SpriteBatch spriteBatch;
+
     public Player(GameScreen screen, Body body) {
+        this.game = screen.game;
         this.world = screen.world;
+        this.spriteBatch = new SpriteBatch();
+
         setBounds(body.getPosition().x, body.getPosition().y,64/PPM,64/PPM);
 
         currentState = State.IDLERIGHT;
         previousState = State.IDLERIGHT;
 
         nhanVat = NhanVat.CUCAI;
-        NhanVatCuCai = new CuCai(
+        previousNhanVat = NhanVat.CUCAI;
+        NhanVatCuCai = new Character(
+                32,32,
                 "IdleRight.png",
                 "IdleLeft.png",
                 "RunningRight.png",
@@ -41,6 +58,25 @@ public class Player extends Sprite {
                 "JumpingLeft.png",
                 "JumpingRight.png"
         );
+
+        NhanVatCucDa = new Character(
+                38,34,
+            "RockIdleRight.png",
+            "RockIdleLeft.png",
+            "RockRunRight.png",
+            "RockRunLeft.png",
+            "RockRunLeft.png",
+            "RockRunRight.png"
+        );
+
+
+        boxTexture = new Texture("box.png");
+        boxRegion = TextureRegion.split(boxTexture, 225, 225);
+        boxAnimation = new Animation(0.3f, boxRegion[0]);
+
+        smokeTexture = new Texture("smokeAnimation.png");
+        smokeRegion = TextureRegion.split(smokeTexture, 64,64);
+        smokeAnimation = new Animation(0.05f, smokeRegion[0]);
 //        NhanVatBachTuoc = new BachTuoc();
 
         stateTimer = 0;
@@ -49,10 +85,37 @@ public class Player extends Sprite {
     }
     public void update(float dt) {
         checkUserInput();
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 4);
-        if(nhanVat == NhanVat.CUCAI) setRegion(getFrame(NhanVatCuCai,dt));
-//        else if(nhanVat == NhanVat.BACHTUOC) setRegion(getFrame(NhanVatBachTuoc,dt));
-//        else if(nhanVat == NhanVat.CUCDA) setRegion(getFrame(NhanVatCucDa, dt));
+        if(isTransition) {
+            stateTimer = 0;
+            isTransition = false;
+        }
+        if(nhanVat != previousNhanVat && !smokeAnimation.isAnimationFinished(stateTimer)){
+            setRegion((TextureRegion) smokeAnimation.getKeyFrame(stateTimer, false));
+            setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3,64/PPM,64/PPM);
+            stateTimer += Gdx.graphics.getDeltaTime();
+            return;
+        }
+        if(nhanVat != previousNhanVat && smokeAnimation.isAnimationFinished(stateTimer)){
+            System.out.println("Done");
+            System.out.println(nhanVat);
+            previousNhanVat = nhanVat;
+            stateTimer = 0;
+        }
+        if(nhanVat == NhanVat.CUCAI) {
+            setBounds(body.getPosition().x, body.getPosition().y,64/PPM,64/PPM);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 4);
+            setRegion(getFrame(NhanVatCuCai,dt));
+        }
+        else if(nhanVat == NhanVat.BACHTUOC) {
+            setRegion((TextureRegion) boxAnimation.getKeyFrame(stateTimer, true));
+            setBounds(body.getPosition().x,body.getPosition().y,32/PPM, 32/PPM);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        }
+        else if(nhanVat == NhanVat.CUCDA){
+            setBounds(body.getPosition().x, body.getPosition().y,46/PPM,46/PPM);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            setRegion(getFrame(NhanVatCucDa,dt));
+        }
     }
 
     public TextureRegion getFrame(Character character, float dt){
@@ -83,6 +146,18 @@ public class Player extends Sprite {
     }
 
     public void checkUserInput(){
+        if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
+            isTransition = true;
+            nhanVat = NhanVat.CUCAI;
+        }
+        if(nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
+            isTransition = true;
+            nhanVat = NhanVat.BACHTUOC;
+        }
+        if(nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
+            isTransition = true;
+            nhanVat = NhanVat.CUCDA;
+        }
         velX = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             currentState = State.RUNNINGRIGHT;

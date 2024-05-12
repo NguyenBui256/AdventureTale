@@ -27,11 +27,11 @@
             }
         },
         "map2.tmx": {
-            "scale": 2,
-            "selectedLayer": 1,
+            "scale": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 513.5,
-                "y": 440.75
+                "x": -2,
+                "y": 605.5
             }
         },
         "map2.tmx#Decorations (32x32)": {

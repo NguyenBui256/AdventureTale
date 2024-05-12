@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class CuCai extends Character {
 
-    public CuCai(String IdleRightPath, String IdleLeftPath, String RunningRightPath, String RunningLeftPath, String JumpingLeftPath, String JumpingRightPath) {
-        super(IdleRightPath, IdleLeftPath, RunningRightPath, RunningLeftPath, JumpingLeftPath, JumpingRightPath);
+    public CuCai(int width, int height, String IdleRightPath, String IdleLeftPath, String RunningRightPath, String RunningLeftPath, String JumpingLeftPath, String JumpingRightPath) {
+        super(width, height, IdleRightPath, IdleLeftPath, RunningRightPath, RunningLeftPath, JumpingLeftPath, JumpingRightPath);
     }
 }
