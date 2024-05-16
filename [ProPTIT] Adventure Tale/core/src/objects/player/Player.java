@@ -29,13 +29,13 @@ public class Player extends Sprite {
     public World world;
     public Body body;
     public int roll;
-    public float speed, velX, velY, stateTimer;
+    public float speed, velX, stateTimer;
 
     public Texture boxTexture, smokeTexture;
     public TextureRegion[][] boxRegion, smokeRegion;
     public Animation boxAnimation, smokeAnimation;
     public boolean isTransition = false;
-    public static boolean isTop;
+    public static boolean isTop, isWall;
     public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null;
 
     public SpriteBatch spriteBatch;
@@ -198,6 +198,7 @@ public class Player extends Sprite {
         if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
             body.setGravityScale(1);
             isTop = false;
+            isWall = false;
             top = true;
             bottom = true;
             left = true;
@@ -214,6 +215,7 @@ public class Player extends Sprite {
             bottomSensor = createSensor(0.5f,0.5f, "bottomSensor");
             currentState = State.ROUND1;
             previousState = State.ROUND1;
+            isWall = false;
             isTop = false;
             top = false;
             bottom = false;
@@ -224,6 +226,7 @@ public class Player extends Sprite {
             nhanVat = NhanVat.BACHTUOC;
         }
         if(nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
+            isWall = false;
             isTop = false;
             top = false;
             bottom = false;
@@ -260,7 +263,7 @@ public class Player extends Sprite {
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
         } else if (nhanVat == NhanVat.BACHTUOC) {
             System.out.println(top + " " + bottom + " " + left + " " + right);
-            if (!isTop) {
+            if (!isTop && !isWall) {
                 body.setGravityScale(1);
             }
             if (right || left) {
@@ -286,23 +289,24 @@ public class Player extends Sprite {
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
             if (top || bottom) {
-                velY = 0;
+                body.setGravityScale(0);
                 if(Gdx.input.isKeyPressed(Input.Keys.UP)){
                     ++roll;
                     if (roll == 8) {
                         roll = 0;
                     }
                     currentState = State.valueOf("ROUND" + (roll + 1));
-                    velY = 1;
+                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, speed);
                 } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
                     --roll;
                     if (roll == -1) {
                         roll = 7;
                     }
                     currentState = State.valueOf("ROUND" + (roll + 1));
-                    velY = -1;
+                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, -speed);
+                } else {
+                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, 0);
                 }
-                body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, velY * speed);
             }
         } else {
             velX = 0;

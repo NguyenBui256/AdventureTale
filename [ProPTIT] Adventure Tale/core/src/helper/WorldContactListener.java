@@ -7,6 +7,7 @@ import static objects.player.Player.bottom;
 import static objects.player.Player.left;
 import static objects.player.Player.right;
 import static objects.player.Player.isTop;
+import static objects.player.Player.isWall;
 
 public class WorldContactListener implements ContactListener {
     @Override
@@ -15,11 +16,13 @@ public class WorldContactListener implements ContactListener {
         if(fix.getUserData() == "leftSensor"){
             top = true;
             bottom = true;
+            isWall = true;
             System.out.println("Left here");
         }
         if(fix.getUserData() == "rightSensor"){
             top = true;
             bottom = true;
+            isWall = true;
             System.out.println("Right here");
         }
         if(fix.getUserData() == "topSensor"){
@@ -40,13 +43,14 @@ public class WorldContactListener implements ContactListener {
         System.out.println("End contact");
         Fixture fix = (contact.getFixtureA().getUserData() != "ground") ? contact.getFixtureA() : contact.getFixtureB();
         if(fix.getUserData() == "leftSensor"){
-
             top = false;
             bottom = false;
+            isWall = false;
         }
         if(fix.getUserData() == "rightSensor"){
             top = false;
             bottom = false;
+            isWall = false;
         }
         if(fix.getUserData() == "topSensor"){
             left = false;
