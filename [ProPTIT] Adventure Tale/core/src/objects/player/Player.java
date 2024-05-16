@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.MassData;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.Main;
 import org.w3c.dom.Text;
+
+import java.awt.geom.RectangularShape;
 
 import static helper.Constants.PPM;
 
@@ -35,14 +35,23 @@ public class Player extends Sprite {
     public Animation boxAnimation, smokeAnimation;
     public boolean isTransition = false;
 
+    public Body leftSensor, rightSensor, topSensor, bottomSensor;
+
     public SpriteBatch spriteBatch;
 
     public Player(GameScreen screen, Body body) {
         this.game = screen.game;
         this.world = screen.world;
         this.spriteBatch = new SpriteBatch();
+        this.body = body;
 
-        setBounds(body.getPosition().x, body.getPosition().y,64/PPM,64/PPM);
+        leftSensor = createSensor(0.5f,16f, "leftSensor");
+        rightSensor = createSensor(0.5f,16f, "rightSensor");
+        topSensor = createSensor(16f,0.5f, "topSensor");
+        bottomSensor = createSensor(16f,0.5f, "bottomSensor");
+
+
+        setBounds(body.getPosition().x, body.getPosition().y,32/PPM,32/PPM);
 
         currentState = State.IDLERIGHT;
         previousState = State.IDLERIGHT;
@@ -84,14 +93,27 @@ public class Player extends Sprite {
         this.speed = 10f;
     }
     public void update(float dt) {
+
+        //Sensors update
+        leftSensor.setTransform(body.getPosition().x - getWidth() / 2, body.getPosition().y, 0);
+        rightSensor.setTransform(body.getPosition().x + getWidth() / 2, body.getPosition().y, 0);
+        topSensor.setTransform(body.getPosition().x, body.getPosition().y + getHeight() / 2, 0);
+        bottomSensor.setTransform(body.getPosition().x, body.getPosition().y - getHeight() / 2, 0);
+
+        //Change character input
+        characterInput();
+
+        //Movement input
         checkUserInput();
+
+        //Transition animation between characters changes
         if(isTransition) {
             stateTimer = 0;
             isTransition = false;
         }
         if(nhanVat != previousNhanVat && !smokeAnimation.isAnimationFinished(stateTimer)){
             setRegion((TextureRegion) smokeAnimation.getKeyFrame(stateTimer, false));
-            setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3,64/PPM,64/PPM);
+            setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,32/PPM,32/PPM);
             stateTimer += Gdx.graphics.getDeltaTime();
             return;
         }
@@ -101,8 +123,10 @@ public class Player extends Sprite {
             previousNhanVat = nhanVat;
             stateTimer = 0;
         }
+
+        //Character frame
         if(nhanVat == NhanVat.CUCAI) {
-            setBounds(body.getPosition().x, body.getPosition().y,64/PPM,64/PPM);
+            setBounds(body.getPosition().x, body.getPosition().y,32/PPM,32/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 4);
             setRegion(getFrame(NhanVatCuCai,dt));
         }
@@ -112,9 +136,24 @@ public class Player extends Sprite {
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         }
         else if(nhanVat == NhanVat.CUCDA){
-            setBounds(body.getPosition().x, body.getPosition().y,46/PPM,46/PPM);
+            setBounds(body.getPosition().x, body.getPosition().y,32/PPM,32/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion(getFrame(NhanVatCucDa,dt));
+        }
+    }
+
+    public void characterInput() {
+        if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
+            isTransition = true;
+            nhanVat = NhanVat.CUCAI;
+        }
+        if(nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
+            isTransition = true;
+            nhanVat = NhanVat.BACHTUOC;
+        }
+        if(nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
+            isTransition = true;
+            nhanVat = NhanVat.CUCDA;
         }
     }
 
@@ -146,18 +185,6 @@ public class Player extends Sprite {
     }
 
     public void checkUserInput(){
-        if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
-            isTransition = true;
-            nhanVat = NhanVat.CUCAI;
-        }
-        if(nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
-            isTransition = true;
-            nhanVat = NhanVat.BACHTUOC;
-        }
-        if(nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
-            isTransition = true;
-            nhanVat = NhanVat.CUCDA;
-        }
         velX = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             currentState = State.RUNNINGRIGHT;
@@ -180,5 +207,20 @@ public class Player extends Sprite {
             else if(currentState == State.RUNNINGLEFT || currentState == State.JUMPINGLEFT) currentState = State.IDLELEFT;
         }
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
+    }
+
+    public Body createSensor(float width, float height, String data){
+        Body sensorBody;
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        sensorBody = world.createBody(bodyDef);
+        FixtureDef fixtureDef = new FixtureDef();
+        PolygonShape boxShape = new PolygonShape();
+        boxShape.setAsBox(width / PPM, height / PPM);
+        fixtureDef.shape=boxShape;
+        fixtureDef.isSensor = true;
+        sensorBody.createFixture(fixtureDef).setUserData(data);
+        boxShape.dispose();
+        return sensorBody;
     }
 }

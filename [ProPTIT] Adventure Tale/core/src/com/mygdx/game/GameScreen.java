@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import helper.TileMapHelper;
+import helper.WorldContactListener;
 import objects.box.Box;
 import objects.player.Player;
 
@@ -28,11 +29,12 @@ public class GameScreen implements Screen {
     public Box2DDebugRenderer box2DDebugRenderer;
     public GameScreen (Main game){
         this.world = new World(new Vector2(0,-25f), false);
+        this.world.setContactListener(new WorldContactListener());
         this.game = game;
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-        box2DDebugRenderer.setDrawJoints(false);
-        box2DDebugRenderer.setDrawBodies(false);
-        box2DDebugRenderer.setDrawContacts(false);
+//        box2DDebugRenderer.setDrawJoints(false);
+//        box2DDebugRenderer.setDrawBodies(false);
+//        box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
     }
