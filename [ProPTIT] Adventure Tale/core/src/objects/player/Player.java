@@ -261,10 +261,26 @@ public class Player extends Sprite {
             if (!isTop && (!isWallLeft || !isWallRight)) {
                 body.setGravityScale(1);
             }
-            if (isTop || isBottom) {
-                if (isTop) {
-                    body.setGravityScale(-1);
+            if (isTop) {
+                body.setGravityScale(-1);
+                velX = 0;
+                if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                    --roll;
+                    if (roll == -1) {
+                        roll = 7;
+                    }
+                    currentState = State.valueOf("ROUND" + (roll + 1));
+                    velX = 1;
+                } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+                    ++roll;
+                    if (roll == 8) {
+                        roll = 0;
+                    }
+                    currentState = State.valueOf("ROUND" + (roll + 1));
+                    velX = -1;
                 }
+                body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
+            } else if (isBottom) {
                 velX = 0;
                 if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
                     ++roll;
@@ -283,7 +299,27 @@ public class Player extends Sprite {
                 }
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
-            if (isWallLeft || isWallRight) {
+            if (isWallLeft) {
+                body.setGravityScale(0);
+                if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+                    --roll;
+                    if (roll == -1) {
+                        roll = 7;
+                    }
+                    currentState = State.valueOf("ROUND" + (roll + 1));
+                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, speed);
+                } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+                    ++roll;
+                    if (roll == 8) {
+                        roll = 0;
+                    }
+                    currentState = State.valueOf("ROUND" + (roll + 1));
+                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, -speed);
+                } else {
+                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, 0);
+                }
+            }
+            else if(isWallRight){
                 body.setGravityScale(0);
                 if(Gdx.input.isKeyPressed(Input.Keys.UP)){
                     ++roll;
