@@ -51,10 +51,10 @@ public class Character {
             TextureRegion[][] runningRight = TextureRegion.split(RunningRight, tileWidth,tileHeight);
             TextureRegion[][] runningLeft = TextureRegion.split(RunningLeft, tileWidth,tileHeight);
 
-            rolls[0] = new Animation(0.5f, idleRight[0]);
-            rolls[1] = new Animation(0.5f, idleLeft[0]);
-            rolls[2] = new Animation(0.2f, runningLeft[0]);
-            rolls[3] = new Animation(0.2f, runningRight[0]);
+            rolls[0] = new Animation(0.08f, idleRight[0]);
+            rolls[1] = new Animation(0.08f, idleLeft[0]);
+            rolls[2] = new Animation(0.05f, runningLeft[0]);
+            rolls[3] = new Animation(0.05f, runningRight[0]);
         }
         else {
             for (int i = 0; i < 8; ++i) {
