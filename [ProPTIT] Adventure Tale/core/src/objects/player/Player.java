@@ -20,6 +20,7 @@ import static helper.Constants.PPM;
 public class Player extends Sprite {
     public enum State {IDLELEFT, IDLERIGHT, RUNNINGLEFT, RUNNINGRIGHT, JUMPINGLEFT, JUMPINGRIGHT};
     public enum NhanVat {CUCAI, BACHTUOC, CUCDA};
+    public boolean BachTuocFlag = false, CucDaFlag = false;
     public NhanVat nhanVat, previousNhanVat;
     public Character NhanVatCuCai, NhanVatCucDa;
     public BachTuoc NhanVatBachTuoc;
@@ -45,10 +46,10 @@ public class Player extends Sprite {
         this.spriteBatch = new SpriteBatch();
         this.body = body;
 
-        leftSensor = createSensor(0.5f,16f, "leftSensor");
-        rightSensor = createSensor(0.5f,16f, "rightSensor");
-        topSensor = createSensor(16f,0.5f, "topSensor");
-        bottomSensor = createSensor(16f,0.5f, "bottomSensor");
+        leftSensor = createSensor(0.5f,10f, "leftSensor");
+        rightSensor = createSensor(0.5f,10f, "rightSensor");
+        topSensor = createSensor(10f,0.5f, "topSensor");
+        bottomSensor = createSensor(10f,0.5f, "bottomSensor");
 
 
         setBounds(body.getPosition().x, body.getPosition().y,32/PPM,32/PPM);
@@ -147,11 +148,11 @@ public class Player extends Sprite {
             isTransition = true;
             nhanVat = NhanVat.CUCAI;
         }
-        if(nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
+        if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
             isTransition = true;
             nhanVat = NhanVat.BACHTUOC;
         }
-        if(nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
+        if(CucDaFlag && nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
             isTransition = true;
             nhanVat = NhanVat.CUCDA;
         }

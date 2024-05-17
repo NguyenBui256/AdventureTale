@@ -12,7 +12,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import helper.TileMapHelper;
 import helper.WorldContactListener;
 import objects.box.Box;
+import objects.box.Bubble;
 import objects.player.Player;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import static helper.Constants.PPM;
 
@@ -21,7 +25,9 @@ public class GameScreen implements Screen {
     public Main game;
     public World world;
     public Player player;
-    public Box box;
+    public boolean DestroyFlag = false;
+    public ArrayList<Box> boxList;
+    public ArrayList<Bubble> bubbleList, destroyList;
     public TileMapHelper tileMapHelper;
     public OrthographicCamera staticCamera;
     public OrthographicCamera playerCamera;
@@ -29,12 +35,15 @@ public class GameScreen implements Screen {
     public Box2DDebugRenderer box2DDebugRenderer;
     public GameScreen (Main game){
         this.world = new World(new Vector2(0,-25f), false);
-        this.world.setContactListener(new WorldContactListener());
+        this.world.setContactListener(new WorldContactListener(this.world, this));
         this.game = game;
+        this.boxList = new ArrayList<>();
+        this.bubbleList = new ArrayList<>();
+        this.destroyList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-//        box2DDebugRenderer.setDrawJoints(false);
-//        box2DDebugRenderer.setDrawBodies(false);
-//        box2DDebugRenderer.setDrawContacts(false);
+        box2DDebugRenderer.setDrawJoints(false);
+        box2DDebugRenderer.setDrawBodies(false);
+        box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
     }
@@ -45,6 +54,15 @@ public class GameScreen implements Screen {
     }
 
     public void update(float dt){
+        if(DestroyFlag){
+            for(Bubble bubble : destroyList){
+                System.out.println("Destroyed!");
+                world.destroyBody(bubble.body);
+                bubbleList.remove(bubble);
+            }
+            destroyList.clear();
+            DestroyFlag = false;
+        }
         world.step(1/60f, 6, 2);
 
         Vector3 position = playerCamera.position;
@@ -53,7 +71,8 @@ public class GameScreen implements Screen {
         playerCamera.position.set(position);
         staticCamera.position.set(position);
         player.update(dt);
-        box.update(dt);
+        for(Bubble bubble : bubbleList) bubble.update(dt);
+        for(Box box : boxList) box.update(dt);
         playerCamera.update();
         staticCamera.update();
     }
@@ -68,6 +87,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         this.update(delta);
+
         renderer.setView(playerCamera);
         renderer.render();
         box2DDebugRenderer.render(world, playerCamera.combined.scl(PPM));
@@ -77,7 +97,8 @@ public class GameScreen implements Screen {
 
         game.batch.setProjectionMatrix(staticCamera.combined);
         game.batch.begin();
-        box.draw(game.batch);
+        for(Bubble bubble : bubbleList) bubble.draw(game.batch);
+        for(Box box : boxList) box.draw(game.batch);
         game.batch.end();
 
         game.batch.setProjectionMatrix(playerCamera.combined);
