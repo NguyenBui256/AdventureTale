@@ -2,38 +2,32 @@ package helper;
 
 import com.badlogic.gdx.physics.box2d.*;
 
-import static objects.player.Player.top;
-import static objects.player.Player.bottom;
-import static objects.player.Player.left;
-import static objects.player.Player.right;
 import static objects.player.Player.isTop;
-import static objects.player.Player.isWall;
+import static objects.player.Player.isWallLeft;
+import static objects.player.Player.isWallRight;
+import static objects.player.Player.isBottom;
 
 public class WorldContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         Fixture fix = (contact.getFixtureA().getUserData() != "ground") ? contact.getFixtureA() : contact.getFixtureB();
+        if (!isTop && !isBottom && !isWallLeft && !isWallRight) {
+
+        }
         if(fix.getUserData() == "leftSensor"){
-            top = true;
-            bottom = true;
-            isWall = true;
+            isWallLeft = true;
             System.out.println("Left here");
         }
         if(fix.getUserData() == "rightSensor"){
-            top = true;
-            bottom = true;
-            isWall = true;
+            isWallRight = true;
             System.out.println("Right here");
         }
         if(fix.getUserData() == "topSensor"){
-            left = true;
-            right = true;
             isTop = true;
             System.out.println("Top here");
         }
         if(fix.getUserData() == "bottomSensor"){
-            left = true;
-            right = true;
+            isBottom = true;
             System.out.println("Bottom here");
         }
     }
@@ -43,23 +37,13 @@ public class WorldContactListener implements ContactListener {
         System.out.println("End contact");
         Fixture fix = (contact.getFixtureA().getUserData() != "ground") ? contact.getFixtureA() : contact.getFixtureB();
         if(fix.getUserData() == "leftSensor"){
-            top = false;
-            bottom = false;
-            isWall = false;
-        }
-        if(fix.getUserData() == "rightSensor"){
-            top = false;
-            bottom = false;
-            isWall = false;
-        }
-        if(fix.getUserData() == "topSensor"){
-            left = false;
-            right = false;
+            isWallLeft = false;
+        } else if(fix.getUserData() == "rightSensor"){
+            isWallRight = false;
+        } else if(fix.getUserData() == "topSensor"){
             isTop = false;
-        }
-        if(fix.getUserData() == "bottomSensor"){
-            left = false;
-            right = false;
+        } else if(fix.getUserData() == "bottomSensor"){
+            isBottom = false;
         }
     }
 

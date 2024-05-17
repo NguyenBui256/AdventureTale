@@ -24,7 +24,6 @@ public class Player extends Sprite {
     public Character NhanVatCuCai, NhanVatCucDa, NhanVatBachTuoc;
     public State currentState;
     public State previousState;
-    public static boolean top, bottom, left, right;
     public Main game;
     public World world;
     public Body body;
@@ -35,8 +34,8 @@ public class Player extends Sprite {
     public TextureRegion[][] boxRegion, smokeRegion;
     public Animation boxAnimation, smokeAnimation;
     public boolean isTransition = false;
-    public static boolean isTop, isWall;
-    public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null;
+    public static boolean isTop, isWallLeft, isWallRight, isBottom;
+    public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null, topLeftSensor = null, topRightSensor = null, bottomLeftSensor = null, bottomRightSensor = null;
 
     public SpriteBatch spriteBatch;
 
@@ -99,7 +98,6 @@ public class Player extends Sprite {
         smokeTexture = new Texture("smokeAnimation.png");
         smokeRegion = TextureRegion.split(smokeTexture, 64,64);
         smokeAnimation = new Animation(0.05f, smokeRegion[0]);
-//        NhanVatBachTuoc = new BachTuoc();
 
         stateTimer = 0;
         this.body = body;
@@ -198,11 +196,9 @@ public class Player extends Sprite {
         if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
             body.setGravityScale(1);
             isTop = false;
-            isWall = false;
-            top = true;
-            bottom = true;
-            left = true;
-            right = true;
+            isWallLeft = false;
+            isWallRight = false;
+            isBottom = true;
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
             isTransition = true;
@@ -213,25 +209,25 @@ public class Player extends Sprite {
             rightSensor = createSensor(0.5f,0.5f, "rightSensor");
             topSensor = createSensor(0.5f,0.5f, "topSensor");
             bottomSensor = createSensor(0.5f,0.5f, "bottomSensor");
+            topLeftSensor = createEdgeSensor(0.5f, 0.5f, "topLeftSensor", body.getPosition().x - 16f / PPM, body.getPosition().y + 16f / PPM);
+            topRightSensor = createEdgeSensor(0.5f, 0.5f, "topRightSensor", body.getPosition().x + 16f / PPM, body.getPosition().y + 16f / PPM);
+            bottomLeftSensor = createEdgeSensor(0.5f, 0.5f, "bottomLeftSensor", body.getPosition().x - 16f / PPM, body.getPosition().y - 16f / PPM);
+            bottomRightSensor = createEdgeSensor(0.5f, 0.5f, "bottomRightSensor", body.getPosition().x + 16f / PPM, body.getPosition().y - 16f / PPM);
             currentState = State.ROUND1;
             previousState = State.ROUND1;
-            isWall = false;
+            isWallLeft = false;
             isTop = false;
-            top = false;
-            bottom = false;
-            left = true;
-            right = true;
+            isBottom = true;
+            isWallRight = false;
             roll = 0;
             isTransition = true;
             nhanVat = NhanVat.BACHTUOC;
         }
         if(nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
-            isWall = false;
+            isWallLeft = false;
             isTop = false;
-            top = false;
-            bottom = false;
-            left = true;
-            right = true;
+            isBottom = true;
+            isWallRight = false;
             body.setGravityScale(1);
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
@@ -262,11 +258,10 @@ public class Player extends Sprite {
             }
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
         } else if (nhanVat == NhanVat.BACHTUOC) {
-            System.out.println(top + " " + bottom + " " + left + " " + right);
-            if (!isTop && !isWall) {
+            if (!isTop && (!isWallLeft || !isWallRight)) {
                 body.setGravityScale(1);
             }
-            if (right || left) {
+            if (isTop || isBottom) {
                 if (isTop) {
                     body.setGravityScale(-1);
                 }
@@ -288,7 +283,7 @@ public class Player extends Sprite {
                 }
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
-            if (top || bottom) {
+            if (isWallLeft || isWallRight) {
                 body.setGravityScale(0);
                 if(Gdx.input.isKeyPressed(Input.Keys.UP)){
                     ++roll;
@@ -334,6 +329,20 @@ public class Player extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape boxShape = new PolygonShape();
         boxShape.setAsBox(width / PPM, height / PPM);
+        fixtureDef.shape=boxShape;
+        fixtureDef.isSensor = true;
+        sensorBody.createFixture(fixtureDef).setUserData(data);
+        boxShape.dispose();
+        return sensorBody;
+    }
+    public Body createEdgeSensor(float width, float height, String data, float x, float y){
+        Body sensorBody;
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        sensorBody = world.createBody(bodyDef);
+        FixtureDef fixtureDef = new FixtureDef();
+        PolygonShape boxShape = new PolygonShape();
+        boxShape.setAsBox(width / PPM, height / PPM, new Vector2(x, y), 0);
         fixtureDef.shape=boxShape;
         fixtureDef.isSensor = true;
         sensorBody.createFixture(fixtureDef).setUserData(data);
