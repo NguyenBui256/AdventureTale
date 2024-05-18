@@ -144,18 +144,12 @@ public class Player extends Sprite {
     }
 
     public void characterInput() {
-        if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
-            isTransition = true;
-            nhanVat = NhanVat.CUCAI;
-        }
-        if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
-            isTransition = true;
-            nhanVat = NhanVat.BACHTUOC;
-        }
-        if(CucDaFlag && nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
-            isTransition = true;
-            nhanVat = NhanVat.CUCDA;
-        }
+        if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1))
+            changeToCuCai();
+        if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2))
+            changeToBachTuoc();
+        if(CucDaFlag && nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3))
+            changeToCucDa();
     }
 
     public TextureRegion getFrame(Character character, float dt){
@@ -223,5 +217,20 @@ public class Player extends Sprite {
         sensorBody.createFixture(fixtureDef).setUserData(data);
         boxShape.dispose();
         return sensorBody;
+    }
+
+    public void changeToCuCai(){
+        isTransition = true;
+        nhanVat = NhanVat.CUCAI;
+    }
+
+    public void changeToBachTuoc(){
+        isTransition = true;
+        nhanVat = NhanVat.BACHTUOC;
+    }
+
+    public void changeToCucDa(){
+        isTransition = true;
+        nhanVat = NhanVat.CUCDA;
     }
 }

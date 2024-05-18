@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import helper.TileMapHelper;
 import helper.WorldContactListener;
 import objects.box.Box;
@@ -22,10 +24,12 @@ import static helper.Constants.PPM;
 
 public class GameScreen implements Screen {
     public float stateTime;
+    protected Hud hud;
     public Main game;
     public World world;
-    public Player player;
     public boolean DestroyFlag = false;
+    public Player player;
+    public Texture CuCaiButton, BachTuocButton, CucDaButton;
     public ArrayList<Box> boxList;
     public ArrayList<Bubble> bubbleList, destroyList;
     public TileMapHelper tileMapHelper;
@@ -46,6 +50,11 @@ public class GameScreen implements Screen {
         box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
+        CuCaiButton = new Texture("CuCaiButton.png");
+        BachTuocButton = new Texture("BachTuocButton.png");
+        CucDaButton = new Texture("CucDaButton.png");
+        this.hud = new Hud(player);
+        Gdx.input.setInputProcessor(hud.stage);
     }
     @Override
     public void show() {
@@ -70,6 +79,7 @@ public class GameScreen implements Screen {
         position.y = Math.round(player.body.getPosition().y * PPM * 10 / 10f);
         playerCamera.position.set(position);
         staticCamera.position.set(position);
+        hud.update();
         player.update(dt);
         for(Bubble bubble : bubbleList) bubble.update(dt);
         for(Box box : boxList) box.update(dt);
@@ -86,12 +96,19 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if(Gdx.input.isTouched()){
+            System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
+            System.out.println(Math.round(player.body.getPosition().x * PPM * 10 / 10f) + " " + Math.round(player.body.getPosition().y * PPM * 10 / 10f));
+        }
         this.update(delta);
 
         renderer.setView(playerCamera);
         renderer.render();
         box2DDebugRenderer.render(world, playerCamera.combined.scl(PPM));
         box2DDebugRenderer.render(world, staticCamera.combined.scl(PPM));
+
+        hud.stage.act(Gdx.graphics.getDeltaTime());
+        hud.stage.draw();
 
         stateTime += delta;
 
@@ -103,6 +120,16 @@ public class GameScreen implements Screen {
 
         game.batch.setProjectionMatrix(playerCamera.combined);
         game.batch.begin();
+        game.batch.draw(CuCaiButton,
+                250,250
+                ,32,32);
+        if(player.BachTuocFlag)
+//            System.out.println("Da in bach Tuoc");
+            game.batch.draw(BachTuocButton,
+                  Math.round(player.body.getPosition().x * PPM * 10 / 10f)
+                , Math.round(player.body.getPosition().y * PPM * 10 / 10f)
+                ,32,32);
+        if(player.CucDaFlag) game.batch.draw(CucDaButton, 100, playerCamera.viewportHeight, 32,32);
         player.draw(game.batch);
         game.batch.end();
     }
