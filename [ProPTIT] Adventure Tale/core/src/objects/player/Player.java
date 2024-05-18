@@ -35,6 +35,7 @@ public class Player extends Sprite {
     public Animation boxAnimation, smokeAnimation;
     public boolean isTransition = false;
     public static boolean isTop, isWallLeft, isWallRight, isBottom;
+    public boolean BachTuocFlag = false, CucDaFlag = false;
     public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null, topLeftSensor = null, topRightSensor = null, bottomLeftSensor = null, bottomRightSensor = null;
 
     public SpriteBatch spriteBatch;
@@ -72,15 +73,6 @@ public class Player extends Sprite {
                 null,
                 null
         );
-
-
-        boxTexture = new Texture("box.png");
-        boxRegion = TextureRegion.split(boxTexture, 225, 225);
-        boxAnimation = new Animation(0.3f, boxRegion[0]);
-
-        smokeTexture = new Texture("smokeAnimation.png");
-        smokeRegion = TextureRegion.split(smokeTexture, 64,64);
-        smokeAnimation = new Animation(0.05f, smokeRegion[0]);
         NhanVatBachTuoc = new Character(
                 32, 32,
                 null,
@@ -91,6 +83,7 @@ public class Player extends Sprite {
                 null
         );
 
+
         boxTexture = new Texture("box.png");
         boxRegion = TextureRegion.split(boxTexture, 225, 225);
         boxAnimation = new Animation(0.3f, boxRegion[0]);
@@ -99,12 +92,17 @@ public class Player extends Sprite {
         smokeRegion = TextureRegion.split(smokeTexture, 64,64);
         smokeAnimation = new Animation(0.05f, smokeRegion[0]);
 
+        boxTexture = new Texture("box.png");
+        boxRegion = TextureRegion.split(boxTexture, 225, 225);
+        boxAnimation = new Animation(0.3f, boxRegion[0]);
+
         stateTimer = 0;
         this.body = body;
         this.speed = 10f;
     }
     public void update(float dt) {
 
+//        characterInput();
         checkUserInput();
 
         //Transition animation between characters changes
@@ -201,8 +199,7 @@ public class Player extends Sprite {
             isBottom = true;
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
-            isTransition = true;
-            nhanVat = NhanVat.CUCAI;
+            changeToCuCai();
         }
         if(nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
             leftSensor = createSensor(0.5f,0.5f, "leftSensor");
@@ -220,8 +217,7 @@ public class Player extends Sprite {
             isBottom = true;
             isWallRight = false;
             roll = 0;
-            isTransition = true;
-            nhanVat = NhanVat.BACHTUOC;
+            changeToBachTuoc();
         }
         if(nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
             isWallLeft = false;
@@ -231,8 +227,7 @@ public class Player extends Sprite {
             body.setGravityScale(1);
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
-            isTransition = true;
-            nhanVat = NhanVat.CUCDA;
+            changeToCucDa();
         }
         if (nhanVat == NhanVat.CUCAI) {
             velX = 0;
@@ -355,6 +350,30 @@ public class Player extends Sprite {
             }
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
         }
+    }
+
+    public void characterInput(){
+//        if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1))
+//            changeToCuCai();
+//        if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2))
+//            changeToBachTuoc();
+//        if(CucDaFlag && nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3))
+//            changeToCucDa();
+    }
+
+    public void changeToCuCai(){
+        isTransition = true;
+        nhanVat = NhanVat.CUCAI;
+    }
+
+    public void changeToBachTuoc(){
+        isTransition = true;
+        nhanVat = NhanVat.BACHTUOC;
+    }
+
+    public void changeToCucDa(){
+        isTransition = true;
+        nhanVat = NhanVat.CUCDA;
     }
 
     public Body createSensor(float width, float height, String data){
