@@ -22,16 +22,19 @@
             "scale": 0.601171875,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 641.2475633528265,
-                "y": 400.05198180636773
+                "x": 640.4158544509422,
+                "y": 398.3885640025991
             }
         },
         "map2.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": -2,
-                "y": 605.5
+                "x": 430,
+                "y": 466.5
             }
         },
         "map2.tmx#Decorations (32x32)": {
@@ -54,12 +57,13 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 40,
     "openFiles": [
-        "map2.tmx"
+        "map2.tmx",
+        "map1.tmx"
     ],
     "project": "testproject.tiled-project",
     "recentFiles": [
-        "map2.tmx",
-        "map1.tmx"
+        "map1.tmx",
+        "map2.tmx"
     ],
     "resizeMap.removeObjects": false,
     "tileset.embedInMap": true,
