@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 import java.awt.geom.RectangularShape;
 
-import static helper.Constants.PPM;
+import static helper.Constants.*;
 
 public class Player extends Sprite {
     public enum State {IDLELEFT, IDLERIGHT, RUNNINGLEFT, RUNNINGRIGHT, JUMPINGLEFT, JUMPINGRIGHT, ROUND1, ROUND2, ROUND3, ROUND4, ROUND5, ROUND6, ROUND7, ROUND8};
@@ -37,16 +37,13 @@ public class Player extends Sprite {
     public static int senTLCount = 0, senTRCount = 0, senBLCount = 0, senBRCount = 0;
     public boolean BachTuocFlag = false, CucDaFlag = false, isJumping = false;
     public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null, topLeftSensor = null, topRightSensor = null, bottomLeftSensor = null, bottomRightSensor = null;
-    public SpriteBatch spriteBatch;
 
     public Player(GameScreen screen, Body body) {
         this.game = screen.game;
         this.world = screen.world;
-        this.spriteBatch = new SpriteBatch();
         this.body = body;
-        this.body.setUserData("cu cai");
 
-        setBounds(body.getPosition().x, body.getPosition().y,32/PPM,32/PPM);
+        setBounds(body.getPosition().x, body.getPosition().y,tiledSize/PPM,tiledSize/PPM);
 
         currentState = State.IDLERIGHT;
         previousState = State.IDLERIGHT;
@@ -82,18 +79,14 @@ public class Player extends Sprite {
                 null
         );
 
-        leftSensor = createSensor(0,12f, "leftSensor");
-        rightSensor = createSensor(0,12f, "rightSensor");
-        topSensor = createSensor(12f,0, "topSensor");
-        bottomSensor = createSensor(12f,0, "bottomSensor");
-        topLeftSensor = createEdgeSensor(1f, 1f, "topLeftSensor", 0, 0);
-        topRightSensor = createEdgeSensor(1f, 1f, "topRightSensor", 0, 0);
-        bottomLeftSensor = createEdgeSensor(1f, 1f, "bottomLeftSensor", 0, 0);
-        bottomRightSensor = createEdgeSensor(1f, 1f, "bottomRightSensor", 0, 0);
-
-        JointDef joint = new JointDef();
-        joint.type = JointDef.JointType.FrictionJoint;
-
+        leftSensor = createSensor(0,sizeSensorSize, "leftSensor");
+        rightSensor = createSensor(0,sizeSensorSize, "rightSensor");
+        topSensor = createSensor(sizeSensorSize,0, "topSensor");
+        bottomSensor = createSensor(sizeSensorSize,0, "bottomSensor");
+        topLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "topLeftSensor", 0, 0);
+        topRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "topRightSensor", 0, 0);
+        bottomLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomLeftSensor", 0, 0);
+        bottomRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomRightSensor", 0, 0);
 
         boxTexture = new Texture("box.png");
         boxRegion = TextureRegion.split(boxTexture, 225, 225);
@@ -130,7 +123,7 @@ public class Player extends Sprite {
         }
         if(nhanVat != previousNhanVat && !smokeAnimation.isAnimationFinished(stateTimer)){
             setRegion((TextureRegion) smokeAnimation.getKeyFrame(stateTimer, false));
-            setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3,64/PPM,64/PPM);
+            setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3,2*tiledSize/PPM,2*tiledSize/PPM);
             stateTimer += Gdx.graphics.getDeltaTime();
             return;
         }
@@ -141,18 +134,27 @@ public class Player extends Sprite {
             stateTimer = 0;
         }
         if(nhanVat == NhanVat.CUCAI) {
+            MassData massData = new MassData();
+            massData.mass = 0;
+            body.setMassData(massData);
             setRegion(getFrame(NhanVatCuCai,dt));
-            setBounds(body.getPosition().x, body.getPosition().y,64/PPM,64/PPM);
+            setBounds(body.getPosition().x, body.getPosition().y,2*tiledSize/PPM,2*tiledSize/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 4);
         }
         else if(nhanVat == NhanVat.BACHTUOC) {
+            MassData massData = new MassData();
+            massData.mass = 0;
+            body.setMassData(massData);
             setRegion(getFrame(NhanVatBachTuoc,dt));
-            setBounds(body.getPosition().x,body.getPosition().y,64/PPM, 64/PPM);
+            setBounds(body.getPosition().x,body.getPosition().y,2*tiledSize/PPM, 2*tiledSize/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         }
         else if(nhanVat == NhanVat.CUCDA){
+            MassData massData = new MassData();
+            massData.mass = 2;
+            body.setMassData(massData);
             setRegion(getFrame(NhanVatCucDa,dt));
-            setBounds(body.getPosition().x, body.getPosition().y,46/PPM,46/PPM);
+            setBounds(body.getPosition().x, body.getPosition().y,(2*tiledSize - 6)/PPM,(2*tiledSize - 6)/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         }
     }
@@ -267,13 +269,13 @@ public class Player extends Sprite {
             if(senBRCount == 2 && !senB && !senBL && !senR && !senTR) //top left
             {
                 System.out.println("top left");
-                body.setLinearVelocity(3,-2);
+                body.setLinearVelocity(1,-2);
                 allowLeft = false; allowUp = false;
                 allowDown = true; allowRight = true;
             }
             if(senBLCount == 2 && !senB && !senBR && !senL && !senTL) //top right
             {
-                body.setLinearVelocity(-3,-2);
+                body.setLinearVelocity(-1,-2);
                 System.out.println("top right");
                 allowRight = false; allowUp = false;
                 allowDown = true; allowLeft = true;
@@ -281,21 +283,21 @@ public class Player extends Sprite {
             if(senTRCount == 2 && !senT && !senTL && !senR && !senBR) //bot left
             {
                 System.out.println("bot left");
-                body.setLinearVelocity(3,2);
+                body.setLinearVelocity(1,2);
                 allowLeft = false; allowDown = false;
                 allowRight = true; allowUp = true;
             }
             if(senTLCount == 2 && !senT && !senTR && !senL && !senBL) //bot right
             {
                 System.out.println("bot right");
-                body.setLinearVelocity(-3,2);
+                body.setLinearVelocity(-1,2);
                 allowRight = false; allowDown = false;
                 allowLeft = true; allowUp = true;
             }
 
             if((senBL && senB && senBR) || (senBL && senB) || (senB && senBR) || (senTL && senT && senTR) || (senTL && senT) || (senT && senTR)){
-                if((senBL && senB && senBR)) body.setGravityScale(1); //ground
-                if((senTL && senT && senTR)) body.setGravityScale(-1); //ceilling
+                if((senBL && senB && senBR) || (senBL && senB) || (senB && senBR)) body.setGravityScale(1); //ground
+                if((senTL && senT && senTR) || (senTL && senT) || (senT && senTR)) body.setGravityScale(-1); //ceilling
                 allowLeft = true; allowRight = true;
                 if((senTL && senL && senBL) || (senTR && senR && senBR)) {
                     allowUp = true;
@@ -357,7 +359,10 @@ public class Player extends Sprite {
                 velY = -1;
                 body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, -speed);
             }
-            if(!hasKeyPressed && (body.getLinearVelocity().x == 0 || body.getLinearVelocity().y == 0)) body.setLinearVelocity(0,0);
+            if(!hasKeyPressed){
+                if(body.getLinearVelocity().y == 0)  body.setLinearVelocity(0,0);
+                if(body.getLinearVelocity().x == 0 && (senL || senR)) body.setLinearVelocity(0,0);
+            }
         } else {
             velX = 0;
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){

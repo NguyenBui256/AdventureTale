@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GameScreen;
 
 import static helper.Constants.PPM;
+import static helper.Constants.tiledSize;
 
 public class Bubble extends Sprite {
     public Body body;
@@ -22,9 +23,9 @@ public class Bubble extends Sprite {
         region = TextureRegion.split(texture, width, height);
         Animation animation = new Animation(0.3f, region[0]);
         setRegion((TextureRegion) animation.getKeyFrame(screen.stateTime));
-        setBounds(body.getPosition().x,body.getPosition().y,32/PPM, 32/PPM);
+        setBounds(body.getPosition().x,body.getPosition().y,1.3f*tiledSize/PPM, 1.3f*tiledSize/PPM);
     }
     public void update(float dt){
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 5);
     }
 }

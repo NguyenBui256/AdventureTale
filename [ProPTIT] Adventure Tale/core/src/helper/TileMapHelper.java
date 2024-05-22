@@ -27,8 +27,8 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        map = new TmxMapLoader().load("map2.tmx");
-        parseMapObjects(map.getLayers().get("ground").getObjects());
+        map = new TmxMapLoader().load("mapmoi.tmx");
+        parseMapObjects(map.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(map);
     }
 
@@ -59,7 +59,7 @@ public class TileMapHelper {
                             rectangle.getHeight(),
                             false,
                             gameScreen.world,
-                            5
+                            2
                     );
                     gameScreen.boxList.add(new Box(gameScreen, body));
                 }

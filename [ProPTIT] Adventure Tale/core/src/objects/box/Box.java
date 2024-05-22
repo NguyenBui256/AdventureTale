@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.GameScreen;
 
-import static helper.Constants.PPM;
+import static helper.Constants.*;
 
 public class Box extends Sprite {
     public World world;
@@ -26,17 +26,15 @@ public class Box extends Sprite {
         Animation animation = new Animation(0.3f, region[0]);
         setRegion((TextureRegion) animation.getKeyFrame(screen.stateTime));
 
-        setBounds(body.getPosition().x,body.getPosition().y,32/PPM, 32/PPM);
+        setBounds(body.getPosition().x,body.getPosition().y,tiledSize/PPM, tiledSize/PPM);
         this.body = body;
         MassData massData = new MassData();
-        massData.mass = 15;
+        massData.mass = 10;
         this.body.setMassData(massData);
-        this.speed = 10f;
     }
 
     public void update(float dt){
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-
     }
 
 

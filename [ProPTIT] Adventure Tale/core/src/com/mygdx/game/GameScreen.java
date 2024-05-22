@@ -58,8 +58,8 @@ public class GameScreen implements Screen {
     }
     @Override
     public void show() {
-        staticCamera = new OrthographicCamera(750, 500);
-        playerCamera = new OrthographicCamera(750, 500);
+        staticCamera = new OrthographicCamera(360, 240);
+        playerCamera = new OrthographicCamera(360, 240);
     }
 
     public void update(float dt){
