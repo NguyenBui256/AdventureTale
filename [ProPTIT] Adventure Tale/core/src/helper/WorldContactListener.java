@@ -18,24 +18,52 @@ public class WorldContactListener implements ContactListener {
 
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
+        Object dataA = fixA.getUserData();
+        Object dataB = fixB.getUserData();
 //        if(fixA.getUserData() != null) System.out.println("A: " + fixA.getUserData().getClass());
-//        if(fixB.getUserData() != null) System.out.println("B: " + fixB.getUserData().getClass());
+//        if(dataB != null) System.out.println("B: " + dataB.getClass());
 
-        if(fixA.getUserData() == "leftSensor" || fixB.getUserData() == "leftSensor"){
+        if(dataA == "leftSensor" || dataB == "leftSensor"){
+            screen.player.senL = true;
             System.out.println("Left here");
         }
-        if(fixA.getUserData() == "rightSensor" || fixB.getUserData() == "rightSensor"){
+        if(dataA == "rightSensor" || dataB == "rightSensor"){
+            screen.player.senR = true;
             System.out.println("Right here");
         }
-        if(fixA.getUserData() == "topSensor" || fixB.getUserData() == "topSensor"){
+        if(dataA == "topSensor" || dataB == "topSensor"){
+            screen.player.senT = true;
             System.out.println("Top here");
         }
-        if(fixA.getUserData() == "BachTuoc" || fixB.getUserData() == "BachTuoc"){
+        if(dataA == "topLeftSensor" || dataB == "topLeftSensor"){
+            screen.player.senTLCount++;
+            screen.player.senTL = true;
+            System.out.println("TL here");
+        }
+        if(dataA == "topRightSensor" || dataB == "topRightSensor"){
+            screen.player.senTRCount++;
+            screen.player.senTR = true;
+            System.out.println("TR here");
+        }
+        if(dataA == "bottomSensor" || dataB == "bottomSensor"){
+            screen.player.senB = true;
+            System.out.println("Bot here");
+        }
+        if(dataA == "bottomLeftSensor" || dataB == "bottomLeftSensor"){
+            screen.player.senBLCount++;
+            screen.player.senBL = true;
+            System.out.println("BL here");
+        }
+        if(dataA == "bottomRightSensor" || dataB == "bottomRightSensor"){
+            screen.player.senBRCount++;
+            screen.player.senBR = true;
+            System.out.println("BR here");
+        }
+        if(dataA == "BachTuoc" || dataB == "BachTuoc"){
             removeBubble("BachTuoc");
             screen.player.BachTuocFlag = true;
-
         }
-        if(fixA.getUserData() == "CucDa" || fixB.getUserData() == "CucDa"){
+        if(dataA == "CucDa" || dataB == "CucDa"){
             removeBubble("CucDa");
             screen.player.CucDaFlag = true;
         }
@@ -57,7 +85,39 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        System.out.println("End contact");
+        System.out.println("end contact");
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+        Object dataA = fixA.getUserData();
+        Object dataB = fixB.getUserData();
+        if(dataA == "leftSensor" || dataB == "leftSensor"){
+            screen.player.senL = false;
+        }
+        if(dataA == "rightSensor" || dataB == "rightSensor"){
+            screen.player.senR = false;
+        }
+        if(dataA == "topSensor" || dataB == "topSensor"){
+            screen.player.senT = false;
+        }
+        if(dataA == "topLeftSensor" || dataB == "topLeftSensor"){
+            screen.player.senTLCount--;
+            if(screen.player.senTLCount <= 1) screen.player.senTL = false;
+        }
+        if(dataA == "topRightSensor" || dataB == "topRightSensor"){
+            screen.player.senTRCount--;
+            if(screen.player.senTRCount <= 1) screen.player.senTR = false;
+        }
+        if(dataA == "bottomSensor" || dataB == "bottomSensor"){
+            screen.player.senB = false;
+        }
+        if(dataA == "bottomLeftSensor" || dataB == "bottomLeftSensor"){
+            screen.player.senBLCount--;
+            if(screen.player.senBLCount <= 1) screen.player.senBL = false;
+        }
+        if(dataA == "bottomRightSensor" || dataB == "bottomRightSensor"){
+            screen.player.senBRCount--;
+            if(screen.player.senBRCount <= 1) screen.player.senBR = false;
+        }
     }
 
     @Override

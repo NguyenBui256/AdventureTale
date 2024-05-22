@@ -42,7 +42,7 @@ public class Hud {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(player.nhanVat != Player.NhanVat.CUCAI) {
-                    player.changeToCuCai();
+                    player.changeCharacterStateTo(Player.NhanVat.CUCAI);
                     focusTo(0);
                 }
             }
@@ -53,7 +53,7 @@ public class Hud {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(player.nhanVat != Player.NhanVat.BACHTUOC) {
-                    player.changeToBachTuoc();
+                    player.changeCharacterStateTo(Player.NhanVat.BACHTUOC);
                     focusTo(1);
                 }
             }
@@ -64,7 +64,7 @@ public class Hud {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(player.nhanVat != Player.NhanVat.CUCDA) {
-                    player.changeToCucDa();
+                    player.changeCharacterStateTo(Player.NhanVat.CUCDA);
                     focusTo(2);
                 }
             }

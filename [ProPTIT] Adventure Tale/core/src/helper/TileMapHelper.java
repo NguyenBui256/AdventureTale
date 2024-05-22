@@ -100,9 +100,11 @@ public class TileMapHelper {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.world.createBody(bodyDef);
-        Shape shape = createPolygonShape(mapObject);
-        body.createFixture(shape,1000);
-        shape.dispose();
+        FixtureDef fdef = new FixtureDef();
+        fdef.friction = 5;
+        fdef.density = 1000;
+        fdef.shape = createPolygonShape(mapObject);
+        body.createFixture(fdef);
     }
 
     private Shape createPolygonShape(PolygonMapObject mapObject) {
