@@ -43,8 +43,8 @@ public class MenuScreen implements Screen {
 			main.batch.draw(playButtonClick, xPlay, yPlay, playButtonWidth, playButtonHeight);
 			if (Gdx.input.isTouched()) {
 				this.dispose();
-				main.setScreen(new LevelScreen(main));
-				main.setScreen(new LevelScreen(main));
+				main.levelScreen = new LevelScreen(main);
+				main.setScreen(main.levelScreen);
 			}
 		} else {
 			main.batch.draw(playButton, xPlay, yPlay, playButtonWidth, playButtonHeight);

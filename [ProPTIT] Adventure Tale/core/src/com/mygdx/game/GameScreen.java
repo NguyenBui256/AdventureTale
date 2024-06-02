@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -19,13 +20,17 @@ import objects.player.Player;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import static helper.Constants.PPM;
 
 public class GameScreen implements Screen {
     public float stateTime;
+    public boolean endMap = false;
     protected Hud hud;
+
     public Main game;
+    public LevelScreen levelScreen;
     public World world;
     public boolean DestroyFlag = false;
     public Player player;
@@ -37,7 +42,8 @@ public class GameScreen implements Screen {
     public OrthographicCamera playerCamera;
     public OrthogonalTiledMapRenderer renderer;
     public Box2DDebugRenderer box2DDebugRenderer;
-    public GameScreen (Main game){
+    public GameScreen (Main game, LevelScreen levelScreen){
+        this.levelScreen = levelScreen;
         this.world = new World(new Vector2(0,-25f), false);
         this.world.setContactListener(new WorldContactListener(this.world, this));
         this.game = game;
@@ -93,45 +99,53 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(!endMap){
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(Gdx.input.isTouched()){
-            System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
-            System.out.println(Math.round(player.body.getPosition().x * PPM * 10 / 10f) + " " + Math.round(player.body.getPosition().y * PPM * 10 / 10f));
-        }
-        this.update(delta);
+            if(Gdx.input.isTouched()){
+                System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
+                System.out.println(Math.round(player.body.getPosition().x * PPM * 10 / 10f) + " " + Math.round(player.body.getPosition().y * PPM * 10 / 10f));
+            }
+            this.update(delta);
 
-        renderer.setView(playerCamera);
-        renderer.render();
-        box2DDebugRenderer.render(world, playerCamera.combined.scl(PPM));
-        box2DDebugRenderer.render(world, staticCamera.combined.scl(PPM));
+            renderer.setView(playerCamera);
+            renderer.render();
+            box2DDebugRenderer.render(world, playerCamera.combined.scl(PPM));
+            box2DDebugRenderer.render(world, staticCamera.combined.scl(PPM));
 
-        hud.stage.act(Gdx.graphics.getDeltaTime());
-        hud.stage.draw();
+            hud.stage.act(Gdx.graphics.getDeltaTime());
+            hud.stage.draw();
 
-        stateTime += delta;
+            stateTime += delta;
 
-        game.batch.setProjectionMatrix(staticCamera.combined);
-        game.batch.begin();
-        for(Bubble bubble : bubbleList) bubble.draw(game.batch);
-        for(Box box : boxList) box.draw(game.batch);
-        game.batch.end();
+            game.batch.setProjectionMatrix(staticCamera.combined);
+            game.batch.begin();
+            for(Bubble bubble : bubbleList) bubble.draw(game.batch);
+            for(Box box : boxList) box.draw(game.batch);
+            game.batch.end();
 
-        game.batch.setProjectionMatrix(playerCamera.combined);
-        game.batch.begin();
-        game.batch.draw(CuCaiButton,
-                250,250
-                ,32,32);
-        if(player.BachTuocFlag)
+            game.batch.setProjectionMatrix(playerCamera.combined);
+            game.batch.begin();
+            game.batch.draw(CuCaiButton,
+                    250,250
+                    ,32,32);
+            if(player.BachTuocFlag)
 //            System.out.println("Da in bach Tuoc");
-            game.batch.draw(BachTuocButton,
-                  Math.round(player.body.getPosition().x * PPM * 10 / 10f)
-                , Math.round(player.body.getPosition().y * PPM * 10 / 10f)
-                ,32,32);
-        if(player.CucDaFlag) game.batch.draw(CucDaButton, 100, playerCamera.viewportHeight, 32,32);
-        player.draw(game.batch);
-        game.batch.end();
+                game.batch.draw(BachTuocButton,
+                        Math.round(player.body.getPosition().x * PPM * 10 / 10f)
+                        , Math.round(player.body.getPosition().y * PPM * 10 / 10f)
+                        ,32,32);
+            if(player.CucDaFlag) game.batch.draw(CucDaButton, 100, playerCamera.viewportHeight, 32,32);
+            player.draw(game.batch);
+            game.batch.end();
+        }
+        else {
+            game.batch = new SpriteBatch();
+            this.dispose();
+            game.levelScreen.show();
+            game.setScreen(game.levelScreen);
+        }
     }
 
 
@@ -148,11 +162,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-        dispose();
     }
 
     @Override
     public void dispose() {
+        world.dispose();
         renderer.dispose();
         box2DDebugRenderer.dispose();
     }

@@ -27,7 +27,7 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        map = new TmxMapLoader().load("mapmoi.tmx");
+        map = new TmxMapLoader().load("map4.tmx");
         parseMapObjects(map.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(map);
     }
@@ -72,6 +72,28 @@ public class TileMapHelper {
                     gameScreen.bubbleList.add(new Bubble(
                         gameScreen, createBubble(rectangle, "CucDa"),
                         "CucDaFrame.png", 38, 34));
+                }
+                else if(rectangleName.equals("door")){
+                    gameScreen.bubbleList.add(new Bubble(
+                        gameScreen, createBubble(rectangle, "door"),
+                        "door1.png", 80, 100));
+                }
+                else if(rectangleName.equals("bound")){
+                    BodyDef bodyDef = new BodyDef();
+                    bodyDef.type =  BodyDef.BodyType.KinematicBody;
+                    bodyDef.position.set(
+                            (rectangle.getX() + rectangle.getWidth() / 2) / PPM,
+                            (rectangle.getY() + rectangle.getHeight() / 2) / PPM);
+                    bodyDef.fixedRotation = true;
+                    Body body = gameScreen.world.createBody(bodyDef);
+
+                    PolygonShape shape = new PolygonShape();
+                    shape.setAsBox(rectangle.getWidth() / 2 / PPM, rectangle.getHeight() / 2 / PPM);
+                    FixtureDef fixtureDef = new FixtureDef();
+                    fixtureDef.shape = shape;
+                    fixtureDef.isSensor = true;
+                    body.createFixture(fixtureDef).setUserData("bound");
+                    shape.dispose();
                 }
             }
         }

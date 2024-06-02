@@ -147,7 +147,7 @@ public class Player extends Sprite {
             body.setMassData(massData);
             setRegion(getFrame(NhanVatBachTuoc,dt));
             setBounds(body.getPosition().x,body.getPosition().y,2*tiledSize/PPM, 2*tiledSize/PPM);
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
         }
         else if(nhanVat == NhanVat.CUCDA){
             MassData massData = new MassData();
@@ -155,7 +155,7 @@ public class Player extends Sprite {
             body.setMassData(massData);
             setRegion(getFrame(NhanVatCucDa,dt));
             setBounds(body.getPosition().x, body.getPosition().y,(2*tiledSize - 6)/PPM,(2*tiledSize - 6)/PPM);
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
         }
     }
 
@@ -244,7 +244,7 @@ public class Player extends Sprite {
                 velX = -1;
             }
             if(!isJumping && Gdx.input.isKeyPressed(Input.Keys.UP) && body.getLinearVelocity().y == 0){
-                float force = body.getMass() * 10f;
+                float force = (body.getMass() + 0.05f) * 10f;
                 body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
                 isJumping = true;
             }

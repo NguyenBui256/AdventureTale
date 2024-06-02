@@ -49,8 +49,9 @@ public class LevelScreen implements Screen {
         if (Gdx.input.getX() >= xBegin + 0 * (levelWidth + space) && Gdx.input.getX() <= xBegin + 0 * (levelWidth + space) + levelWidth
                 && Gdx.input.getY() <= MenuScreen.Height - (yBegin - 0 * (levelHeight + space)) && Gdx.input.getY() >= MenuScreen.Height - (yBegin - 0 * (levelHeight + space) + levelHeight)) {
             if (Gdx.input.isTouched()) {
-                this.dispose();
-                main.setScreen(new GameScreen(main));
+                this.hide();
+                main.gameScreen = new GameScreen(main, this);
+                main.setScreen(main.gameScreen);
             }
         }
         if (Gdx.input.getX() >= 12 && Gdx.input.getX() <= 12 + MenuScreen.iconSize && Gdx.input.getY() >= 12 && Gdx.input.getY() <= 12 + MenuScreen.iconSize) {

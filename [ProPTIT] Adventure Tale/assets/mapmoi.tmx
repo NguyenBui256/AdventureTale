@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="4" nextobjectid="19">
- <tileset firstgid="1" name="tilemap_packed" tilewidth="18" tileheight="18" tilecount="180" columns="20">
-  <image source="tileset/tilemap_packed.png" width="360" height="162"/>
- </tileset>
- <tileset firstgid="181" name="tilemap-backgrounds_packed" tilewidth="18" tileheight="18" tilecount="40" columns="10">
-  <image source="tileset/tilemap-backgrounds_packed.png" width="192" height="72"/>
- </tileset>
+ <tileset firstgid="1" source="tileset/tilemap_packed.tsx"/>
+ <tileset firstgid="181" source="tileset/tilemap-backgrounds_packed.tsx"/>
  <layer id="3" name="background" width="60" height="40">
   <data encoding="csv">
 181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,181,

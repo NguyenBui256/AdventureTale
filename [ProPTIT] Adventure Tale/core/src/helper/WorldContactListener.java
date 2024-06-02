@@ -67,6 +67,9 @@ public class WorldContactListener implements ContactListener {
             removeBubble("CucDa");
             screen.player.CucDaFlag = true;
         }
+        if(dataA == "door" || dataB == "door" || dataA == "bound" || dataB == "bound"){
+            screen.endMap = true;
+        }
     }
 
     public void removeBubble(String data){

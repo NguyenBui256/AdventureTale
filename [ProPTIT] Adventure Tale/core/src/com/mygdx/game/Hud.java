@@ -35,7 +35,7 @@ public class Hud {
 
         CuCaiButton.setPosition(10, 570);
         BachTuocButton.setPosition(74, 570);
-        CucDaButton.setPosition(148, 570);
+        CucDaButton.setPosition(140, 570);
 
         CuCaiButton.addListener(new ClickListener(){
             @Override
