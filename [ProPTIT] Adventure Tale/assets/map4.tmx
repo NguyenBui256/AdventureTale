@@ -124,7 +124,7 @@
   <object id="19" x="0" y="342">
    <polygon points="0,0 0,288 18,288 18,0"/>
   </object>
-  <object id="22" name="BachTuoc" x="936" y="342" width="18" height="18"/>
+  <object id="22" name="BachTuoc" x="901.012" y="360.012" width="18" height="18" rotation="0.033008"/>
   <object id="24" name="CucDa" x="738" y="180" width="18" height="18"/>
   <object id="27" x="126" y="288">
    <polygon points="0,0 0,36 18,36 18,-36 0,-36"/>
