@@ -17,6 +17,7 @@ import helper.TileMapHelper;
 import helper.WorldContactListener;
 import objects.box.Box;
 import objects.box.Bubble;
+import objects.box.Door;
 import objects.player.Player;
 
 import java.lang.reflect.Array;
@@ -35,6 +36,7 @@ public class GameScreen implements Screen {
     public World world;
     public boolean DestroyFlag = false;
     public Player player;
+    public Door door;
     public Texture CuCaiButton, BachTuocButton, CucDaButton;
     public Texture menu, restart;
     public ArrayList<Box> boxList;
@@ -91,6 +93,7 @@ public class GameScreen implements Screen {
         staticCamera.position.set(position);
         hud.update();
         player.update(dt);
+        door.update(dt);
         for(Bubble bubble : bubbleList) bubble.update(dt);
         for(Box box : boxList) box.update(dt);
         playerCamera.update();
@@ -146,6 +149,7 @@ public class GameScreen implements Screen {
                 game.setScreen(game.gameScreen);
             }
             player.draw(game.batch);
+            door.draw(game.batch);
             game.batch.end();
         }
         else {

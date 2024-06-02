@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import objects.box.Box;
 import com.mygdx.game.GameScreen;
 import objects.box.Bubble;
+import objects.box.Door;
 import objects.player.Player;
 
 import static helper.Constants.PPM;
@@ -74,9 +75,7 @@ public class TileMapHelper {
                         "CucDaFrame.png", 38, 34));
                 }
                 else if(rectangleName.equals("door")){
-                    gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, "door"),
-                        "door1.png", 80, 100));
+                    gameScreen.door = new Door(gameScreen, createBubble(rectangle, "door"), 80, 100);
                 }
                 else if(rectangleName.equals("bound")){
                     BodyDef bodyDef = new BodyDef();

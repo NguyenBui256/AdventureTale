@@ -88,8 +88,8 @@ public class Player extends Sprite {
         bottomLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomLeftSensor", 0, 0);
         bottomRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomRightSensor", 0, 0);
 
-        boxTexture = new Texture("box.png");
-        boxRegion = TextureRegion.split(boxTexture, 225, 225);
+        boxTexture = new Texture("tile_0026.png");
+        boxRegion = TextureRegion.split(boxTexture, 18, 18);
         boxAnimation = new Animation(0.3f, boxRegion[0]);
 
         smokeTexture = new Texture("smokeAnimation.png");

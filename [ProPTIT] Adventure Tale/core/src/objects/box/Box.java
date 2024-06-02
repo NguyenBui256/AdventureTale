@@ -21,8 +21,8 @@ public class Box extends Sprite {
     public float speed, velX, velY;
     public Box(GameScreen screen, Body body) {
         this.world = screen.world;
-        texture = new Texture("box.png");
-        region = TextureRegion.split(texture, 225, 225);
+        texture = new Texture("tile_0026.png");
+        region = TextureRegion.split(texture, 18, 18);
         Animation animation = new Animation(0.3f, region[0]);
         setRegion((TextureRegion) animation.getKeyFrame(screen.stateTime));
 
