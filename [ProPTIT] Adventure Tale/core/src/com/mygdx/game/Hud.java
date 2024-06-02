@@ -35,14 +35,22 @@ public class Hud {
 
         CuCaiButton.setPosition(10, 570);
         BachTuocButton.setPosition(74, 570);
+
+        CucDaButton.setPosition(140, 570);
+
         CucDaButton.setPosition(148, 570);
+
 
         CuCaiButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(player.nhanVat != Player.NhanVat.CUCAI) {
+
+                    player.changeCharacterStateTo(Player.NhanVat.CUCAI);
+
                     player.changeToCuCai();
+
                     focusTo(0);
                 }
             }
@@ -53,7 +61,11 @@ public class Hud {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(player.nhanVat != Player.NhanVat.BACHTUOC) {
+
+                    player.changeCharacterStateTo(Player.NhanVat.BACHTUOC);
+
                     player.changeToBachTuoc();
+
                     focusTo(1);
                 }
             }
@@ -64,7 +76,11 @@ public class Hud {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(player.nhanVat != Player.NhanVat.CUCDA) {
+
+                    player.changeCharacterStateTo(Player.NhanVat.CUCDA);
+
                     player.changeToCucDa();
+
                     focusTo(2);
                 }
             }
@@ -100,3 +116,4 @@ public class Hud {
         stage.getActors().get((index + 2) % 3).setColor(0,0,0,0.3f);
     }
 }
+

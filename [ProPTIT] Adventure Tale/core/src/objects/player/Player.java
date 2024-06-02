@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 import java.awt.geom.RectangularShape;
 
-import static helper.Constants.PPM;
+import static helper.Constants.*;
 
 public class Player extends Sprite {
     public enum State {IDLELEFT, IDLERIGHT, RUNNINGLEFT, RUNNINGRIGHT, JUMPINGLEFT, JUMPINGRIGHT, ROUND1, ROUND2, ROUND3, ROUND4, ROUND5, ROUND6, ROUND7, ROUND8};
@@ -28,26 +28,26 @@ public class Player extends Sprite {
     public World world;
     public Body body;
     public int roll;
-    public float speed, velX, stateTimer;
+    public float speed, velX, velY, stateTimer;
 
     public Texture boxTexture, smokeTexture;
     public TextureRegion[][] boxRegion, smokeRegion;
     public Animation boxAnimation, smokeAnimation;
     public boolean isTransition = false;
-    public static boolean isTop, isWallLeft, isWallRight, isBottom;
-    public boolean BachTuocFlag = false, CucDaFlag = false;
+
+    public static boolean senTL = false, senTR = false, senBL = false, senBR = false, senT = false, senR = false, senB = false, senL = false;
+    public static int senTLCount = 0, senTRCount = 0, senBLCount = 0, senBRCount = 0;
+    public boolean BachTuocFlag = false, CucDaFlag = false, isJumping = false;
     public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null, topLeftSensor = null, topRightSensor = null, bottomLeftSensor = null, bottomRightSensor = null;
 
-    public SpriteBatch spriteBatch;
 
     public Player(GameScreen screen, Body body) {
         this.game = screen.game;
         this.world = screen.world;
-        this.spriteBatch = new SpriteBatch();
         this.body = body;
-        this.body.setUserData("cu cai");
 
-        setBounds(body.getPosition().x, body.getPosition().y,32/PPM,32/PPM);
+        setBounds(body.getPosition().x, body.getPosition().y,tiledSize/PPM,tiledSize/PPM);
+
 
         currentState = State.IDLERIGHT;
         previousState = State.IDLERIGHT;
@@ -83,18 +83,22 @@ public class Player extends Sprite {
                 null
         );
 
+        leftSensor = createSensor(0,sizeSensorSize, "leftSensor");
+        rightSensor = createSensor(0,sizeSensorSize, "rightSensor");
+        topSensor = createSensor(sizeSensorSize,0, "topSensor");
+        bottomSensor = createSensor(sizeSensorSize,0, "bottomSensor");
+        topLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "topLeftSensor", 0, 0);
+        topRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "topRightSensor", 0, 0);
+        bottomLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomLeftSensor", 0, 0);
+        bottomRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomRightSensor", 0, 0);
 
-        boxTexture = new Texture("box.png");
-        boxRegion = TextureRegion.split(boxTexture, 225, 225);
+        boxTexture = new Texture("tile_0026.png");
+        boxRegion = TextureRegion.split(boxTexture, 18, 18);
         boxAnimation = new Animation(0.3f, boxRegion[0]);
 
         smokeTexture = new Texture("smokeAnimation.png");
         smokeRegion = TextureRegion.split(smokeTexture, 64,64);
         smokeAnimation = new Animation(0.05f, smokeRegion[0]);
-
-        boxTexture = new Texture("box.png");
-        boxRegion = TextureRegion.split(boxTexture, 225, 225);
-        boxAnimation = new Animation(0.3f, boxRegion[0]);
 
         stateTimer = 0;
         this.body = body;
@@ -102,8 +106,20 @@ public class Player extends Sprite {
     }
     public void update(float dt) {
 
-//        characterInput();
-        checkUserInput();
+        //Sensors update
+        leftSensor.setTransform(body.getPosition().x - getWidth() / 4, body.getPosition().y, 0);
+        rightSensor.setTransform(body.getPosition().x + getWidth() / 4, body.getPosition().y, 0);
+        topSensor.setTransform(body.getPosition().x, body.getPosition().y + getHeight() / 4, 0);
+        bottomSensor.setTransform(body.getPosition().x, body.getPosition().y - getHeight() / 4, 0);
+        topLeftSensor.setTransform(body.getPosition().x - getWidth() / 4, body.getPosition().y + getHeight() / 4, 0);
+        topRightSensor.setTransform(body.getPosition().x + getWidth() / 4, body.getPosition().y + getHeight() / 4, 0);
+        bottomLeftSensor.setTransform(body.getPosition().x - getWidth() / 4, body.getPosition().y - getHeight() / 4, 0);
+        bottomRightSensor.setTransform(body.getPosition().x + getWidth() / 4, body.getPosition().y - getHeight() / 4, 0);
+
+        //Input
+        checkCharacterInput();
+        checkMovingInput();
+
 
         //Transition animation between characters changes
         if(isTransition) {
@@ -112,7 +128,9 @@ public class Player extends Sprite {
         }
         if(nhanVat != previousNhanVat && !smokeAnimation.isAnimationFinished(stateTimer)){
             setRegion((TextureRegion) smokeAnimation.getKeyFrame(stateTimer, false));
-            setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3,64/PPM,64/PPM);
+
+            setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3,2*tiledSize/PPM,2*tiledSize/PPM);
+
             stateTimer += Gdx.graphics.getDeltaTime();
             return;
         }
@@ -123,24 +141,29 @@ public class Player extends Sprite {
             stateTimer = 0;
         }
         if(nhanVat == NhanVat.CUCAI) {
+            MassData massData = new MassData();
+            massData.mass = 0;
+            body.setMassData(massData);
             setRegion(getFrame(NhanVatCuCai,dt));
-            setBounds(body.getPosition().x, body.getPosition().y,64/PPM,64/PPM);
+            setBounds(body.getPosition().x, body.getPosition().y,2*tiledSize/PPM,2*tiledSize/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 4);
         }
         else if(nhanVat == NhanVat.BACHTUOC) {
+            MassData massData = new MassData();
+            massData.mass = 0;
+            body.setMassData(massData);
             setRegion(getFrame(NhanVatBachTuoc,dt));
-            setBounds(body.getPosition().x,body.getPosition().y,32/PPM, 32/PPM);
-            //Sensors update
-            leftSensor.setTransform(body.getPosition().x - getWidth() / 2, body.getPosition().y, 0);
-            rightSensor.setTransform(body.getPosition().x + getWidth() / 2, body.getPosition().y, 0);
-            topSensor.setTransform(body.getPosition().x, body.getPosition().y + getHeight() / 2, 0);
-            bottomSensor.setTransform(body.getPosition().x, body.getPosition().y - getHeight() / 2, 0);
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            setBounds(body.getPosition().x,body.getPosition().y,2*tiledSize/PPM, 2*tiledSize/PPM);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
         }
         else if(nhanVat == NhanVat.CUCDA){
+            MassData massData = new MassData();
+            massData.mass = 2;
+            body.setMassData(massData);
             setRegion(getFrame(NhanVatCucDa,dt));
-            setBounds(body.getPosition().x, body.getPosition().y,46/PPM,46/PPM);
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            setBounds(body.getPosition().x, body.getPosition().y,(2*tiledSize - 6)/PPM,(2*tiledSize - 6)/PPM);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
+
         }
     }
 
@@ -167,9 +190,11 @@ public class Player extends Sprite {
                     region = (TextureRegion) character.rolls[5].getKeyFrame(stateTimer, true);
                     break;
             }
-        } else if (nhanVat == NhanVat.BACHTUOC) {
+        }
+        else if (nhanVat == NhanVat.BACHTUOC) {
             region = (TextureRegion) character.rolls[currentState.name().charAt(5) - 49].getKeyFrame(stateTimer, true);
-        } else {
+        }
+        else if (nhanVat == NhanVat.CUCDA){
             switch (currentState) {
                 case IDLELEFT:
                     region = (TextureRegion) character.rolls[1].getKeyFrame(stateTimer, true);
@@ -189,45 +214,32 @@ public class Player extends Sprite {
         previousState = currentState;
         return region;
     }
-
-    public void checkUserInput(){
+    public void checkCharacterInput(){
         if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
             body.setGravityScale(1);
-            isTop = false;
-            isWallLeft = false;
-            isWallRight = false;
-            isBottom = true;
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
-            changeToCuCai();
+            changeCharacterStateTo(NhanVat.CUCAI);
         }
-        if(nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
-            leftSensor = createSensor(0.5f,0.5f, "leftSensor");
-            rightSensor = createSensor(0.5f,0.5f, "rightSensor");
-            topSensor = createSensor(0.5f,0.5f, "topSensor");
-            bottomSensor = createSensor(0.5f,0.5f, "bottomSensor");
-            topLeftSensor = createEdgeSensor(0.5f, 0.5f, "topLeftSensor", body.getPosition().x - 16f / PPM, body.getPosition().y + 16f / PPM);
-            topRightSensor = createEdgeSensor(0.5f, 0.5f, "topRightSensor", body.getPosition().x + 16f / PPM, body.getPosition().y + 16f / PPM);
-            bottomLeftSensor = createEdgeSensor(0.5f, 0.5f, "bottomLeftSensor", body.getPosition().x - 16f / PPM, body.getPosition().y - 16f / PPM);
-            bottomRightSensor = createEdgeSensor(0.5f, 0.5f, "bottomRightSensor", body.getPosition().x + 16f / PPM, body.getPosition().y - 16f / PPM);
+        if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
             currentState = State.ROUND1;
             previousState = State.ROUND1;
-            isWallLeft = false;
-            isTop = false;
-            isBottom = true;
-            isWallRight = false;
             roll = 0;
-            changeToBachTuoc();
+            changeCharacterStateTo(NhanVat.BACHTUOC);
         }
-        if(nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
-            isWallLeft = false;
-            isTop = false;
-            isBottom = true;
-            isWallRight = false;
+        if(CucDaFlag && nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
             body.setGravityScale(1);
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
-            changeToCucDa();
+            changeCharacterStateTo(NhanVat.CUCDA);
+        }
+    }
+
+    public void checkMovingInput(){
+
+        if(Gdx.input.isTouched()){
+            System.out.println("TL T TR: " + senTL + senT + senTR +  "| BL B BR: " + senBL + senB + senBR + "| L R: " + senL + senR);
+
         }
         if (nhanVat == NhanVat.CUCAI) {
             velX = 0;
@@ -239,100 +251,128 @@ public class Player extends Sprite {
                 currentState = State.RUNNINGLEFT;
                 velX = -1;
             }
-            if(Gdx.input.isKeyPressed(Input.Keys.UP) && body.getLinearVelocity().y == 0){
-                float force = body.getMass() * 10f;
+            if(!isJumping && Gdx.input.isKeyPressed(Input.Keys.UP) && body.getLinearVelocity().y == 0){
+                float force = (body.getMass() + 0.05f) * 10f;
                 body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
+                isJumping = true;
+
             }
             if(body.getLinearVelocity().y!=0) {
                 if(currentState == State.RUNNINGLEFT || currentState == State.IDLELEFT) currentState = State.JUMPINGLEFT;
                 else if(currentState == State.RUNNINGRIGHT || currentState == State.IDLERIGHT) currentState = State.JUMPINGRIGHT;
             }
+            else isJumping = false;
+
             if(this.velX == 0 && body.getLinearVelocity().y == 0){
                 if(currentState == State.RUNNINGRIGHT || currentState == State.JUMPINGRIGHT) currentState = State.IDLERIGHT;
                 else if(currentState == State.RUNNINGLEFT || currentState == State.JUMPINGLEFT) currentState = State.IDLELEFT;
             }
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
-        } else if (nhanVat == NhanVat.BACHTUOC) {
-            if (!isTop && (!isWallLeft || !isWallRight)) {
-                body.setGravityScale(1);
+        }
+        else if (nhanVat == NhanVat.BACHTUOC) {
+            boolean hasKeyPressed = false;
+            velX = 0;
+            velY = 0;
+            boolean allowLeft = false, allowRight = false, allowUp = false, allowDown = false;
+            //4 corners
+            if(senBRCount == 2 && !senB && !senBL && !senR && !senTR) //top left
+            {
+                System.out.println("top left");
+                body.setLinearVelocity(1,-2);
+                allowLeft = false; allowUp = false;
+                allowDown = true; allowRight = true;
             }
-            if (isTop) {
-                body.setGravityScale(-1);
-                velX = 0;
-                if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                    --roll;
-                    if (roll == -1) {
-                        roll = 7;
-                    }
-                    currentState = State.valueOf("ROUND" + (roll + 1));
-                    velX = 1;
-                } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                    ++roll;
-                    if (roll == 8) {
-                        roll = 0;
-                    }
-                    currentState = State.valueOf("ROUND" + (roll + 1));
-                    velX = -1;
-                }
-                body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
-            } else if (isBottom) {
-                velX = 0;
-                if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                    ++roll;
-                    if (roll == 8) {
-                        roll = 0;
-                    }
-                    currentState = State.valueOf("ROUND" + (roll + 1));
-                    velX = 1;
-                } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                    --roll;
-                    if (roll == -1) {
-                        roll = 7;
-                    }
-                    currentState = State.valueOf("ROUND" + (roll + 1));
-                    velX = -1;
-                }
-                body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
+            if(senBLCount == 2 && !senB && !senBR && !senL && !senTL) //top right
+            {
+                body.setLinearVelocity(-1,-2);
+                System.out.println("top right");
+                allowRight = false; allowUp = false;
+                allowDown = true; allowLeft = true;
             }
-            if (isWallLeft) {
+            if(senTRCount == 2 && !senT && !senTL && !senR && !senBR) //bot left
+            {
+                System.out.println("bot left");
+                body.setLinearVelocity(1,2);
+                allowLeft = false; allowDown = false;
+                allowRight = true; allowUp = true;
+            }
+            if(senTLCount == 2 && !senT && !senTR && !senL && !senBL) //bot right
+            {
+                System.out.println("bot right");
+                body.setLinearVelocity(-1,2);
+                allowRight = false; allowDown = false;
+                allowLeft = true; allowUp = true;
+            }
+
+            if((senBL && senB && senBR) || (senBL && senB) || (senB && senBR) || (senTL && senT && senTR) || (senTL && senT) || (senT && senTR)){
+                if((senBL && senB && senBR) || (senBL && senB) || (senB && senBR)) body.setGravityScale(1); //ground
+                if((senTL && senT && senTR) || (senTL && senT) || (senT && senTR)) body.setGravityScale(-1); //ceilling
+                allowLeft = true; allowRight = true;
+                if((senTL && senL && senBL) || (senTR && senR && senBR)) {
+                    allowUp = true;
+                    allowDown = true;
+                }
+                else{
+                    allowUp = false;
+                    allowDown = false;
+                }
+            }
+            if((senTL && senL && senBL) || (senTL && senL) || (senBL && senL) || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR)){
+//                System.out.println("side");
                 body.setGravityScale(0);
-                if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-                    --roll;
-                    if (roll == -1) {
-                        roll = 7;
-                    }
-                    currentState = State.valueOf("ROUND" + (roll + 1));
-                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, speed);
-                } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-                    ++roll;
-                    if (roll == 8) {
-                        roll = 0;
-                    }
-                    currentState = State.valueOf("ROUND" + (roll + 1));
-                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, -speed);
-                } else {
-                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, 0);
+                allowUp = true; allowDown = true;
+                if((senBL && senB && senBR) || (senTL && senT && senTR)){
+                    allowLeft = true; allowRight = true;
+                }else{
+                    allowLeft = false; allowRight = false;
                 }
             }
-            else if(isWallRight){
-                body.setGravityScale(0);
-                if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-                    ++roll;
-                    if (roll == 8) {
-                        roll = 0;
-                    }
-                    currentState = State.valueOf("ROUND" + (roll + 1));
-                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, speed);
-                } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-                    --roll;
-                    if (roll == -1) {
-                        roll = 7;
-                    }
-                    currentState = State.valueOf("ROUND" + (roll + 1));
-                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, -speed);
-                } else {
-                    body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, 0);
+            if(allowRight && Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                hasKeyPressed = true;
+                --roll;
+                if (roll == -1) {
+                    roll = 7;
                 }
+                currentState = State.valueOf("ROUND" + (roll + 1));
+                velX = 1;
+                body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
+            }
+            if(allowLeft && Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+                hasKeyPressed = true;
+                ++roll;
+                if (roll == 8) {
+                    roll = 0;
+                }
+                currentState = State.valueOf("ROUND" + (roll + 1));
+                velX = -1;
+                body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
+            }
+            if(allowUp && Gdx.input.isKeyPressed(Input.Keys.UP)){
+                hasKeyPressed = true;
+                --roll;
+                if (roll == -1) {
+                    roll = 7;
+                }
+                currentState = State.valueOf("ROUND" + (roll + 1));
+                velY = 1;
+                body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, speed);
+            }
+            if(allowDown && Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            {
+                hasKeyPressed = true;
+                ++roll;
+                if (roll == 8) {
+                    roll = 0;
+                }
+                currentState = State.valueOf("ROUND" + (roll + 1));
+                velY = -1;
+                body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, -speed);
+            }
+            if(!hasKeyPressed){
+                if(body.getLinearVelocity().y == 0)  body.setLinearVelocity(0,0);
+                if(body.getLinearVelocity().x == 0 && (senL || senR)) body.setLinearVelocity(0,0);
+
+       
             }
         } else {
             velX = 0;
@@ -352,28 +392,9 @@ public class Player extends Sprite {
         }
     }
 
-    public void characterInput(){
-//        if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1))
-//            changeToCuCai();
-//        if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2))
-//            changeToBachTuoc();
-//        if(CucDaFlag && nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3))
-//            changeToCucDa();
-    }
-
-    public void changeToCuCai(){
+    public void changeCharacterStateTo(NhanVat state){
         isTransition = true;
-        nhanVat = NhanVat.CUCAI;
-    }
-
-    public void changeToBachTuoc(){
-        isTransition = true;
-        nhanVat = NhanVat.BACHTUOC;
-    }
-
-    public void changeToCucDa(){
-        isTransition = true;
-        nhanVat = NhanVat.CUCDA;
+        nhanVat = state;
     }
 
     public Body createSensor(float width, float height, String data){
@@ -405,3 +426,4 @@ public class Player extends Sprite {
         return sensorBody;
     }
 }
+

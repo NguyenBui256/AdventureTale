@@ -50,7 +50,6 @@
    <polygon points="0,0 0,32 896,32 896,0"/>
   </object>
   <object id="19" name="player" x="64" y="480" width="32" height="32"/>
-  <object id="32" name="box" x="416" y="320" width="32" height="32"/>
   <object id="36" name="BachTuoc" x="416" y="576" width="32" height="32"/>
   <object id="38" name="CucDa" x="608" y="320" width="32" height="32"/>
  </objectgroup>

@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import objects.box.Box;
 import com.mygdx.game.GameScreen;
 import objects.box.Bubble;
+import objects.box.Door;
+
 import objects.player.Player;
 
 import static helper.Constants.PPM;
@@ -27,8 +29,8 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        map = new TmxMapLoader().load("map2.tmx");
-        parseMapObjects(map.getLayers().get("ground").getObjects());
+        map = new TmxMapLoader().load("map4.tmx");
+        parseMapObjects(map.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(map);
     }
 
@@ -59,19 +61,39 @@ public class TileMapHelper {
                             rectangle.getHeight(),
                             false,
                             gameScreen.world,
-                            5
+                            2
                     );
                     gameScreen.boxList.add(new Box(gameScreen, body));
                 }
                 else if(rectangleName.equals("BachTuoc")){
                     gameScreen.bubbleList.add(new Bubble(
-                            gameScreen, createBubble(rectangle, "BachTuoc"),
-                            "BachTuocFrame.png", 32, 32));
+                        gameScreen, createBubble(rectangle, "BachTuoc"),
+                        "BachTuocFrame.png", 32, 32));
                 }
                 else if(rectangleName.equals("CucDa")){
                     gameScreen.bubbleList.add(new Bubble(
-                            gameScreen, createBubble(rectangle, "CucDa"),
-                            "CucDaFrame.png", 38, 34));
+                        gameScreen, createBubble(rectangle, "CucDa"),
+                        "CucDaFrame.png", 38, 34));
+                }
+                else if(rectangleName.equals("door")){
+                    gameScreen.door = new Door(gameScreen, createBubble(rectangle, "door"), 80, 100);
+                }
+                else if(rectangleName.equals("bound")){
+                    BodyDef bodyDef = new BodyDef();
+                    bodyDef.type =  BodyDef.BodyType.KinematicBody;
+                    bodyDef.position.set(
+                            (rectangle.getX() + rectangle.getWidth() / 2) / PPM,
+                            (rectangle.getY() + rectangle.getHeight() / 2) / PPM);
+                    bodyDef.fixedRotation = true;
+                    Body body = gameScreen.world.createBody(bodyDef);
+
+                    PolygonShape shape = new PolygonShape();
+                    shape.setAsBox(rectangle.getWidth() / 2 / PPM, rectangle.getHeight() / 2 / PPM);
+                    FixtureDef fixtureDef = new FixtureDef();
+                    fixtureDef.shape = shape;
+                    fixtureDef.isSensor = true;
+                    body.createFixture(fixtureDef).setUserData("bound");
+                    shape.dispose();
                 }
             }
         }
@@ -100,6 +122,11 @@ public class TileMapHelper {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.world.createBody(bodyDef);
+        FixtureDef fdef = new FixtureDef();
+        fdef.friction = 5;
+        fdef.density = 1000;
+        fdef.shape = createPolygonShape(mapObject);
+        body.createFixture(fdef);
         Shape shape = createPolygonShape(mapObject);
         body.createFixture(shape,1000).setUserData("ground");
         shape.dispose();
