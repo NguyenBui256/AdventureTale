@@ -14,13 +14,15 @@ import java.util.ArrayList;
 public class LevelScreen implements Screen {
     ArrayList<Texture> list;
     float levelWidth = 100;
-    float levelHeight = 110;
+    float levelHeight = 100;
     float space = 30;
+    public static Texture background;
     Main main;
     public LevelScreen(Main main) {
         this.main = main;
-        Texture level = new Texture("Dummy@0.5x.png");
-        Texture levelLocked = new Texture("Locked@0.5x.png");
+        Texture level = new Texture("Default@2x-1.png");
+        Texture levelLocked = new Texture("Hover@2x-1.png");
+        background = new Texture("bg3.png");
         list = new ArrayList<>();
         list.add(level);
         for (int i = 0; i < 11; ++i) {
@@ -32,6 +34,7 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
+        main.batch.draw(background, 0, 0, MenuScreen.Width, MenuScreen.Height);
         float xBegin = (float) MenuScreen.Width / 2 - 2 * levelWidth - 3 * space / 2;
         float yBegin = MenuScreen.Height - (MenuScreen.Height - 3 * levelHeight - 2 * space) / 2 - levelHeight + space;
         int d = 0;

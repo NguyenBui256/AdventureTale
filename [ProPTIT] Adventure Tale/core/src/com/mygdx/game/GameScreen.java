@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -35,6 +36,7 @@ public class GameScreen implements Screen {
     public boolean DestroyFlag = false;
     public Player player;
     public Texture CuCaiButton, BachTuocButton, CucDaButton;
+    public Texture menu, restart;
     public ArrayList<Box> boxList;
     public ArrayList<Bubble> bubbleList, destroyList;
     public TileMapHelper tileMapHelper;
@@ -59,6 +61,8 @@ public class GameScreen implements Screen {
         CuCaiButton = new Texture("CuCaiButton.png");
         BachTuocButton = new Texture("BachTuocButton.png");
         CucDaButton = new Texture("CucDaButton.png");
+        menu = new Texture("menu.png");
+        restart = new Texture("restart.png");
         this.hud = new Hud(player);
         Gdx.input.setInputProcessor(hud.stage);
     }
@@ -137,6 +141,10 @@ public class GameScreen implements Screen {
                         , Math.round(player.body.getPosition().y * PPM * 10 / 10f)
                         ,32,32);
             if(player.CucDaFlag) game.batch.draw(CucDaButton, 100, playerCamera.viewportHeight, 32,32);
+            if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+                game.gameScreen = new GameScreen(game, levelScreen);
+                game.setScreen(game.gameScreen);
+            }
             player.draw(game.batch);
             game.batch.end();
         }
