@@ -55,9 +55,9 @@ public class GameScreen implements Screen {
         this.bubbleList = new ArrayList<>();
         this.destroyList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-        box2DDebugRenderer.setDrawJoints(false);
-        box2DDebugRenderer.setDrawBodies(false);
-        box2DDebugRenderer.setDrawContacts(false);
+//        box2DDebugRenderer.setDrawJoints(false);
+//        box2DDebugRenderer.setDrawBodies(false);
+//        box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
         CuCaiButton = new Texture("CuCaiButton.png");
@@ -178,6 +178,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        player.reset();
         world.dispose();
         renderer.dispose();
         box2DDebugRenderer.dispose();

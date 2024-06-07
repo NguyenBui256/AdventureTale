@@ -302,18 +302,30 @@ public class Player extends Sprite {
                 if((senTL && senL && senBL) || (senTR && senR && senBR)) {
                     allowUp = true;
                     allowDown = true;
+                    if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+                        allowLeft = allowRight = false;
+                    }
+                    if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                        allowUp = allowDown = false;
+                    }
                 }
                 else{
                     allowUp = false;
                     allowDown = false;
                 }
             }
-            if((senTL && senL && senBL) || (senTL && senL) || (senBL && senL) || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR)){
+            else if((senTL && senL && senBL) || (senTL && senL) || (senBL && senL) || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR)){
 //                System.out.println("side");
                 body.setGravityScale(0);
                 allowUp = true; allowDown = true;
                 if((senBL && senB && senBR) || (senTL && senT && senTR)){
                     allowLeft = true; allowRight = true;
+                    if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+                        allowLeft = allowRight = false;
+                    }
+                    if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                        allowUp = allowDown = false;
+                    }
                 }else{
                     allowLeft = false; allowRight = false;
                 }
@@ -328,7 +340,7 @@ public class Player extends Sprite {
                 velX = 1;
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
-            if(allowLeft && Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            else if(allowLeft && Gdx.input.isKeyPressed(Input.Keys.LEFT)){
                 hasKeyPressed = true;
                 ++roll;
                 if (roll == 8) {
@@ -338,7 +350,7 @@ public class Player extends Sprite {
                 velX = -1;
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
-            if(allowUp && Gdx.input.isKeyPressed(Input.Keys.UP)){
+            else if(allowUp && Gdx.input.isKeyPressed(Input.Keys.UP)){
                 hasKeyPressed = true;
                 --roll;
                 if (roll == -1) {
@@ -348,7 +360,7 @@ public class Player extends Sprite {
                 velY = 1;
                 body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, speed);
             }
-            if(allowDown && Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            else if(allowDown && Gdx.input.isKeyPressed(Input.Keys.DOWN))
             {
                 hasKeyPressed = true;
                 ++roll;
@@ -413,5 +425,11 @@ public class Player extends Sprite {
         sensorBody.createFixture(fixtureDef).setUserData(data);
         boxShape.dispose();
         return sensorBody;
+    }
+
+    public void reset(){
+        senTL = false;senTR = false; senBL = false; senBR = false; senT = false; senR = false; senB = false; senL = false;
+        BachTuocFlag = false; CucDaFlag = false; isJumping = false;
+        senTLCount = 0; senTRCount = 0; senBLCount = 0; senBRCount = 0;
     }
 }
