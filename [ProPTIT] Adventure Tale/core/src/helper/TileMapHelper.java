@@ -51,7 +51,8 @@ public class TileMapHelper {
                             rectangle.getHeight(),
                             false,
                             gameScreen.world,
-                            0
+                            0,
+                            "player"
                     );
                     gameScreen.player = new Player(gameScreen, body);
                 }
@@ -63,7 +64,8 @@ public class TileMapHelper {
                             rectangle.getHeight(),
                             false,
                             gameScreen.world,
-                            2
+                            2,
+                            "box"
                     );
                     gameScreen.boxList.add(new Box(gameScreen, body));
                 }
@@ -103,18 +105,24 @@ public class TileMapHelper {
 
     public Body createBubble(Rectangle rectangle, String data) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type =  BodyDef.BodyType.KinematicBody;
+        bodyDef.type =  BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(
                 (rectangle.getX() + rectangle.getWidth() / 2) / PPM,
                 (rectangle.getY() + rectangle.getHeight() / 2) / PPM);
         bodyDef.fixedRotation = true;
         Body body = gameScreen.world.createBody(bodyDef);
 
+        MassData massData = new MassData();
+        massData.mass = 1;
+        body.setMassData(massData);
+        body.setGravityScale(0.1f);
+
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(rectangle.getWidth() / 2 / PPM, rectangle.getHeight() / 2 / PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
+//        fixtureDef.isSensor = true;
+        fixtureDef.restitution = 1f;
         body.createFixture(fixtureDef).setUserData(data);
         shape.dispose();
         return body;

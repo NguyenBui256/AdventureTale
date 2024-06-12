@@ -19,8 +19,6 @@ public class WorldContactListener implements ContactListener {
         Fixture fixB = contact.getFixtureB();
         Object dataA = fixA.getUserData();
         Object dataB = fixB.getUserData();
-//        if(fixA.getUserData() != null) System.out.println("A: " + fixA.getUserData().getClass());
-//        if(dataB != null) System.out.println("B: " + dataB.getClass());
 
         if(dataA == "leftSensor" || dataB == "leftSensor"){
             screen.player.senL = true;
@@ -58,18 +56,17 @@ public class WorldContactListener implements ContactListener {
             screen.player.senBR = true;
             System.out.println("BR here");
         }
-        if(dataA == "BachTuoc" || dataB == "BachTuoc"){
+        if((dataA == "BachTuoc" && dataB == "player") || (dataB == "BachTuoc" && dataA == "player")){
             removeBubble("BachTuoc");
             screen.player.BachTuocFlag = true;
         }
-        if(dataA == "CucDa" || dataB == "CucDa"){
+        if((dataA == "CucDa" && dataB == "player") || (dataB == "CucDa" && dataA == "player")){
             removeBubble("CucDa");
             screen.player.CucDaFlag = true;
         }
-        if(dataA == "door" || dataB == "door" || dataA == "bound" || dataB == "bound"){
-//            LoadingScreen loadingScreen = new LoadingScreen(screen.game);
-//            screen.game.setScreen(loadingScreen);
-            screen.endMap = true;
+        if((dataA == "door" && dataB == "player") || (dataB == "door" && dataA == "player")
+        || (dataA == "bound" && dataB == "player") || (dataB == "bound" && dataA == "player")){
+            screen.TRS.transitionOutFlag = true;
         }
     }
 

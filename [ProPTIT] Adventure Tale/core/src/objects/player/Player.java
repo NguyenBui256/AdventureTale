@@ -70,7 +70,7 @@ public class Player extends Sprite {
                 null
         );
         NhanVatBachTuoc = new Character(
-                32, 32,
+                36, 36,
                 null,
                 null,
                 null,
@@ -88,17 +88,13 @@ public class Player extends Sprite {
         bottomLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomLeftSensor", 0, 0);
         bottomRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomRightSensor", 0, 0);
 
-        boxTexture = new Texture("tile_0026.png");
-        boxRegion = TextureRegion.split(boxTexture, 18, 18);
-        boxAnimation = new Animation(0.3f, boxRegion[0]);
-
         smokeTexture = new Texture("smokeAnimation.png");
         smokeRegion = TextureRegion.split(smokeTexture, 64,64);
         smokeAnimation = new Animation(0.05f, smokeRegion[0]);
 
         stateTimer = 0;
         this.body = body;
-        this.speed = 10f;
+        this.speed = 8f;
     }
     public void update(float dt) {
 
@@ -147,7 +143,7 @@ public class Player extends Sprite {
             body.setMassData(massData);
             setRegion(getFrame(NhanVatBachTuoc,dt));
             setBounds(body.getPosition().x,body.getPosition().y,2*tiledSize/PPM, 2*tiledSize/PPM);
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         }
         else if(nhanVat == NhanVat.CUCDA){
             MassData massData = new MassData();

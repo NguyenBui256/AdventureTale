@@ -62,7 +62,7 @@ public class Character {
                 list.add(new Texture(path));
             }
             for (int i = 0; i < 8; ++i) {
-                TextureRegion[][] textureRegions = TextureRegion.split(list.get(i), 32, 32);
+                TextureRegion[][] textureRegions = TextureRegion.split(list.get(i), 40, 40);
                 rolls[i] = new Animation(1.5f, textureRegions[0]);
             }
         }
