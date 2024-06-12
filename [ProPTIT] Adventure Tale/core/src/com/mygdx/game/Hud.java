@@ -30,15 +30,6 @@ public class Hud {
         BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("bachtuocbtn.png"))));
         CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("cucdabtn.png"))));
 
-        //Buttons settings
-        CuCaiButton.setSize(64,64);
-        BachTuocButton.setSize(64,64);
-        CucDaButton.setSize(64,64);
-
-        CuCaiButton.setPosition(20, 560);
-        BachTuocButton.setPosition(100, 560);
-        CucDaButton.setPosition(190, 560);
-
         CuCaiButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -98,11 +89,11 @@ public class Hud {
 
     public void focusTo(int index){
         stage.getActors().get(index).setColor(0,0,0,1);
-        stage.getActors().get(index).setSize(80,80);
+        stage.getActors().get(index).setSize(bigButtonSize,bigButtonSize);
         stage.getActors().get((index + 1) % 3).setColor(0,0,0,0.2f);
-        stage.getActors().get((index + 1) % 3).setSize(64,64);
+        stage.getActors().get((index + 1) % 3).setSize(buttonSize,buttonSize);
         stage.getActors().get((index + 2) % 3).setColor(0,0,0,0.2f);
-        stage.getActors().get((index + 2) % 3).setSize(64,64);
+        stage.getActors().get((index + 2) % 3).setSize(buttonSize,buttonSize);
 
         if(index == 0){
             stage.getActors().get(0).setPosition(buttonPadding,buttonPositionY - (bigButtonSize - buttonSize) / 2);
