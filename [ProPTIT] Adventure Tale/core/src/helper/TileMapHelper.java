@@ -2,23 +2,22 @@ package helper;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.Main;
 import objects.box.Box;
 import com.mygdx.game.GameScreen;
 import objects.box.Bubble;
 import objects.box.Door;
 import objects.player.Player;
 
-import static helper.Constants.PPM;
+import static helper.Constants.*;
 
 public class TileMapHelper {
     public TiledMap map;
@@ -30,7 +29,7 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        map = new TmxMapLoader().load("map4.tmx");
+        map = new TmxMapLoader().load("map" + Main.chooseLevel + ".tmx");
         parseMapObjects(map.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(map);
     }
@@ -51,7 +50,7 @@ public class TileMapHelper {
                             false,
                             gameScreen.world,
                             0,
-                            "player"
+                            NhanVat.MAIN
                     );
                     gameScreen.player = new Player(gameScreen, body);
                 }
@@ -64,22 +63,22 @@ public class TileMapHelper {
                             false,
                             gameScreen.world,
                             2,
-                            "box"
+                            VatThe.BOX
                     );
                     gameScreen.boxList.add(new Box(gameScreen, body));
                 }
                 else if(rectangleName.equals("BachTuoc")){
                     gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, "BachTuoc"),
-                        "bachtuocbb.png", 171, 171));
+                        gameScreen, createBubble(rectangle, NhanVat.BACHTUOC),
+                        BachTuocBubblePath, 171, 171));
                 }
                 else if(rectangleName.equals("CucDa")){
                     gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, "CucDa"),
-                        "cucdabb.png", 169, 169));
+                        gameScreen, createBubble(rectangle, NhanVat.CUCDA),
+                        CucDaBubblePath, 169, 169));
                 }
                 else if(rectangleName.equals("door")){
-                    gameScreen.door = new Door(gameScreen, createBubble(rectangle, "door"), 80, 100);
+                    gameScreen.door = new Door(gameScreen, createBubble(rectangle, VatThe.DOOR), 80, 100);
                 }
                 else if(rectangleName.equals("bound")){
                     BodyDef bodyDef = new BodyDef();
@@ -95,14 +94,14 @@ public class TileMapHelper {
                     FixtureDef fixtureDef = new FixtureDef();
                     fixtureDef.shape = shape;
                     fixtureDef.isSensor = true;
-                    body.createFixture(fixtureDef).setUserData("bound");
+                    body.createFixture(fixtureDef).setUserData(VatThe.MAPBOUND);
                     shape.dispose();
                 }
             }
         }
     }
 
-    public Body createBubble(Rectangle rectangle, String data) {
+    public Body createBubble(Rectangle rectangle, Object data) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type =  BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(
@@ -112,7 +111,7 @@ public class TileMapHelper {
         Body body = gameScreen.world.createBody(bodyDef);
 
         MassData massData = new MassData();
-        massData.mass = 1;
+        massData.mass = 0;
         body.setMassData(massData);
         body.setGravityScale(0.1f);
 

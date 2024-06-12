@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,8 +40,7 @@ public class GameScreen implements Screen {
     public World world;
     public Player player;
     public Door door;
-    public Texture CuCaiButton, BachTuocButton, CucDaButton;
-    public Texture menu, restart;
+    public Texture CuCaiButton, BachTuocButton, CucDaButton, menu, restart;
     public ArrayList<Box> boxList;
     public ArrayList<Bubble> bubbleList, destroyList;
     public TileMapHelper tileMapHelper;
@@ -48,6 +48,7 @@ public class GameScreen implements Screen {
     public OrthographicCamera playerCamera;
     public OrthogonalTiledMapRenderer renderer;
     public Box2DDebugRenderer box2DDebugRenderer;
+    public Music ingameBGMusic = Gdx.audio.newMusic(Gdx.files.internal(MenuBGMusicPath));
 
     public GameScreen (Main game, LevelScreen levelScreen){
         this.TRS = new TransitionScreen(game);
@@ -65,13 +66,18 @@ public class GameScreen implements Screen {
 //        box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
-        CuCaiButton = new Texture("cucaibtn.png");
-        BachTuocButton = new Texture("bachtuocbtn.png");
-        CucDaButton = new Texture("cucdabtn.png");
-        menu = new Texture("menu.png");
-        restart = new Texture("restart.png");
+
         this.hud = new Hud(player);
         Gdx.input.setInputProcessor(hud.stage);
+        CuCaiButton = new Texture(CuCaiButtonPath);
+        BachTuocButton = new Texture(BachTuocButtonPath);
+        CucDaButton = new Texture(CucDaButtonPath);
+        menu = new Texture(MenuButtonPath);
+        restart = new Texture(RestartButtonPath);
+
+
+        ingameBGMusic.setVolume(0.3f);
+        ingameBGMusic.play();
     }
     @Override
     public void show() {
@@ -82,7 +88,7 @@ public class GameScreen implements Screen {
     public void update(float dt){
         if(DestroyFlag){
             for(Bubble bubble : destroyList){
-                System.out.println("Destroyed!");
+//                System.out.println("Destroyed!");
                 world.destroyBody(bubble.body);
                 bubbleList.remove(bubble);
             }
@@ -95,9 +101,9 @@ public class GameScreen implements Screen {
         position.x = Math.round(player.body.getPosition().x * PPM * 10 / 10f);
         position.y = Math.round(player.body.getPosition().y * PPM * 10 / 10f);
         if(position.x < 0) position.x = 0;
-        if(position.x + CameraViewportWidth / 2 > tiledSize * 60) position.x = tiledSize * 60  - CameraViewportWidth / 2;
-        if(position.y - CameraViewportHeight / 2 < 0) position.y = CameraViewportHeight / 2;
-        if(position.y + CameraViewportHeight / 2 > tiledSize * 40) position.y = tiledSize * 40 - CameraViewportHeight / 2;
+        if(position.x + CAMERA_VIEWPORT_WIDTH / 2 > TILE_SIZE * 60) position.x = TILE_SIZE * 60  - CAMERA_VIEWPORT_WIDTH / 2;
+        if(position.y - CAMERA_VIEWPORT_HEIGHT / 2 < 0) position.y = CAMERA_VIEWPORT_HEIGHT / 2;
+        if(position.y + CAMERA_VIEWPORT_HEIGHT / 2 > TILE_SIZE * 40) position.y = TILE_SIZE * 40 - CAMERA_VIEWPORT_HEIGHT / 2;
         playerCamera.position.set(position);
         staticCamera.position.set(position);
         hud.update();
@@ -123,7 +129,6 @@ public class GameScreen implements Screen {
             TRS.transitionState = 1;
         }
         else if(TRS.transitionOutFlag){
-            System.out.println("OUTT");
             TRS.time = System.currentTimeMillis();
             TRS.transitionOutFlag = false;
             TRS.transitionRunnning = true;
@@ -141,7 +146,7 @@ public class GameScreen implements Screen {
                 }
             } else {
                 if(TRS.transitionState == 2) endMap = true;
-                System.out.println("End Screen");
+//                System.out.println("End Screen");
                 TRS.transitionRunnning = false;
             }
         }
@@ -154,6 +159,8 @@ public class GameScreen implements Screen {
                 System.out.println(Math.round(player.body.getPosition().x * PPM * 10 / 10f) + " " + Math.round(player.body.getPosition().y * PPM * 10 / 10f));
             }
             if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+                player.reset();
+                ingameBGMusic.stop();
                 game.gameScreen = new GameScreen(game, levelScreen);
                 game.setScreen(game.gameScreen);
             }
@@ -183,11 +190,16 @@ public class GameScreen implements Screen {
             game.batch.end();
         }
         else if(endMap){
+            ingameBGMusic.stop();
+            game.menuScreen.bgMusic.play();
             TRS.fadeInStage.dispose();
-            TRS.fadeOutStage.dispose();
+            if (Main.chooseLevel == Main.level) {
+                ++Main.level;
+            }
             game.batch = new SpriteBatch();
             this.dispose();
-            game.changeScreen(levelScreen, delta);
+            game.setScreen(game.levelScreen);
+            this.tileMapHelper = new TileMapHelper(this);
         }
     }
 
@@ -210,6 +222,7 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         TRS.transitionInFlag = false; TRS.transitionOutFlag = false; TRS.transitionRunnning = false;
+        ingameBGMusic.stop();
         endMap = false;
         player.reset();
         world.dispose();

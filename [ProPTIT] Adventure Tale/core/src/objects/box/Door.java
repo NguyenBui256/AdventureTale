@@ -10,7 +10,7 @@ import com.mygdx.game.GameScreen;
 import com.badlogic.gdx.utils.Timer;
 
 import static helper.Constants.PPM;
-import static helper.Constants.tiledSize;
+import static helper.Constants.TILE_SIZE;
 
 public class Door extends Sprite {
     public Body body;
@@ -25,7 +25,7 @@ public class Door extends Sprite {
             TextureRegion[][] region = TextureRegion.split(texture, width, height);
             rolls[i] = new Animation(1.5f, region[0]);
         }
-        setBounds(body.getPosition().x,body.getPosition().y,2*tiledSize/PPM, 2*tiledSize/PPM);
+        setBounds(body.getPosition().x,body.getPosition().y,2*TILE_SIZE/PPM, 2*TILE_SIZE/PPM);
         stateTime = 0;
         roll = -1;
         Timer.schedule(new Timer.Task() {

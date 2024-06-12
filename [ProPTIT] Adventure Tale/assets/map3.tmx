@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="6" nextobjectid="99">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="6" nextobjectid="98">
  <tileset firstgid="1" source="tileset/tilemap-backgrounds_packed.tsx"/>
  <tileset firstgid="41" source="tileset/tilemap_packed.tsx"/>
  <objectgroup id="5" name="objects">
@@ -41,6 +41,12 @@
   </object>
   <object id="67" x="594" y="684">
    <polygon points="0,0 0,-162 18,-162 18,0"/>
+  </object>
+  <object id="70" x="774" y="594">
+   <polygon points="0,0 54,0 54,18 0,18"/>
+  </object>
+  <object id="71" x="810" y="612">
+   <polygon points="0,0 0,72 18,72 18,0"/>
   </object>
   <object id="72" x="828" y="684">
    <polygon points="0,0 72,0 72,18 0,18"/>
@@ -86,27 +92,21 @@
   </object>
   <object id="86" name="door" x="108" y="360" width="36" height="36"/>
   <object id="87" name="player" x="180" y="450" width="18" height="18"/>
-  <object id="88" name="BachTuoc" x="342.114" y="657.636" width="18" height="18"/>
+  <object id="88" name="BachTuoc" x="342" y="666" width="18" height="18"/>
   <object id="90" name="box" x="738" y="504" width="18" height="18"/>
   <object id="91" name="button" x="846" y="674" width="17" height="9"/>
-  <object id="92" name="CucDa" x="936.364" y="405.091" width="18" height="18"/>
+  <object id="92" name="CucDa" x="936" y="414" width="18" height="18"/>
   <object id="93" x="612" y="522">
    <polygon points="0,0 144,0 144,18 0,18"/>
   </object>
-  <object id="94" x="756" y="522">
-   <polygon points="0,0 18,0 18,72 0,72"/>
-  </object>
-  <object id="95" x="810" y="594">
-   <polygon points="0,0 0,90 18,90 18,0"/>
-  </object>
-  <object id="96" x="774" y="594">
-   <polygon points="0,0 36,0 36,18 0,18"/>
-  </object>
-  <object id="97" x="90" y="504">
+  <object id="95" x="90" y="504">
    <polygon points="0,0 108,0 108,18 0,18"/>
   </object>
-  <object id="98" x="198" y="504">
+  <object id="96" x="198" y="504">
    <polygon points="0,0 18,0 18,108 0,108"/>
+  </object>
+  <object id="97" x="756" y="522">
+   <polygon points="0,0 18,0 18,72 0,72"/>
   </object>
  </objectgroup>
  <layer id="1" name="Tile Layer 1" width="60" height="40">

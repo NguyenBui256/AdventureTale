@@ -3,18 +3,19 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import static helper.Constants.App_Height;
-import static helper.Constants.App_Width;
+import static helper.Constants.APP_HEIGHT;
+import static helper.Constants.APP_WIDTH;
 
 public class MenuScreen implements Screen {
-	public static final int Width = App_Width;
-	public static final int Height = App_Height;
+	public static final int Width = APP_WIDTH;
+	public static final int Height = APP_HEIGHT;
 	float playButtonWidth = 196;
 	float playButtonHeight = 84;
 	public static float iconSize = 40;
@@ -28,6 +29,9 @@ public class MenuScreen implements Screen {
 	public static Texture background;
 	public static Texture name;
 	Main main;
+
+	public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal("sound/bonussound.ogg")),
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/background-DLTTAD.ogg"));
 	public MenuScreen(Main main) {
 		this.main = main;
 		playButton = new Texture("Default.png");
@@ -38,6 +42,10 @@ public class MenuScreen implements Screen {
 		soundOnButtonClick = new Texture("soundOnPress.png");
 		background = new Texture("bg2.png");
 		name = new Texture("name.png");
+
+		bgMusic.setVolume(0.3f);
+		bgMusic.play();
+		bonusSound.setVolume(0.5f);
 	}
 
 	@Override
@@ -53,6 +61,7 @@ public class MenuScreen implements Screen {
 			main.batch.draw(playButtonClick, xPlay, yPlay, playButtonWidth, playButtonHeight);
 			if (Gdx.input.isTouched()) {
 				this.dispose();
+				bonusSound.play();
 				main.levelScreen = new LevelScreen(main);
 				main.setScreen(main.levelScreen);
 			}
