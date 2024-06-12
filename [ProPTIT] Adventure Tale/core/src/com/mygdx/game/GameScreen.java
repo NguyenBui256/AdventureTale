@@ -6,7 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -19,6 +21,7 @@ import helper.TileMapHelper;
 import helper.WorldContactListener;
 import objects.box.Box;
 import objects.box.Bubble;
+
 import objects.box.Door;
 import objects.player.Player;
 
@@ -29,6 +32,10 @@ import java.util.logging.Level;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static helper.Constants.*;
 
+
+import static helper.Constants.PPM;
+
+
 public class GameScreen implements Screen {
     public float stateTime;
     public boolean endMap = false, DestroyFlag = false;;
@@ -38,9 +45,11 @@ public class GameScreen implements Screen {
     public TransitionScreen TRS;
     public World world;
     public Player player;
+
     public Door door;
     public Texture CuCaiButton, BachTuocButton, CucDaButton;
     public Texture menu, restart;
+
     public ArrayList<Box> boxList;
     public ArrayList<Bubble> bubbleList, destroyList;
     public TileMapHelper tileMapHelper;
@@ -60,6 +69,7 @@ public class GameScreen implements Screen {
         this.bubbleList = new ArrayList<>();
         this.destroyList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
+
 //        box2DDebugRenderer.setDrawJoints(false);
 //        box2DDebugRenderer.setDrawBodies(false);
 //        box2DDebugRenderer.setDrawContacts(false);
@@ -68,8 +78,10 @@ public class GameScreen implements Screen {
         CuCaiButton = new Texture("cucaibtn.png");
         BachTuocButton = new Texture("bachtuocbtn.png");
         CucDaButton = new Texture("cucdabtn.png");
+
         menu = new Texture("menu.png");
         restart = new Texture("restart.png");
+
         this.hud = new Hud(player);
         Gdx.input.setInputProcessor(hud.stage);
     }
@@ -103,6 +115,7 @@ public class GameScreen implements Screen {
         hud.update();
         player.update(dt);
         door.update(dt);
+
         for(Bubble bubble : bubbleList) bubble.update(dt);
         for(Box box : boxList) box.update(dt);
         playerCamera.update();
@@ -194,6 +207,32 @@ public class GameScreen implements Screen {
             game.setScreen(game.levelScreen);
             this.tileMapHelper = new TileMapHelper(this);
         }
+
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        hud.stage.act(Gdx.graphics.getDeltaTime());
+        hud.stage.draw();
+
+        this.update(delta);
+        renderer.setView(playerCamera);
+        renderer.render();
+        box2DDebugRenderer.render(world, playerCamera.combined.scl(PPM));
+        box2DDebugRenderer.render(world, staticCamera.combined.scl(PPM));
+
+        stateTime += delta;
+
+        game.batch.setProjectionMatrix(staticCamera.combined);
+        game.batch.begin();
+        for(Bubble bubble : bubbleList) bubble.draw(game.batch);
+        for(Box box : boxList) box.draw(game.batch);
+        game.batch.end();
+
+        game.batch.setProjectionMatrix(playerCamera.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.end();
+
     }
 
 

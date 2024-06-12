@@ -6,6 +6,7 @@ import objects.box.Box;
 import objects.box.Bubble;
 
 public class WorldContactListener implements ContactListener {
+
     protected World world;
     protected GameScreen screen;
     public WorldContactListener(World world, GameScreen screen) {
@@ -127,6 +128,7 @@ public class WorldContactListener implements ContactListener {
         if(dataA == "bottomRightSensor" || dataB == "bottomRightSensor"){
             screen.player.senBRCount--;
             if(screen.player.senBRCount <= 1) screen.player.senBR = false;
+
         }
     }
 

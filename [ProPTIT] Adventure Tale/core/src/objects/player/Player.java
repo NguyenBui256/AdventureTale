@@ -29,14 +29,17 @@ public class Player extends Sprite {
     public Body body;
     public int roll;
     public float speed, velX, velY, stateTimer;
+
     public Texture boxTexture, smokeTexture;
     public TextureRegion[][] boxRegion, smokeRegion;
     public Animation boxAnimation, smokeAnimation;
     public boolean isTransition = false;
+
     public static boolean senTL = false, senTR = false, senBL = false, senBR = false, senT = false, senR = false, senB = false, senL = false;
     public static int senTLCount = 0, senTRCount = 0, senBLCount = 0, senBRCount = 0, senTCount = 0, senBCount = 0, senLCount = 0, senRCount = 0;
     public boolean BachTuocFlag = false, CucDaFlag = false, isJumping = false;
     public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null, topLeftSensor = null, topRightSensor = null, bottomLeftSensor = null, bottomRightSensor = null;
+
 
     public Player(GameScreen screen, Body body) {
         this.game = screen.game;
@@ -44,6 +47,7 @@ public class Player extends Sprite {
         this.body = body;
 
         setBounds(body.getPosition().x, body.getPosition().y,tiledSize/PPM,tiledSize/PPM);
+
 
         currentState = State.IDLERIGHT;
         previousState = State.IDLERIGHT;
@@ -87,7 +91,7 @@ public class Player extends Sprite {
         topRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "topRightSensor", 0, 0);
         bottomLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomLeftSensor", 0, 0);
         bottomRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomRightSensor", 0, 0);
-
+      
         smokeTexture = new Texture("smokeAnimation.png");
         smokeRegion = TextureRegion.split(smokeTexture, 64,64);
         smokeAnimation = new Animation(0.05f, smokeRegion[0]);
@@ -112,6 +116,7 @@ public class Player extends Sprite {
         checkCharacterInput();
         checkMovingInput();
 
+
         //Transition animation between characters changes
         if(isTransition) {
             stateTimer = 0;
@@ -119,7 +124,9 @@ public class Player extends Sprite {
         }
         if(nhanVat != previousNhanVat && !smokeAnimation.isAnimationFinished(stateTimer)){
             setRegion((TextureRegion) smokeAnimation.getKeyFrame(stateTimer, false));
+
             setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3,2*tiledSize/PPM,2*tiledSize/PPM);
+
             stateTimer += Gdx.graphics.getDeltaTime();
             return;
         }
@@ -152,6 +159,7 @@ public class Player extends Sprite {
             setRegion(getFrame(NhanVatCucDa,dt));
             setBounds(body.getPosition().x, body.getPosition().y,(2*tiledSize - 6)/PPM,(2*tiledSize - 6)/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
+
         }
     }
 
@@ -202,7 +210,6 @@ public class Player extends Sprite {
         previousState = currentState;
         return region;
     }
-
     public void checkCharacterInput(){
         if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
             body.setGravityScale(1);
@@ -228,6 +235,7 @@ public class Player extends Sprite {
 
         if(Gdx.input.isTouched()){
             System.out.println("TL T TR: " + senTL + senT + senTR +  "| BL B BR: " + senBL + senB + senBR + "| L R: " + senL + senR);
+
         }
         if (nhanVat == NhanVat.CUCAI) {
             velX = 0;
@@ -243,6 +251,7 @@ public class Player extends Sprite {
                 float force = (body.getMass() + 0.05f) * 10f;
                 body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
                 isJumping = true;
+
             }
             if(body.getLinearVelocity().y!=0) {
                 if(currentState == State.RUNNINGLEFT || currentState == State.IDLELEFT) currentState = State.JUMPINGLEFT;
@@ -374,6 +383,7 @@ public class Player extends Sprite {
                         || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR))) {
                     body.setLinearVelocity(0, 0);
                 }
+
             }
         } else {
             velX = 0;
@@ -426,7 +436,6 @@ public class Player extends Sprite {
         boxShape.dispose();
         return sensorBody;
     }
-
     public void reset(){
         senTL = false;senTR = false; senBL = false; senBR = false; senT = false; senR = false; senB = false; senL = false;
         BachTuocFlag = false; CucDaFlag = false; isJumping = false;
@@ -434,3 +443,4 @@ public class Player extends Sprite {
         senTCount = 0; senBCount = 0; senLCount = 0; senRCount = 0;
     }
 }
+

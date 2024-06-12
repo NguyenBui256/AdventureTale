@@ -17,6 +17,7 @@ import objects.box.Box;
 import com.mygdx.game.GameScreen;
 import objects.box.Bubble;
 import objects.box.Door;
+
 import objects.player.Player;
 
 import static helper.Constants.PPM;
@@ -137,6 +138,9 @@ public class TileMapHelper {
         fdef.density = 1000;
         fdef.shape = createPolygonShape(mapObject);
         body.createFixture(fdef);
+        Shape shape = createPolygonShape(mapObject);
+        body.createFixture(shape,1000).setUserData("ground");
+        shape.dispose();
     }
 
     private Shape createPolygonShape(PolygonMapObject mapObject) {
