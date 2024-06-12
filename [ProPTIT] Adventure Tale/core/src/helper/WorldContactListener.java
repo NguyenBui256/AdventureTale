@@ -2,7 +2,6 @@ package helper;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.GameScreen;
-import objects.box.Box;
 import objects.box.Bubble;
 
 public class WorldContactListener implements ContactListener {
@@ -25,17 +24,14 @@ public class WorldContactListener implements ContactListener {
 
         if(dataA == "leftSensor" || dataB == "leftSensor"){
             screen.player.senL = true;
-            screen.player.senLCount++;
             System.out.println("Left here");
         }
         if(dataA == "rightSensor" || dataB == "rightSensor"){
             screen.player.senR = true;
-            screen.player.senRCount++;
             System.out.println("Right here");
         }
         if(dataA == "topSensor" || dataB == "topSensor"){
             screen.player.senT = true;
-            screen.player.senTCount++;
             System.out.println("Top here");
         }
         if(dataA == "topLeftSensor" || dataB == "topLeftSensor"){
@@ -50,7 +46,6 @@ public class WorldContactListener implements ContactListener {
         }
         if(dataA == "bottomSensor" || dataB == "bottomSensor"){
             screen.player.senB = true;
-            screen.player.senBCount++;
             System.out.println("Bot here");
         }
         if(dataA == "bottomLeftSensor" || dataB == "bottomLeftSensor"){
@@ -72,7 +67,9 @@ public class WorldContactListener implements ContactListener {
             screen.player.CucDaFlag = true;
         }
         if(dataA == "door" || dataB == "door" || dataA == "bound" || dataB == "bound"){
-            screen.TRS.transitionOutFlag = true;
+//            LoadingScreen loadingScreen = new LoadingScreen(screen.game);
+//            screen.game.setScreen(loadingScreen);
+            screen.endMap = true;
         }
     }
 
@@ -98,16 +95,13 @@ public class WorldContactListener implements ContactListener {
         Object dataA = fixA.getUserData();
         Object dataB = fixB.getUserData();
         if(dataA == "leftSensor" || dataB == "leftSensor"){
-            screen.player.senLCount--;
-            if(screen.player.senLCount <= 1) screen.player.senL = false;
+            screen.player.senL = false;
         }
         if(dataA == "rightSensor" || dataB == "rightSensor"){
-            screen.player.senRCount--;
-            if(screen.player.senRCount <= 1) screen.player.senR = false;
+            screen.player.senR = false;
         }
         if(dataA == "topSensor" || dataB == "topSensor"){
-            screen.player.senTCount--;
-            if(screen.player.senTCount <= 1) screen.player.senT = false;
+            screen.player.senT = false;
         }
         if(dataA == "topLeftSensor" || dataB == "topLeftSensor"){
             screen.player.senTLCount--;
@@ -118,8 +112,7 @@ public class WorldContactListener implements ContactListener {
             if(screen.player.senTRCount <= 1) screen.player.senTR = false;
         }
         if(dataA == "bottomSensor" || dataB == "bottomSensor"){
-            screen.player.senBCount--;
-            if(screen.player.senBCount <= 1) screen.player.senB = false;
+            screen.player.senB = false;
         }
         if(dataA == "bottomLeftSensor" || dataB == "bottomLeftSensor"){
             screen.player.senBLCount--;

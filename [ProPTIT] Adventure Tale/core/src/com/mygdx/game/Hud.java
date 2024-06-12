@@ -16,8 +16,6 @@ import com.badlogic.gdx.utils.Predicate;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import objects.player.Player;
 
-import static helper.Constants.*;
-
 public class Hud {
     public Stage stage;
     public Player player;
@@ -26,18 +24,18 @@ public class Hud {
     public Hud(Player player){
         stage = new Stage();
         this.player = player;
-        CuCaiButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("cucaibtn.png"))));
-        BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("bachtuocbtn.png"))));
-        CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("cucdabtn.png"))));
+        CuCaiButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("CuCaiButton.png"))));
+        BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("BachTuocButton.png"))));
+        CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("CucDaButton.png"))));
 
         //Buttons settings
         CuCaiButton.setSize(64,64);
         BachTuocButton.setSize(64,64);
         CucDaButton.setSize(64,64);
 
-        CuCaiButton.setPosition(20, 560);
-        BachTuocButton.setPosition(100, 560);
-        CucDaButton.setPosition(190, 560);
+        CuCaiButton.setPosition(10, 570);
+        BachTuocButton.setPosition(74, 570);
+        CucDaButton.setPosition(140, 570);
 
         CuCaiButton.addListener(new ClickListener(){
             @Override
@@ -98,26 +96,7 @@ public class Hud {
 
     public void focusTo(int index){
         stage.getActors().get(index).setColor(0,0,0,1);
-        stage.getActors().get(index).setSize(80,80);
-        stage.getActors().get((index + 1) % 3).setColor(0,0,0,0.2f);
-        stage.getActors().get((index + 1) % 3).setSize(64,64);
-        stage.getActors().get((index + 2) % 3).setColor(0,0,0,0.2f);
-        stage.getActors().get((index + 2) % 3).setSize(64,64);
-
-        if(index == 0){
-            stage.getActors().get(0).setPosition(buttonPadding,buttonPositionY - (bigButtonSize - buttonSize) / 2);
-            stage.getActors().get(1).setPosition(2*buttonPadding + bigButtonSize,buttonPositionY);
-            stage.getActors().get(2).setPosition(3*buttonPadding + bigButtonSize + buttonSize,buttonPositionY);
-        }
-        if(index == 1){
-            stage.getActors().get(0).setPosition(buttonPadding,buttonPositionY);
-            stage.getActors().get(1).setPosition(2*buttonPadding + buttonSize,buttonPositionY - (bigButtonSize - buttonSize) / 2);
-            stage.getActors().get(2).setPosition(3*buttonPadding + bigButtonSize + buttonSize,buttonPositionY);
-        }
-        if(index == 2){
-            stage.getActors().get(0).setPosition(buttonPadding,buttonPositionY);
-            stage.getActors().get(1).setPosition(2*buttonPadding + buttonSize,buttonPositionY);
-            stage.getActors().get(2).setPosition(3*buttonPadding + 2*buttonSize,buttonPositionY - (bigButtonSize - buttonSize) / 2);
-        }
+        stage.getActors().get((index + 1) % 3).setColor(0,0,0,0.3f);
+        stage.getActors().get((index + 2) % 3).setColor(0,0,0,0.3f);
     }
 }
