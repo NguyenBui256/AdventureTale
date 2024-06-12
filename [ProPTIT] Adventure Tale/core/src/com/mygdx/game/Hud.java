@@ -27,16 +27,6 @@ public class Hud {
         CuCaiButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("CuCaiButton.png"))));
         BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("BachTuocButton.png"))));
         CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("CucDaButton.png"))));
-
-        //Buttons settings
-        CuCaiButton.setSize(64,64);
-        BachTuocButton.setSize(64,64);
-        CucDaButton.setSize(64,64);
-
-        CuCaiButton.setPosition(10, 570);
-        BachTuocButton.setPosition(74, 570);
-        CucDaButton.setPosition(140, 570);
-
         CuCaiButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -96,7 +86,27 @@ public class Hud {
 
     public void focusTo(int index){
         stage.getActors().get(index).setColor(0,0,0,1);
-        stage.getActors().get((index + 1) % 3).setColor(0,0,0,0.3f);
-        stage.getActors().get((index + 2) % 3).setColor(0,0,0,0.3f);
+
+        stage.getActors().get(index).setSize(bigButtonSize,bigButtonSize);
+        stage.getActors().get((index + 1) % 3).setColor(0,0,0,0.2f);
+        stage.getActors().get((index + 1) % 3).setSize(buttonSize,buttonSize);
+        stage.getActors().get((index + 2) % 3).setColor(0,0,0,0.2f);
+        stage.getActors().get((index + 2) % 3).setSize(buttonSize,buttonSize);
+
+        if(index == 0){
+            stage.getActors().get(0).setPosition(buttonPadding,buttonPositionY - (bigButtonSize - buttonSize) / 2);
+            stage.getActors().get(1).setPosition(2*buttonPadding + bigButtonSize,buttonPositionY);
+            stage.getActors().get(2).setPosition(3*buttonPadding + bigButtonSize + buttonSize,buttonPositionY);
+        }
+        if(index == 1){
+            stage.getActors().get(0).setPosition(buttonPadding,buttonPositionY);
+            stage.getActors().get(1).setPosition(2*buttonPadding + buttonSize,buttonPositionY - (bigButtonSize - buttonSize) / 2);
+            stage.getActors().get(2).setPosition(3*buttonPadding + bigButtonSize + buttonSize,buttonPositionY);
+        }
+        if(index == 2){
+            stage.getActors().get(0).setPosition(buttonPadding,buttonPositionY);
+            stage.getActors().get(1).setPosition(2*buttonPadding + buttonSize,buttonPositionY);
+            stage.getActors().get(2).setPosition(3*buttonPadding + 2*buttonSize,buttonPositionY - (bigButtonSize - buttonSize) / 2);
+        }
     }
 }

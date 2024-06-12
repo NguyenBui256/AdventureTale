@@ -27,6 +27,6 @@ public class Bubble extends Sprite {
         setBounds(body.getPosition().x,body.getPosition().y,1.4f*tiledSize/PPM, 1.4f*tiledSize/PPM);
     }
     public void update(float dt){
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 5);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
     }
 }
