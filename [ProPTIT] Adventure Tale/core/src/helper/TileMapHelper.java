@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.Main;
 import objects.box.Box;
 import com.mygdx.game.GameScreen;
 import objects.box.Bubble;
@@ -21,7 +22,7 @@ import objects.player.Player;
 import static helper.Constants.PPM;
 
 public class TileMapHelper {
-    public TiledMap map;
+    public static TiledMap map;
     public GameScreen gameScreen;
 
 
@@ -30,7 +31,7 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        map = new TmxMapLoader().load("map4.tmx");
+        map = new TmxMapLoader().load("map" + Main.chooseLevel + ".tmx");
         parseMapObjects(map.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(map);
     }
@@ -70,13 +71,13 @@ public class TileMapHelper {
                 }
                 else if(rectangleName.equals("BachTuoc")){
                     gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, "BachTuoc"),
-                        "bachtuocbb.png", 171, 171));
+                            gameScreen, createBubble(rectangle, "BachTuoc"),
+                            "BachTuocFrame.png", 32, 32));
                 }
                 else if(rectangleName.equals("CucDa")){
                     gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, "CucDa"),
-                        "cucdabb.png", 169, 169));
+                            gameScreen, createBubble(rectangle, "CucDa"),
+                            "CucDaFrame.png", 38, 34));
                 }
                 else if(rectangleName.equals("door")){
                     gameScreen.door = new Door(gameScreen, createBubble(rectangle, "door"), 80, 100);

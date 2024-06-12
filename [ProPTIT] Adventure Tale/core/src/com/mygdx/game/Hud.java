@@ -16,8 +16,6 @@ import com.badlogic.gdx.utils.Predicate;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import objects.player.Player;
 
-import static helper.Constants.*;
-
 public class Hud {
     public Stage stage;
     public Player player;
@@ -26,9 +24,9 @@ public class Hud {
     public Hud(Player player){
         stage = new Stage();
         this.player = player;
-        CuCaiButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("cucaibtn.png"))));
-        BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("bachtuocbtn.png"))));
-        CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("cucdabtn.png"))));
+        CuCaiButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("CuCaiButton.png"))));
+        BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("BachTuocButton.png"))));
+        CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("CucDaButton.png"))));
 
         CuCaiButton.addListener(new ClickListener(){
             @Override
@@ -110,5 +108,6 @@ public class Hud {
             stage.getActors().get(1).setPosition(2*buttonPadding + buttonSize,buttonPositionY);
             stage.getActors().get(2).setPosition(3*buttonPadding + 2*buttonSize,buttonPositionY - (bigButtonSize - buttonSize) / 2);
         }
+
     }
 }
