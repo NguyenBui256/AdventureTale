@@ -21,7 +21,7 @@ import objects.player.Player;
 import static helper.Constants.PPM;
 
 public class TileMapHelper {
-    public static TiledMap map;
+    public TiledMap map;
     public GameScreen gameScreen;
 
 
@@ -69,12 +69,12 @@ public class TileMapHelper {
                 else if(rectangleName.equals("BachTuoc")){
                     gameScreen.bubbleList.add(new Bubble(
                         gameScreen, createBubble(rectangle, "BachTuoc"),
-                        "BachTuocFrame.png", 32, 32));
+                        "bachtuocbb.png", 171, 171));
                 }
                 else if(rectangleName.equals("CucDa")){
                     gameScreen.bubbleList.add(new Bubble(
                         gameScreen, createBubble(rectangle, "CucDa"),
-                        "CucDaFrame.png", 38, 34));
+                        "cucdabb.png", 169, 169));
                 }
                 else if(rectangleName.equals("door")){
                     gameScreen.door = new Door(gameScreen, createBubble(rectangle, "door"), 80, 100);

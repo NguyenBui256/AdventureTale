@@ -34,7 +34,7 @@ public class Player extends Sprite {
     public Animation boxAnimation, smokeAnimation;
     public boolean isTransition = false;
     public static boolean senTL = false, senTR = false, senBL = false, senBR = false, senT = false, senR = false, senB = false, senL = false;
-    public static int senTLCount = 0, senTRCount = 0, senBLCount = 0, senBRCount = 0;
+    public static int senTLCount = 0, senTRCount = 0, senBLCount = 0, senBRCount = 0, senTCount = 0, senBCount = 0, senLCount = 0, senRCount = 0;
     public boolean BachTuocFlag = false, CucDaFlag = false, isJumping = false;
     public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null, topLeftSensor = null, topRightSensor = null, bottomLeftSensor = null, bottomRightSensor = null;
 
@@ -266,28 +266,28 @@ public class Player extends Sprite {
             velY = 0;
             boolean allowLeft = false, allowRight = false, allowUp = false, allowDown = false;
             //4 corners
-            if(senBRCount == 2 && !senB && !senBL && !senR && !senTR) //top left
+            if(senBRCount >= 2 && !senB && !senBL && !senR && !senTR) //top left
             {
                 System.out.println("top left");
                 body.setLinearVelocity(1,-2);
                 allowLeft = false; allowUp = false;
                 allowDown = true; allowRight = true;
             }
-            if(senBLCount == 2 && !senB && !senBR && !senL && !senTL) //top right
+            if(senBLCount >= 2 && !senB && !senBR && !senL && !senTL) //top right
             {
                 body.setLinearVelocity(-1,-2);
                 System.out.println("top right");
                 allowRight = false; allowUp = false;
                 allowDown = true; allowLeft = true;
             }
-            if(senTRCount == 2 && !senT && !senTL && !senR && !senBR) //bot left
+            if(senTRCount >= 2 && !senT && !senTL && !senR && !senBR) //bot left
             {
                 System.out.println("bot left");
                 body.setLinearVelocity(1,2);
                 allowLeft = false; allowDown = false;
                 allowRight = true; allowUp = true;
             }
-            if(senTLCount == 2 && !senT && !senTR && !senL && !senBL) //bot right
+            if(senTLCount >= 2 && !senT && !senTR && !senL && !senBL) //bot right
             {
                 System.out.println("bot right");
                 body.setLinearVelocity(-1,2);
@@ -373,7 +373,11 @@ public class Player extends Sprite {
             }
             if(!hasKeyPressed){
                 if(body.getLinearVelocity().y == 0)  body.setLinearVelocity(0,0);
-                if(body.getLinearVelocity().x == 0 && (senL || senR)) body.setLinearVelocity(0,0);
+                if(body.getLinearVelocity().x == 0 &&
+                        ((senTL && senL && senBL) || (senTL && senL) || (senBL && senL)
+                        || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR))) {
+                    body.setLinearVelocity(0, 0);
+                }
             }
         } else {
             velX = 0;
@@ -431,5 +435,6 @@ public class Player extends Sprite {
         senTL = false;senTR = false; senBL = false; senBR = false; senT = false; senR = false; senB = false; senL = false;
         BachTuocFlag = false; CucDaFlag = false; isJumping = false;
         senTLCount = 0; senTRCount = 0; senBLCount = 0; senBRCount = 0;
+        senTCount = 0; senBCount = 0; senLCount = 0; senRCount = 0;
     }
 }

@@ -9,9 +9,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import static helper.Constants.App_Height;
+import static helper.Constants.App_Width;
+
 public class MenuScreen implements Screen {
-	public static final int Width = 960;
-	public static final int Height = 640;
+	public static final int Width = App_Width;
+	public static final int Height = App_Height;
 	float playButtonWidth = 196;
 	float playButtonHeight = 84;
 	public static float iconSize = 40;
