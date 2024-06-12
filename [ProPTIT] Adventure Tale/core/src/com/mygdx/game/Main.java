@@ -24,10 +24,13 @@ public class Main extends Game {
     public Image blackFade;
     public Stage stage;
     public TransitionScreen transitionScreen;
+    public static int level;
+    public static int chooseLevel;
     @Override
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
+        level = 1;
         menuScreen = new MenuScreen(this);
         transitionScreen = new TransitionScreen(this);
         this.setScreen(menuScreen);

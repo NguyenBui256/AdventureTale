@@ -154,6 +154,7 @@ public class GameScreen implements Screen {
                 System.out.println(Math.round(player.body.getPosition().x * PPM * 10 / 10f) + " " + Math.round(player.body.getPosition().y * PPM * 10 / 10f));
             }
             if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+                player.reset();
                 game.gameScreen = new GameScreen(game, levelScreen);
                 game.setScreen(game.gameScreen);
             }
@@ -185,9 +186,13 @@ public class GameScreen implements Screen {
         else if(endMap){
             TRS.fadeInStage.dispose();
             TRS.fadeOutStage.dispose();
+            if (Main.chooseLevel == Main.level) {
+                ++Main.level;
+            }
             game.batch = new SpriteBatch();
             this.dispose();
-            game.changeScreen(levelScreen, delta);
+            game.setScreen(game.levelScreen);
+            this.tileMapHelper = new TileMapHelper(this);
         }
     }
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.Main;
 import objects.box.Box;
 import com.mygdx.game.GameScreen;
 import objects.box.Bubble;
@@ -30,7 +31,7 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        map = new TmxMapLoader().load("map4.tmx");
+        map = new TmxMapLoader().load("map" + Main.chooseLevel + ".tmx");
         parseMapObjects(map.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(map);
     }
@@ -112,7 +113,7 @@ public class TileMapHelper {
         Body body = gameScreen.world.createBody(bodyDef);
 
         MassData massData = new MassData();
-        massData.mass = 1;
+        massData.mass = 0;
         body.setMassData(massData);
         body.setGravityScale(0.1f);
 

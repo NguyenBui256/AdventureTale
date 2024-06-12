@@ -30,38 +30,39 @@ public class Hud {
         BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("bachtuocbtn.png"))));
         CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("cucdabtn.png"))));
 
-        CuCaiButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                if(player.nhanVat != Player.NhanVat.CUCAI) {
-                    player.changeCharacterStateTo(Player.NhanVat.CUCAI);
-                    focusTo(0);
-                }
-            }
-        });
+//        CuCaiButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                super.clicked(event, x, y);
+//                if(player.nhanVat != Player.NhanVat.CUCAI) {
+//                    player.changeCharacterStateTo(Player.NhanVat.CUCAI);
+//                    focusTo(0);
+//                }
+//            }
+//        });
 
-        BachTuocButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                if(player.nhanVat != Player.NhanVat.BACHTUOC) {
-                    player.changeCharacterStateTo(Player.NhanVat.BACHTUOC);
-                    focusTo(1);
-                }
-            }
-        });
+//        BachTuocButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                super.clicked(event, x, y);
+//                if(player.nhanVat != Player.NhanVat.BACHTUOC) {
+//                    player.changeCharacterStateTo(Player.NhanVat.BACHTUOC);
+//                    focusTo(1);
+//                }
+//            }
+//        });
 
-        CucDaButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                if(player.nhanVat != Player.NhanVat.CUCDA) {
-                    player.changeCharacterStateTo(Player.NhanVat.CUCDA);
-                    focusTo(2);
-                }
-            }
-        });
+//        CucDaButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                super.clicked(event, x, y);
+//                if(player.nhanVat != Player.NhanVat.CUCDA) {
+//                    player.changeCharacterStateTo(Player.NhanVat.CUCDA);
+//                    focusTo(2);
+//                }
+//            }
+//        });
+
         //CuCai is default character
         CuCaiButton.setVisible(true); BachTuocButton.setVisible(false); CucDaButton.setVisible(false);
         stage.addActor(CuCaiButton); //index 0
