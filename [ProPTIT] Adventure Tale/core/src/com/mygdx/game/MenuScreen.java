@@ -14,8 +14,8 @@ import static helper.Constants.APP_HEIGHT;
 import static helper.Constants.APP_WIDTH;
 
 public class MenuScreen implements Screen {
-	public static final int Width = APP_WIDTH;
-	public static final int Height = APP_HEIGHT;
+	public static final int WIDTH = APP_WIDTH;
+	public static final int HEIGHT = APP_HEIGHT;
 	float playButtonWidth = 196;
 	float playButtonHeight = 84;
 	public static float iconSize = 40;
@@ -53,10 +53,10 @@ public class MenuScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		main.batch.begin();
-		main.batch.draw(background, 0, 0, Width, Height);
+		main.batch.draw(background, 0, 0, WIDTH, HEIGHT);
 		main.batch.draw(name, 135, 120, 700, 700);
-		float xPlay = (Width - playButtonWidth) / 2;
-		float yPlay = (Height - playButtonHeight) / 2;
+		float xPlay = (WIDTH - playButtonWidth) / 2;
+		float yPlay = (HEIGHT - playButtonHeight) / 2;
 		if (Gdx.input.getX() >= xPlay && Gdx.input.getX() <= xPlay + playButtonWidth && Gdx.input.getY() >= yPlay && Gdx.input.getY() <= yPlay + playButtonHeight) {
 			main.batch.draw(playButtonClick, xPlay, yPlay, playButtonWidth, playButtonHeight);
 			if (Gdx.input.isTouched()) {
@@ -69,7 +69,7 @@ public class MenuScreen implements Screen {
 			main.batch.draw(playButton, xPlay, yPlay, playButtonWidth, playButtonHeight);
 		}
 		int xSound = 12;
-		if (Gdx.input.getX() >= xSound && Gdx.input.getX() <= xSound + iconSize && Gdx.input.getY() >= Height - (xSound + iconSize) && Gdx.input.getY() <= Height - xSound) {
+		if (Gdx.input.getX() >= xSound && Gdx.input.getX() <= xSound + iconSize && Gdx.input.getY() >= HEIGHT - (xSound + iconSize) && Gdx.input.getY() <= HEIGHT - xSound) {
 
 			if (checkSound) {
 				main.batch.draw(soundOnButtonClick, xSound, xSound, iconSize, iconSize);

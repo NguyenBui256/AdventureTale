@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Adventure Tale");
-		config.setWindowedMode(MenuScreen.Width, MenuScreen.Height);
+		config.setWindowedMode(MenuScreen.WIDTH, MenuScreen.HEIGHT);
 		new Lwjgl3Application(new Main(), config);
 	}
 }

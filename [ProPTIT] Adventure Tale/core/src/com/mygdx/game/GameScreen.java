@@ -13,26 +13,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import helper.TileMapHelper;
 import helper.WorldContactListener;
-import objects.box.Box;
-import objects.box.Bubble;
-import objects.box.Door;
+import objects.box.*;
 import objects.player.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static helper.Constants.*;
 
 public class GameScreen implements Screen {
     public float stateTime;
-    public boolean endMap = false, DestroyFlag = false;;
+    public boolean endMap = false, DestroyFlag = false, checkButton = false, checkFire = false, isPass = false;
     protected Hud hud;
     public Main game;
     public LevelScreen levelScreen;
@@ -40,7 +32,9 @@ public class GameScreen implements Screen {
     public World world;
     public Player player;
     public Door door;
+    public Button button;
     public Texture CuCaiButton, BachTuocButton, CucDaButton, menu, restart;
+    public ArrayList<Fire> fireList;
     public ArrayList<Box> boxList;
     public ArrayList<Bubble> bubbleList, destroyList;
     public TileMapHelper tileMapHelper;
@@ -60,6 +54,7 @@ public class GameScreen implements Screen {
         this.boxList = new ArrayList<>();
         this.bubbleList = new ArrayList<>();
         this.destroyList = new ArrayList<>();
+        this.fireList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 //        box2DDebugRenderer.setDrawJoints(false);
 //        box2DDebugRenderer.setDrawBodies(false);
@@ -81,8 +76,8 @@ public class GameScreen implements Screen {
     }
     @Override
     public void show() {
-        staticCamera = new OrthographicCamera(360, 240);
-        playerCamera = new OrthographicCamera(360, 240);
+        staticCamera = new OrthographicCamera(CAMERA_VIEWPORT_WIDTH, CAMERA_VIEWPORT_HEIGHT);
+        playerCamera = new OrthographicCamera(CAMERA_VIEWPORT_WIDTH, CAMERA_VIEWPORT_HEIGHT);
     }
 
     public void update(float dt){
@@ -97,10 +92,16 @@ public class GameScreen implements Screen {
         }
         world.step(1/60f, 6, 2);
 
+        if (bubbleList.isEmpty() && (!checkButton || Button.isClick)) {
+            isPass = true;
+        } else {
+            isPass = false;
+        }
+
         Vector3 position = playerCamera.position;
         position.x = Math.round(player.body.getPosition().x * PPM * 10 / 10f);
         position.y = Math.round(player.body.getPosition().y * PPM * 10 / 10f);
-        if(position.x < 0) position.x = 0;
+        if(position.x - CAMERA_VIEWPORT_WIDTH / 2 < 0) position.x = CAMERA_VIEWPORT_WIDTH / 2;
         if(position.x + CAMERA_VIEWPORT_WIDTH / 2 > TILE_SIZE * 60) position.x = TILE_SIZE * 60  - CAMERA_VIEWPORT_WIDTH / 2;
         if(position.y - CAMERA_VIEWPORT_HEIGHT / 2 < 0) position.y = CAMERA_VIEWPORT_HEIGHT / 2;
         if(position.y + CAMERA_VIEWPORT_HEIGHT / 2 > TILE_SIZE * 40) position.y = TILE_SIZE * 40 - CAMERA_VIEWPORT_HEIGHT / 2;
@@ -109,6 +110,15 @@ public class GameScreen implements Screen {
         hud.update();
         player.update(dt);
         door.update(dt);
+
+        if (checkFire) {
+            for (Fire fire : fireList) {
+                fire.update(dt);
+            }
+        }
+        if (checkButton) {
+            button.update(dt);
+        }
         for(Bubble bubble : bubbleList) bubble.update(dt);
         for(Box box : boxList) box.update(dt);
         playerCamera.update();
@@ -163,6 +173,7 @@ public class GameScreen implements Screen {
                 ingameBGMusic.stop();
                 game.gameScreen = new GameScreen(game, levelScreen);
                 game.setScreen(game.gameScreen);
+                this.tileMapHelper = new TileMapHelper(this);
             }
 
             this.update(delta);
@@ -187,6 +198,14 @@ public class GameScreen implements Screen {
             game.batch.begin();
             player.draw(game.batch);
             door.draw(game.batch);
+            if (checkFire) {
+                for (Fire fire : fireList) {
+                    fire.draw(game.batch);
+                }
+            }
+            if (checkButton) {
+                button.draw(game.batch);
+            }
             game.batch.end();
         }
         else if(endMap){

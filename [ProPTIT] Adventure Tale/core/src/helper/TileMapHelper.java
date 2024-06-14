@@ -11,10 +11,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.Main;
-import objects.box.Box;
+import objects.box.*;
 import com.mygdx.game.GameScreen;
-import objects.box.Bubble;
-import objects.box.Door;
 import objects.player.Player;
 
 import static helper.Constants.*;
@@ -62,23 +60,23 @@ public class TileMapHelper {
                             rectangle.getHeight(),
                             false,
                             gameScreen.world,
-                            2,
+                            1,
                             VatThe.BOX
                     );
                     gameScreen.boxList.add(new Box(gameScreen, body));
                 }
                 else if(rectangleName.equals("BachTuoc")){
                     gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, NhanVat.BACHTUOC),
+                        gameScreen, createBubble(rectangle, NhanVat.BACHTUOC, false),
                         BachTuocBubblePath, 171, 171));
                 }
                 else if(rectangleName.equals("CucDa")){
                     gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, NhanVat.CUCDA),
+                        gameScreen, createBubble(rectangle, NhanVat.CUCDA, false),
                         CucDaBubblePath, 169, 169));
                 }
                 else if(rectangleName.equals("door")){
-                    gameScreen.door = new Door(gameScreen, createBubble(rectangle, VatThe.DOOR), 80, 100);
+                    gameScreen.door = new Door(gameScreen, createBubble(rectangle, VatThe.DOOR, false), 80, 100);
                 }
                 else if(rectangleName.equals("bound")){
                     BodyDef bodyDef = new BodyDef();
@@ -97,13 +95,31 @@ public class TileMapHelper {
                     body.createFixture(fixtureDef).setUserData(VatThe.MAPBOUND);
                     shape.dispose();
                 }
+                else if (rectangleName.equals("button")) {
+                    gameScreen.checkButton = true;
+                    Body body = BodyHelperService.createBody(
+                            rectangle.getX() + rectangle.getWidth() / 2,
+                            rectangle.getY() + rectangle.getHeight() / 2,
+                            rectangle.getWidth(),
+                            rectangle.getHeight(),
+                            false,
+                            gameScreen.world,
+                            2,
+                            VatThe.BUTTON
+                    );
+                    gameScreen.button = new Button(gameScreen, body);
+                }
+                else if (rectangleName.equals("fire")) {
+                    gameScreen.checkFire = true;
+                    gameScreen.fireList.add(new Fire(gameScreen, createBubble(rectangle, VatThe.FIRE, true), 446));
+                }
             }
         }
     }
 
-    public Body createBubble(Rectangle rectangle, Object data) {
+    public Body createBubble(Rectangle rectangle, Object data, boolean isStatic) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type =  BodyDef.BodyType.DynamicBody;
+        bodyDef.type = !isStatic ? BodyDef.BodyType.DynamicBody : BodyDef.BodyType.StaticBody;
         bodyDef.position.set(
                 (rectangle.getX() + rectangle.getWidth() / 2) / PPM,
                 (rectangle.getY() + rectangle.getHeight() / 2) / PPM);

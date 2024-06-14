@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="6" nextobjectid="99">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="6" nextobjectid="103">
  <tileset firstgid="1" source="tileset/tilemap-backgrounds_packed.tsx"/>
  <tileset firstgid="41" source="tileset/tilemap_packed.tsx"/>
  <objectgroup id="5" name="objects">
@@ -86,10 +86,10 @@
   </object>
   <object id="86" name="door" x="108" y="360" width="36" height="36"/>
   <object id="87" name="player" x="180" y="450" width="18" height="18"/>
-  <object id="88" name="BachTuoc" x="342.114" y="657.636" width="18" height="18"/>
+  <object id="88" name="BachTuoc" x="342.25" y="656.75" width="18" height="18"/>
   <object id="90" name="box" x="738" y="504" width="18" height="18"/>
-  <object id="91" name="button" x="846" y="674" width="17" height="9"/>
-  <object id="92" name="CucDa" x="936.364" y="405.091" width="18" height="18"/>
+  <object id="91" name="button" x="846" y="685.667" width="17" height="1.66667"/>
+  <object id="92" name="CucDa" x="935.75" y="404.75" width="18" height="18"/>
   <object id="93" x="612" y="522">
    <polygon points="0,0 144,0 144,18 0,18"/>
   </object>

@@ -9,7 +9,7 @@ public class Constants {
     public enum State {IDLELEFT, IDLERIGHT, RUNNINGLEFT, RUNNINGRIGHT, JUMPINGLEFT, JUMPINGRIGHT, ROUND1,
         ROUND2, ROUND3, ROUND4, ROUND5, ROUND6, ROUND7, ROUND8};
     public enum NhanVat {MAIN, CUCAI, BACHTUOC, CUCDA};
-    public enum VatThe {DOOR, MAPBOUND, BOX, TRAP};
+    public enum VatThe {DOOR, MAPBOUND, BOX, FIRE, BUTTON};
     public enum SensorDirection {TOP, LEFT, RIGHT, BOT, TOPLEFT, TOPRIGHT, BOTLEFT, BOTRIGHT};
 
 

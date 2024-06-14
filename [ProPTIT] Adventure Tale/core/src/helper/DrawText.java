@@ -7,7 +7,7 @@ import com.mygdx.game.Main;
 
 public class DrawText {
     BitmapFont font;
-    Main main;// sao nửa phải nửa k =))
+    Main main;
     public DrawText(Main main) {
         this.main = main;
     }

@@ -5,6 +5,7 @@ import com.mygdx.game.GameScreen;
 import objects.box.Box;
 import objects.box.Bubble;
 import helper.Constants.*;
+import objects.box.Button;
 
 public class WorldContactListener implements ContactListener {
     protected World world;
@@ -80,6 +81,19 @@ public class WorldContactListener implements ContactListener {
             screen.player.endlevelMusic.play();
             screen.ingameBGMusic.stop();
         }
+
+        if(sensorDirectionA == "button" || sensorDirectionB == "button" &&
+        (sensorDirectionA == "player" || sensorDirectionB == "player" || sensorDirectionA == "box" || sensorDirectionB == "box")){
+            Button.isClick = true;
+        }
+
+        if((sensorDirectionA == "fire" || sensorDirectionB == "fire")
+                && (sensorDirectionA == "player" || sensorDirectionB == "player")) {
+            screen.player.reset();
+            screen.game.gameScreen = new GameScreen(screen.game, screen.levelScreen);
+            screen.game.setScreen(screen.game.gameScreen);
+            screen.tileMapHelper = new TileMapHelper(screen);
+        }
     }
 
     public void removeBubble(NhanVat data){
@@ -132,6 +146,10 @@ public class WorldContactListener implements ContactListener {
         if(sensorDirectionA == SensorDirection.BOTRIGHT || sensorDirectionB == SensorDirection.BOTRIGHT){
             screen.player.senBRCount--;
             if(screen.player.senBRCount <= 1) screen.player.senBR = false;
+        }
+        if(sensorDirectionA == "button" || sensorDirectionB == "button" &&
+        (sensorDirectionA == "player" || sensorDirectionB == "player" || sensorDirectionA == "box" || sensorDirectionB == "box")){
+            Button.isClick = false;
         }
     }
 

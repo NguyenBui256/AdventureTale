@@ -51,9 +51,9 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         update();
         main.batch.begin();
-        main.batch.draw(background, 0, 0, MenuScreen.Width, MenuScreen.Height);
-        float xBegin = (float) MenuScreen.Width / 2 - 2 * levelWidth - 3 * space / 2;
-        float yBegin = MenuScreen.Height - (MenuScreen.Height - 3 * levelHeight - 2 * space) / 2 - levelHeight + space;
+        main.batch.draw(background, 0, 0, MenuScreen.WIDTH, MenuScreen.HEIGHT);
+        float xBegin = (float) MenuScreen.WIDTH / 2 - 2 * levelWidth - 3 * space / 2;
+        float yBegin = MenuScreen.HEIGHT - (MenuScreen.HEIGHT - 3 * levelHeight - 2 * space) / 2 - levelHeight + space;
         int d = 0;
         for (int j = 0; j < 3; ++j) {
             for (int i = 0; i < 4; ++i) {
@@ -61,7 +61,9 @@ public class LevelScreen implements Screen {
                     main.batch.draw(lock, xBegin + i * (levelWidth + space), yBegin - j * (levelHeight + space), levelWidth, levelHeight);
                 } else {
                     main.batch.draw(level, xBegin + i * (levelWidth + space), yBegin - j * (levelHeight + space), levelWidth, levelHeight);
-                    drawText.drText("font/Unnamed.fnt", Color.RED, (d + 1) + "", xBegin + i * (levelWidth + space) + levelWidth / 2 - 8, yBegin - j * (levelHeight + space) + levelHeight / 2 + 16, 0.4f);
+                    drawText.drText("font/Unnamed.fnt", Color.RED, (d + 1) + "",
+                            xBegin + i * (levelWidth + space) + levelWidth / 2 - 8 - (float) (d + 1 + "").length() /2,
+                            yBegin - j * (levelHeight + space) + levelHeight / 2 + 16, 0.4f);
                 }
                 ++d;
             }
@@ -73,7 +75,7 @@ public class LevelScreen implements Screen {
         for (int j = 0; j < 3; ++j) {
             for (int i = 0; i < 4; ++i) {
                 if (point.get(d) && Gdx.input.getX() >= xBegin + i * (levelWidth + space) && Gdx.input.getX() <= xBegin + i * (levelWidth + space) + levelWidth
-                        && Gdx.input.getY() <= MenuScreen.Height - (yBegin - j * (levelHeight + space)) && Gdx.input.getY() >= MenuScreen.Height - (yBegin - j * (levelHeight + space) + levelHeight)) {
+                        && Gdx.input.getY() <= MenuScreen.HEIGHT - (yBegin - j * (levelHeight + space)) && Gdx.input.getY() >= MenuScreen.HEIGHT - (yBegin - j * (levelHeight + space) + levelHeight)){
                     main.batch.draw(levelClick, xBegin + i * (levelWidth + space), yBegin - j * (levelHeight + space), levelWidth, levelHeight);
                     if (Gdx.input.isTouched()) {
                         Main.chooseLevel = d + 1;
