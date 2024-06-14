@@ -29,6 +29,9 @@ public class TileMapHelper {
     public OrthogonalTiledMapRenderer setupMap(){
         map = new TmxMapLoader().load("map" + Main.chooseLevel + ".tmx");
         parseMapObjects(map.getLayers().get("objects").getObjects());
+        if (Main.chooseLevel == 4) {
+            parseMapObjects(map.getLayers().get("objectsBrokenGlass").getObjects());
+        }
         return new OrthogonalTiledMapRenderer(map);
     }
 
@@ -67,16 +70,16 @@ public class TileMapHelper {
                 }
                 else if(rectangleName.equals("BachTuoc")){
                     gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, NhanVat.BACHTUOC, false),
+                        gameScreen, createBubble(rectangle, NhanVat.BACHTUOC, false, false),
                         BachTuocBubblePath, 171, 171));
                 }
                 else if(rectangleName.equals("CucDa")){
                     gameScreen.bubbleList.add(new Bubble(
-                        gameScreen, createBubble(rectangle, NhanVat.CUCDA, false),
+                        gameScreen, createBubble(rectangle, NhanVat.CUCDA, false, false),
                         CucDaBubblePath, 169, 169));
                 }
                 else if(rectangleName.equals("door")){
-                    gameScreen.door = new Door(gameScreen, createBubble(rectangle, VatThe.DOOR, false), 80, 100);
+                    gameScreen.door = new Door(gameScreen, createBubble(rectangle, VatThe.DOOR, true, false), 80, 100);
                 }
                 else if(rectangleName.equals("bound")){
                     BodyDef bodyDef = new BodyDef();
@@ -110,16 +113,30 @@ public class TileMapHelper {
                     gameScreen.button = new Button(gameScreen, body);
                 }
                 else if (rectangleName.equals("fire")) {
-                    gameScreen.checkFire = true;
-                    gameScreen.fireList.add(new Fire(gameScreen, createBubble(rectangle, VatThe.FIRE, true), 446));
+                    gameScreen.fireList.add(new Fire(gameScreen, createBubble(rectangle, VatThe.FIRE, true, false), 446));
+                }
+                else if (rectangleName.equals("glass")) {
+                    gameScreen.glassList.add(new Glass(gameScreen, createBubble(rectangle, "glass" + gameScreen.glassList.size(), true, false), 220, 70));
+                }
+                else if (rectangleName.equals("glassSt")) {
+                    gameScreen.glassList.add(new Glass(gameScreen, createBubble(rectangle, "glass" + gameScreen.glassList.size(), true, false), 70, 220));
+                }
+                else if (rectangleName.equals("brokenGlass") || rectangleName.equals("brokenGlassSt")) {
+                    if (rectangleName.equals("brokenGlass")) {
+                        gameScreen.brokenGlassList.add(new Glass(gameScreen, createBubble(rectangle, "brokenGlass" + gameScreen.brokenGlassList.size(), true, true), 220, 70));
+                    } else {
+                        gameScreen.brokenGlassList.add(new Glass(gameScreen, createBubble(rectangle, "brokenGlass" + gameScreen.brokenGlassList.size(), true, true), 70, 220));
+                    }
+                    gameScreen.brokenGlassList.get(gameScreen.brokenGlassList.size() - 1).isBroken = true;
                 }
             }
         }
     }
 
-    public Body createBubble(Rectangle rectangle, Object data, boolean isStatic) {
+    public Body createBubble(Rectangle rectangle, Object data, boolean isStatic, boolean isBroken) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = !isStatic ? BodyDef.BodyType.DynamicBody : BodyDef.BodyType.StaticBody;
+        bodyDef.type = isBroken ? BodyDef.BodyType.KinematicBody : bodyDef.type;
         bodyDef.position.set(
                 (rectangle.getX() + rectangle.getWidth() / 2) / PPM,
                 (rectangle.getY() + rectangle.getHeight() / 2) / PPM);
@@ -135,7 +152,9 @@ public class TileMapHelper {
         shape.setAsBox(rectangle.getWidth() / 2 / PPM, rectangle.getHeight() / 2 / PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-//        fixtureDef.isSensor = true;
+        if (isBroken) {
+            fixtureDef.isSensor = true;
+        }
         fixtureDef.restitution = 1f;
         body.createFixture(fixtureDef).setUserData(data);
         shape.dispose();

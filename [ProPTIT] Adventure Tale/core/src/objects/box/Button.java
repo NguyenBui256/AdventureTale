@@ -22,8 +22,8 @@ public class Button extends Sprite {
         this.world = screen.world;
         this.screen = screen;
         this.body = body;
-        texture = new Texture("button-pressed.png");
-        textureClick = new Texture("button-unpressed.png");
+        textureClick = new Texture("button-pressed.png");
+        texture = new Texture("button-unpressed.png");
         isClick = false;
         region = TextureRegion.split(texture, 18, 18);
         Animation animation = new Animation(0.3f, region[0]);

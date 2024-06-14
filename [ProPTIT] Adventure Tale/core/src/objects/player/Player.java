@@ -166,7 +166,7 @@ public class Player extends Sprite {
         }
         else if(nhanVat == NhanVat.CUCDA){
             MassData massData = new MassData();
-            massData.mass = 2;
+            massData.mass = 2f;
             body.setMassData(massData);
             setRegion(getFrame(NhanVatCucDa,dt));
             setBounds(body.getPosition().x, body.getPosition().y,(2*TILE_SIZE - 6)/PPM,(2*TILE_SIZE - 6)/PPM);

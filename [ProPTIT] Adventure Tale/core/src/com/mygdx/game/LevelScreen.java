@@ -21,7 +21,6 @@ public class LevelScreen implements Screen {
     DrawText drawText;
     public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal("sound/bonussound.ogg"));
 
-    //    Sound sound = Gdx.audio.newSound(Gdx.files.internal("onoff.wav"));
     public LevelScreen(Main main) {
         this.main = main;
         drawText = new DrawText(main);

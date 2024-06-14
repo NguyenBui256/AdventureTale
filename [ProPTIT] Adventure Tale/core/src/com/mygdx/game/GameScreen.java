@@ -24,7 +24,8 @@ import static helper.Constants.*;
 
 public class GameScreen implements Screen {
     public float stateTime;
-    public boolean endMap = false, DestroyFlag = false, checkButton = false, checkFire = false, isPass = false;
+    public NhanVat nhanVat;
+    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false;
     protected Hud hud;
     public Main game;
     public LevelScreen levelScreen;
@@ -33,6 +34,7 @@ public class GameScreen implements Screen {
     public Player player;
     public Door door;
     public Button button;
+    public ArrayList<Glass> glassList, brokenGlassList;
     public Texture CuCaiButton, BachTuocButton, CucDaButton, menu, restart;
     public ArrayList<Fire> fireList;
     public ArrayList<Box> boxList;
@@ -55,6 +57,8 @@ public class GameScreen implements Screen {
         this.bubbleList = new ArrayList<>();
         this.destroyList = new ArrayList<>();
         this.fireList = new ArrayList<>();
+        this.glassList = new ArrayList<>();
+        this.brokenGlassList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 //        box2DDebugRenderer.setDrawJoints(false);
 //        box2DDebugRenderer.setDrawBodies(false);
@@ -69,6 +73,8 @@ public class GameScreen implements Screen {
         CucDaButton = new Texture(CucDaButtonPath);
         menu = new Texture(MenuButtonPath);
         restart = new Texture(RestartButtonPath);
+
+        this.nhanVat = NhanVat.CUCAI;
 
 
         ingameBGMusic.setVolume(0.3f);
@@ -91,7 +97,15 @@ public class GameScreen implements Screen {
             DestroyFlag = false;
         }
         world.step(1/60f, 6, 2);
+//        System.out.println(destroyList.size());
 
+        for (int i = 0; i < glassList.size(); ++i) {
+            if (glassList.get(i).isBroken && !glassList.get(i).isVisited) {
+                world.destroyBody(glassList.get(i).body);
+                glassList.set(i, brokenGlassList.get(i));
+                glassList.get(i).isVisited = true;
+            }
+        }
         if (bubbleList.isEmpty() && (!checkButton || Button.isClick)) {
             isPass = true;
         } else {
@@ -109,12 +123,14 @@ public class GameScreen implements Screen {
         staticCamera.position.set(position);
         hud.update();
         player.update(dt);
+        nhanVat = player.nhanVat;
         door.update(dt);
 
-        if (checkFire) {
-            for (Fire fire : fireList) {
-                fire.update(dt);
-            }
+        for (Fire fire : fireList) {
+            fire.update(dt);
+        }
+        for (Glass glass : glassList) {
+            glass.update(dt);
         }
         if (checkButton) {
             button.update(dt);
@@ -198,10 +214,11 @@ public class GameScreen implements Screen {
             game.batch.begin();
             player.draw(game.batch);
             door.draw(game.batch);
-            if (checkFire) {
-                for (Fire fire : fireList) {
-                    fire.draw(game.batch);
-                }
+            for (Fire fire : fireList) {
+                fire.draw(game.batch);
+            }
+            for (Glass glass : glassList) {
+                glass.draw(game.batch);
             }
             if (checkButton) {
                 button.draw(game.batch);

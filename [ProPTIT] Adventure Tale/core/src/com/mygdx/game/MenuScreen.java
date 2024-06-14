@@ -122,11 +122,5 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void dispose () {
-		playButton.dispose();
-		playButtonClick.dispose();
-		soundOffButton.dispose();
-		soundOnButton.dispose();
-		soundOffButtonClick.dispose();
-		soundOnButtonClick.dispose();
 	}
 }
