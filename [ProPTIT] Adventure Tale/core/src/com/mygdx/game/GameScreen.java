@@ -9,12 +9,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import helper.TileMapHelper;
 import helper.WorldContactListener;
+import jdk.internal.net.http.common.Pair;
 import objects.box.*;
 import objects.player.Player;
 
@@ -34,7 +35,8 @@ public class GameScreen implements Screen {
     public Player player;
     public Door door;
     public Button button;
-    public ArrayList<Glass> glassList, brokenGlassList;
+    public ArrayList<Glass> glassList;
+//    public ArrayList<Pair<Rectangle, Pair<Integer, Integer>>> brokenGlassList;
     public Texture CuCaiButton, BachTuocButton, CucDaButton, menu, restart;
     public ArrayList<Fire> fireList;
     public ArrayList<Box> boxList;
@@ -58,7 +60,7 @@ public class GameScreen implements Screen {
         this.destroyList = new ArrayList<>();
         this.fireList = new ArrayList<>();
         this.glassList = new ArrayList<>();
-        this.brokenGlassList = new ArrayList<>();
+//        this.brokenGlassList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 //        box2DDebugRenderer.setDrawJoints(false);
 //        box2DDebugRenderer.setDrawBodies(false);
@@ -96,16 +98,21 @@ public class GameScreen implements Screen {
             destroyList.clear();
             DestroyFlag = false;
         }
-        world.step(1/60f, 6, 2);
 //        System.out.println(destroyList.size());
 
         for (int i = 0; i < glassList.size(); ++i) {
             if (glassList.get(i).isBroken && !glassList.get(i).isVisited) {
-                world.destroyBody(glassList.get(i).body);
-                glassList.set(i, brokenGlassList.get(i));
+                glassList.get(i).body.setType(BodyDef.BodyType.KinematicBody);
+                for (Fixture fixture : glassList.get(i).body.getFixtureList()) {
+                    fixture.setSensor(true);
+                }
+//                world.destroyBody(glassList.get(i).body);
+//                Pair<Rectangle, Pair<Integer, Integer>> brokenGlass = brokenGlassList.get(i);
+//                glassList.set(i, new Glass(this, tileMapHelper.createBubble(brokenGlass.first, "glass" + i, true, true), brokenGlass.second.first, brokenGlass.second.second));
                 glassList.get(i).isVisited = true;
             }
         }
+        world.step(1/60f, 6, 2);
         if (bubbleList.isEmpty() && (!checkButton || Button.isClick)) {
             isPass = true;
         } else {

@@ -27,7 +27,6 @@ public class Glass extends Sprite {
         this.Width = Width;
         this.Height = Height;
         isBroken = false;
-        isVisited = false;
 
         if (Width > Height) {
             glassUnbroken = new Texture("glass-unbroken.png");
