@@ -4,12 +4,23 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.sun.tools.jdeprscan.scan.Scan;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
@@ -27,13 +38,34 @@ public class Main extends Game {
     public TransitionScreen transitionScreen;
     public static int level;
     public static int chooseLevel;
+    public static FileWriter fw;
 
 
     @Override
     public void create() {
+        try {
+            fw = new FileWriter("tex", false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Pixmap pixmap = new Pixmap((Gdx.files.internal("cursor.png")));
+        int xHotspot = 15, yHotspot = 15;
+        Cursor cursor = Gdx.graphics.newCursor(pixmap,xHotspot,yHotspot);
+        pixmap.dispose();
+        Gdx.graphics.setCursor(cursor);
+
+        Scanner sc;
+        try {
+            sc = new Scanner(new File("tex"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        if(sc.hasNextInt()) level = sc.nextInt();
+        else level = 1;
         batch = new SpriteBatch();
         font = new BitmapFont();
-        level = 1;
+//        level = 1;
         menuScreen = new MenuScreen(this);
         transitionScreen = new TransitionScreen(this);
         this.setScreen(menuScreen);

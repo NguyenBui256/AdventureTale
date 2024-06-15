@@ -46,7 +46,8 @@ public class Player extends Sprite {
                 bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound)),
                 endlevelMusic = Gdx.audio.newMusic(Gdx.files.internal(EndLevelMusic)),
                 transformSound = Gdx.audio.newMusic(Gdx.files.internal(TransformSound)),
-                rockSound = Gdx.audio.newMusic(Gdx.files.internal(RockSound));
+                rockSound = Gdx.audio.newMusic(Gdx.files.internal(RockSound)),
+                glassSound = Gdx.audio.newMusic(Gdx.files.internal(GlassSound));
 
     public Player(GameScreen screen, Body body) {
         this.game = screen.game;

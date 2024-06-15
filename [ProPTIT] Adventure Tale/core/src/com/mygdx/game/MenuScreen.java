@@ -44,6 +44,7 @@ public class MenuScreen implements Screen {
 		name = new Texture("name.png");
 
 		bgMusic.setVolume(0.3f);
+		bgMusic.setLooping(true);
 		bgMusic.play();
 		bonusSound.setVolume(0.5f);
 	}
@@ -75,12 +76,14 @@ public class MenuScreen implements Screen {
 				main.batch.draw(soundOnButtonClick, xSound, xSound, iconSize, iconSize);
 				if (Gdx.input.isTouched()) {
 					checkSound = false;
+					main.menuScreen.bgMusic.stop();
 					main.batch.draw(soundOffButtonClick, xSound, xSound, iconSize, iconSize);
 				}
 			} else {
 				main.batch.draw(soundOffButtonClick, xSound, xSound, iconSize, iconSize);
 				if (Gdx.input.isTouched()) {
 					checkSound = true;
+					main.menuScreen.bgMusic.play();
 					main.batch.draw(soundOnButtonClick, xSound, xSound, iconSize, iconSize);
 				}
 			}
