@@ -46,7 +46,8 @@ public class Player extends Sprite {
                 bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound)),
                 endlevelMusic = Gdx.audio.newMusic(Gdx.files.internal(EndLevelMusic)),
                 transformSound = Gdx.audio.newMusic(Gdx.files.internal(TransformSound)),
-                rockSound = Gdx.audio.newMusic(Gdx.files.internal(RockSound));
+                rockSound = Gdx.audio.newMusic(Gdx.files.internal(RockSound)),
+                glassSound = Gdx.audio.newMusic(Gdx.files.internal(GlassSound));
 
     public Player(GameScreen screen, Body body) {
         this.game = screen.game;
@@ -107,9 +108,9 @@ public class Player extends Sprite {
         this.speed = 9f;
 
         octopusSound.setVolume(1);
-        rockSound.setVolume(0.5f);
-        transformSound.setVolume(0.2f);
-        walkingSound.setVolume(0.4f);
+        rockSound.setVolume(0.7f);
+        transformSound.setVolume(0.4f);
+        walkingSound.setVolume(1);
         bonusSound.setVolume(0.4f);
     }
     public void update(float dt) {

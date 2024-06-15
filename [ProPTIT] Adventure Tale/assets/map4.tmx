@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="7" nextobjectid="122">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="7" nextobjectid="126">
  <tileset firstgid="1" source="tileset/tilemap-backgrounds_packed.tsx"/>
  <tileset firstgid="41" source="tileset/tilemap_packed.tsx"/>
  <layer id="1" name="Tile Layer 1" width="60" height="40">
@@ -218,5 +218,9 @@
   <object id="119" x="108" y="522">
    <polygon points="0,0 54,0 54,18 0,18"/>
   </object>
+  <object id="122" name="bound" x="-18.6667" y="-5.33333" width="19.3333" height="438"/>
+  <object id="123" name="bound" x="1090.67" y="-0.666667" width="18" height="692"/>
+  <object id="124" name="bound" x="30.6667" y="730.667" width="396.667" height="18"/>
+  <object id="125" name="bound" x="-9.00017" y="-23.6667" width="1103.33" height="18"/>
  </objectgroup>
 </map>

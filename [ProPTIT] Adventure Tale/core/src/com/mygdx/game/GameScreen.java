@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -19,14 +20,17 @@ import jdk.internal.net.http.common.Pair;
 import objects.box.*;
 import objects.player.Player;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static helper.Constants.*;
 
 public class GameScreen implements Screen {
     public float stateTime;
     public NhanVat nhanVat;
-    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false;
+    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false,  winn = false, isZoomOut = false;;
     protected Hud hud;
     public Main game;
     public LevelScreen levelScreen;
@@ -37,7 +41,7 @@ public class GameScreen implements Screen {
     public Button button;
     public ArrayList<Glass> glassList;
 //    public ArrayList<Pair<Rectangle, Pair<Integer, Integer>>> brokenGlassList;
-    public Texture CuCaiButton, BachTuocButton, CucDaButton, menu, restart;
+    public Texture CuCaiButton, BachTuocButton, CucDaButton, menu, restart, pause;
     public ArrayList<Fire> fireList;
     public ArrayList<Box> boxList;
     public ArrayList<Bubble> bubbleList, destroyList;
@@ -46,7 +50,8 @@ public class GameScreen implements Screen {
     public OrthographicCamera playerCamera;
     public OrthogonalTiledMapRenderer renderer;
     public Box2DDebugRenderer box2DDebugRenderer;
-    public Music ingameBGMusic = Gdx.audio.newMusic(Gdx.files.internal(MenuBGMusicPath));
+    public Vector3 center;
+    public Music ingameBGMusic = Gdx.audio.newMusic(Gdx.files.internal(IngameBGMPath));
 
     public GameScreen (Main game, LevelScreen levelScreen){
         this.TRS = new TransitionScreen(game);
@@ -62,30 +67,36 @@ public class GameScreen implements Screen {
         this.glassList = new ArrayList<>();
 //        this.brokenGlassList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-//        box2DDebugRenderer.setDrawJoints(false);
-//        box2DDebugRenderer.setDrawBodies(false);
-//        box2DDebugRenderer.setDrawContacts(false);
+        box2DDebugRenderer.setDrawJoints(false);
+        box2DDebugRenderer.setDrawBodies(false);
+        box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
+
 
         this.hud = new Hud(player);
         Gdx.input.setInputProcessor(hud.stage);
         CuCaiButton = new Texture(CuCaiButtonPath);
         BachTuocButton = new Texture(BachTuocButtonPath);
         CucDaButton = new Texture(CucDaButtonPath);
-        menu = new Texture(MenuButtonPath);
         restart = new Texture(RestartButtonPath);
+        pause = new Texture(PauseButtonPath);
 
         this.nhanVat = NhanVat.CUCAI;
 
+        TiledMapTileLayer layer0 = (TiledMapTileLayer) TileMapHelper.map.getLayers().get(0);
+        center = new Vector3(layer0.getWidth() * layer0.getTileWidth() / 2,
+                layer0.getHeight() * layer0.getTileHeight() / 2, 0);
 
-        ingameBGMusic.setVolume(0.3f);
+        ingameBGMusic.setVolume(0.4f);
+        ingameBGMusic.setLooping(true);
         ingameBGMusic.play();
     }
     @Override
     public void show() {
         staticCamera = new OrthographicCamera(CAMERA_VIEWPORT_WIDTH, CAMERA_VIEWPORT_HEIGHT);
         playerCamera = new OrthographicCamera(CAMERA_VIEWPORT_WIDTH, CAMERA_VIEWPORT_HEIGHT);
+
     }
 
     public void update(float dt){
@@ -126,7 +137,25 @@ public class GameScreen implements Screen {
         if(position.x + CAMERA_VIEWPORT_WIDTH / 2 > TILE_SIZE * 60) position.x = TILE_SIZE * 60  - CAMERA_VIEWPORT_WIDTH / 2;
         if(position.y - CAMERA_VIEWPORT_HEIGHT / 2 < 0) position.y = CAMERA_VIEWPORT_HEIGHT / 2;
         if(position.y + CAMERA_VIEWPORT_HEIGHT / 2 > TILE_SIZE * 40) position.y = TILE_SIZE * 40 - CAMERA_VIEWPORT_HEIGHT / 2;
-        playerCamera.position.set(position);
+
+
+        if(!isZoomOut) {
+            playerCamera.viewportWidth = CAMERA_VIEWPORT_WIDTH;
+            playerCamera.viewportHeight = CAMERA_VIEWPORT_HEIGHT;
+            staticCamera.viewportWidth = playerCamera.viewportWidth;
+            staticCamera.viewportHeight = playerCamera.viewportHeight;
+            playerCamera.position.set(position);
+            staticCamera.position.set(position);
+
+        }
+        else{
+            playerCamera.viewportWidth = MAP_WIDTH;
+            playerCamera.viewportHeight = MAP_HEIGHT;
+            staticCamera.viewportWidth = MAP_WIDTH;
+            staticCamera.viewportHeight = MAP_HEIGHT;
+            playerCamera.position.set(center);
+            staticCamera.position.set(center);
+        }
         staticCamera.position.set(position);
         hud.update();
         player.update(dt);
@@ -162,9 +191,9 @@ public class GameScreen implements Screen {
             TRS.transitionState = 1;
         }
         else if(TRS.transitionOutFlag){
+            winn = true;
             TRS.time = System.currentTimeMillis();
             TRS.transitionOutFlag = false;
-            TRS.transitionRunnning = true;
             TRS.transitionState = 2;
         }
         else if(TRS.transitionRunnning) {
@@ -178,8 +207,16 @@ public class GameScreen implements Screen {
                     TRS.fadeOutStage.draw();
                 }
             } else {
-                if(TRS.transitionState == 2) endMap = true;
-//                System.out.println("End Screen");
+                if(TRS.transitionState == 2){
+                    ingameBGMusic.stop();
+//                    game.menuScreen.bgMusic.play();
+                    TRS.fadeInStage.dispose();
+                    game.batch = new SpriteBatch();
+                    this.dispose();
+                    game.gameScreen = new GameScreen(game, game.levelScreen);
+                    game.setScreen(game.gameScreen);
+                    this.tileMapHelper = new TileMapHelper(this);
+                }
                 TRS.transitionRunnning = false;
             }
         }
@@ -191,13 +228,15 @@ public class GameScreen implements Screen {
                 System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
                 System.out.println(Math.round(player.body.getPosition().x * PPM * 10 / 10f) + " " + Math.round(player.body.getPosition().y * PPM * 10 / 10f));
             }
-            if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            if(Gdx.input.isKeyJustPressed(Input.Keys.P)|| hud.restart){
                 player.reset();
                 ingameBGMusic.stop();
                 game.gameScreen = new GameScreen(game, levelScreen);
                 game.setScreen(game.gameScreen);
                 this.tileMapHelper = new TileMapHelper(this);
             }
+            if (Gdx.input.isKeyPressed(Input.Keys.Z)) isZoomOut = true;
+            else isZoomOut = false;
 
             this.update(delta);
 
@@ -231,18 +270,40 @@ public class GameScreen implements Screen {
                 button.draw(game.batch);
             }
             game.batch.end();
-        }
-        else if(endMap){
-            ingameBGMusic.stop();
-            game.menuScreen.bgMusic.play();
-            TRS.fadeInStage.dispose();
-            if (Main.chooseLevel == Main.level) {
-                ++Main.level;
+
+            hud.stage.act(Gdx.graphics.getDeltaTime());
+            hud.stage.draw();
+            if(hud.level){
+                ingameBGMusic.stop();
+                game.menuScreen.bgMusic.play();
+                TRS.fadeInStage.dispose();
+                game.batch = new SpriteBatch();
+                this.dispose();
+                game.setScreen(game.levelScreen);
+                this.tileMapHelper = new TileMapHelper(this);
             }
-            game.batch = new SpriteBatch();
-            this.dispose();
-            game.setScreen(game.levelScreen);
-            this.tileMapHelper = new TileMapHelper(this);
+            if(winn) {
+                if (Main.chooseLevel == Main.level) {
+                    ++Main.level;
+                    try {
+                        System.out.println("da luu file");
+                        game.fw = new FileWriter(SAVE_FILE_PATH, false);
+                        game.fw.write(Main.level + "");
+                        game.fw.close();
+//                        System.out.println(Main.level);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                    //hud.nextlevel = true;
+                hud.win();
+                if (hud.goToNextLevel) {
+                    ++Main.chooseLevel;
+                    TRS.transitionState = 2;
+                    TRS.transitionRunnning = true;
+                    endMap = true;
+                }
+            }
         }
     }
 

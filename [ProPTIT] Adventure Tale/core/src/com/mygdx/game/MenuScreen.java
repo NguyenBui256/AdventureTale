@@ -10,8 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import static helper.Constants.APP_HEIGHT;
-import static helper.Constants.APP_WIDTH;
+import static helper.Constants.*;
 
 public class MenuScreen implements Screen {
 	public static final int WIDTH = APP_WIDTH;
@@ -30,8 +29,8 @@ public class MenuScreen implements Screen {
 	public static Texture name;
 	Main main;
 
-	public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal("sound/bonussound.ogg")),
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/background-DLTTAD.ogg"));
+	public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound)),
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal(MenuBGMusicPath));
 	public MenuScreen(Main main) {
 		this.main = main;
 		playButton = new Texture("Default.png");
@@ -44,6 +43,7 @@ public class MenuScreen implements Screen {
 		name = new Texture("name.png");
 
 		bgMusic.setVolume(0.3f);
+		bgMusic.setLooping(true);
 		bgMusic.play();
 		bonusSound.setVolume(0.5f);
 	}
@@ -74,13 +74,17 @@ public class MenuScreen implements Screen {
 			if (checkSound) {
 				main.batch.draw(soundOnButtonClick, xSound, xSound, iconSize, iconSize);
 				if (Gdx.input.isTouched()) {
+					bonusSound.play();
 					checkSound = false;
+					main.menuScreen.bgMusic.stop();
 					main.batch.draw(soundOffButtonClick, xSound, xSound, iconSize, iconSize);
 				}
 			} else {
 				main.batch.draw(soundOffButtonClick, xSound, xSound, iconSize, iconSize);
 				if (Gdx.input.isTouched()) {
+					bonusSound.play();
 					checkSound = true;
+					main.menuScreen.bgMusic.play();
 					main.batch.draw(soundOnButtonClick, xSound, xSound, iconSize, iconSize);
 				}
 			}

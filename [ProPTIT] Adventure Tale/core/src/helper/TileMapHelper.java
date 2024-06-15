@@ -19,7 +19,7 @@ import objects.player.Player;
 import static helper.Constants.*;
 
 public class TileMapHelper {
-    public TiledMap map;
+    public static TiledMap map;
     public GameScreen gameScreen;
 
 

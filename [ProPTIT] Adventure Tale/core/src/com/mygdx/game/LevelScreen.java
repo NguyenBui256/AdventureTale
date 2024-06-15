@@ -10,6 +10,8 @@ import helper.DrawText;
 
 import java.util.ArrayList;
 
+import static helper.Constants.BonusSound;
+
 public class LevelScreen implements Screen {
     public static ArrayList<Boolean> point;
     Texture level, levelClick, lock, soundOffButton, soundOffButtonClick, soundOnButton, soundOnButtonClick;
@@ -19,7 +21,7 @@ public class LevelScreen implements Screen {
     public static Texture background;
     Main main;
     DrawText drawText;
-    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal("sound/bonussound.ogg"));
+    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound));
 
     public LevelScreen(Main main) {
         this.main = main;
