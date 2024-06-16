@@ -319,21 +319,21 @@ public class Player extends Sprite {
                 allowLeft = false; allowUp = false;
                 allowDown = true; allowRight = true;
             }
-            if(senBLCount >= 2 && !senB && !senBR && !senL && !senTL) //top right
+            else if(senBLCount >= 2 && !senB && !senBR && !senL && !senTL) //top right
             {
 //                System.out.println("top right");
                 body.setLinearVelocity(-1,-2);
                 allowRight = false; allowUp = false;
                 allowDown = true; allowLeft = true;
             }
-            if(senTRCount >= 2 && !senT && !senTL && !senR && !senBR) //bot left
+            else if(senTRCount >= 2 && !senT && !senTL && !senR && !senBR) //bot left
             {
 //                System.out.println("bot left");
                 body.setLinearVelocity(1,2);
                 allowLeft = false; allowDown = false;
                 allowRight = true; allowUp = true;
             }
-            if(senTLCount >= 2 && !senT && !senTR && !senL && !senBL) //bot right
+            else if(senTLCount >= 2 && !senT && !senTR && !senL && !senBL) //bot right
             {
 //                System.out.println("bot right");
                 body.setLinearVelocity(-1,2);

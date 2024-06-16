@@ -62,7 +62,7 @@ public class Main extends Game {
             throw new RuntimeException(e);
         }
         if(sc.hasNextInt()) level = sc.nextInt();
-        else level = 1;
+        else level = 12;
         batch = new SpriteBatch();
         font = new BitmapFont();
 //        level = 1;

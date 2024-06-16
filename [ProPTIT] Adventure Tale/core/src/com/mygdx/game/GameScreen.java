@@ -27,7 +27,7 @@ import static helper.Constants.*;
 public class GameScreen implements Screen {
     public float stateTime;
     public NhanVat nhanVat;
-    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false,  winn = false;;
+    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false,  winn = false, checkDoor = false;
     protected Hud hud;
     public Main game;
     public LevelScreen levelScreen;
@@ -37,8 +37,7 @@ public class GameScreen implements Screen {
     public Door door;
     public Button button;
     public ArrayList<Glass> glassList;
-//    public ArrayList<Pair<Rectangle, Pair<Integer, Integer>>> brokenGlassList;
-    public Texture CuCaiButton, BachTuocButton, CucDaButton, menu, restart, pause;
+    public Texture CuCaiButton, BachTuocButton, CucDaButton, restart, pause;
     public ArrayList<Fire> fireList;
     public ArrayList<Box> boxList;
     public ArrayList<Bubble> bubbleList, destroyList;

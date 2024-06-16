@@ -111,16 +111,18 @@ public class WorldContactListener implements ContactListener {
             screen.tileMapHelper = new TileMapHelper(screen.game.gameScreen);
         }
 
-        if((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
-        (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON) ||
-        (sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
-        (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX)){
+        if(!Button.isClick && ((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
+                (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON))){
+            Button.isClick = true;
+        } else if (!Button.isClick && ((sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
+                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX))) {
             Button.isClick = true;
         }
 
         if((sensorDirectionA == VatThe.FIRE && sensorDirectionB == NhanVat.MAIN)
                 || (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.FIRE)) {
             screen.player.reset();
+            screen.ingameBGMusic.stop();
             screen.game.gameScreen = new GameScreen(screen.game, screen.levelScreen);
             screen.game.setScreen(screen.game.gameScreen);
             screen.tileMapHelper = new TileMapHelper(screen);
@@ -199,10 +201,11 @@ public class WorldContactListener implements ContactListener {
                 if(screen.player.senBRCount <= 1) screen.player.senBR = false;
             }
         }
-        if((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
-                (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON) ||
-                (sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
-                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX)){
+        if(Button.isClick && ((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
+                (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON))){
+            Button.isClick = false;
+        } else if (Button.isClick && ((sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
+                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX))) {
             Button.isClick = false;
         }
     }

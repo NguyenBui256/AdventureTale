@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="4" nextobjectid="22">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="18" tileheight="18" infinite="0" nextlayerid="4" nextobjectid="23">
  <tileset firstgid="1" source="tileset/tilemap_packed.tsx"/>
  <tileset firstgid="181" source="tileset/tilemap-backgrounds_packed.tsx"/>
  <layer id="3" name="background" width="60" height="40">
@@ -111,14 +111,12 @@
   <object id="11" x="450" y="360">
    <polygon points="0,0 126,0 126,18 0,18"/>
   </object>
-  <object id="12" name="BachTuoc" x="468.25" y="441" width="18" height="18"/>
-  <object id="13" name="CucDa" x="558" y="333.25" width="18" height="18"/>
   <object id="14" name="box" x="414" y="450" width="18" height="18"/>
   <object id="16" x="252" y="468">
    <polygon points="0,0 0,18 540,18 540,0"/>
   </object>
-  <object id="17" x="270" y="395.5">
-   <polygon points="0,0 0,72.5 18,72.5 18,0"/>
+  <object id="17" x="270" y="413.5">
+   <polygon points="0,0 0,54.5 18,54.5 18,0"/>
   </object>
   <object id="18" x="738" y="468">
    <polygon points="0,0 18,0 18,-180 0,-180"/>

@@ -20,7 +20,7 @@ public class Constants {
     public static final int TB_WIDTH = 417, TB_HEIGHT = 429;
     public static final int TB_POS_X = (APP_WIDTH - TB_WIDTH)/2, TB_POS_Y = (APP_HEIGHT-TB_HEIGHT)/2 + 50;
     public static final float PPM = 18.0f;
-    public static final float TILE_SIZE = 18f; //square
+    public static final float TILE_SIZE = 18f, ICON_SIZE = 40f; //square
     public static final float CORNER_SENSOR_SIZE = 1f, EDGE_SENSOR_SIZE = 6f;
     public static final float CAMERA_VIEWPORT_WIDTH = 360, CAMERA_VIEWPORT_HEIGHT = 240;
 
@@ -35,8 +35,7 @@ public class Constants {
             CuCaiButtonPath = "cucaibtn.png",
             BachTuocButtonPath = "bachtuocbtn.png",
             CucDaButtonPath = "cucdabtn.png",
-    //MenuButtonPath = "menu.png",
-    RestartButtonPath = "restart.png",
+            RestartButtonPath = "restart.png",
             RestartClickButtonPath = "restartpress.png",
             PauseButtonPath = "Pause.png",
             PauseClickButtonPath = "Pausepress.png",
