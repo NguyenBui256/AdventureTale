@@ -17,7 +17,7 @@ public class Menu {
     public static final int HEIGHT = APP_HEIGHT;
     float playButtonWidth = 236;
     float playButtonHeight = 124;
-    ImageButton playButton, tutButton, tutButtonClick, playButtonClick, controlBoard;
+    ImageButton playButton, tutButton, tutButtonClick, playButtonClick, controlBoard, exitButton, exitClickButton;
     public ImageButton background;
     public Texture name;
     Main main;
@@ -39,11 +39,30 @@ public class Menu {
         MusicOnClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOnClickPath))));
         MusicOffButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOffPath))));
         MusicOffClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOffClickPath))));
+        exitButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("Exit.png"))));
+        exitClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("ExitPress.png"))));
+
 
         bgMusic.setVolume(0.3f);
         bgMusic.setLooping(true);
         bgMusic.play();
         bonusSound.setVolume(0.5f);
+
+        exitButton.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                exitButton.setVisible(false);
+                exitClickButton.setVisible(true);
+                bgMusic.stop();
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                exitButton.setVisible(true);
+                exitClickButton.setVisible(false);
+                Gdx.app.exit();
+            }
+        });
         MusicOnButton.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -108,6 +127,7 @@ public class Menu {
         MusicOffButton.setVisible(false); MusicOffClickButton.setVisible(false);
         playButton.setVisible(true); playButtonClick.setVisible(false);
         tutButton.setVisible(true); tutButtonClick.setVisible(false);
+        exitButton.setVisible(true); exitClickButton.setVisible(false);
         controlBoard.setVisible(false);
         stage.addActor(background); // index 0
         stage.addActor(MusicOnButton); //index 1
@@ -118,7 +138,9 @@ public class Menu {
         stage.addActor(playButtonClick); // index 6
         stage.addActor(tutButton); // index 7
         stage.addActor(tutButtonClick); // index 8
-        stage.addActor(controlBoard); // index 9
+        stage.addActor(exitButton); //index 9
+        stage.addActor(exitClickButton); //index 10
+        stage.addActor(controlBoard); // index 11
     }
     public void update() {
         int xSound = 12;
@@ -126,23 +148,27 @@ public class Menu {
         float yPlay = (HEIGHT - playButtonHeight) / 2 - 10;
         stage.getActors().get(0).setPosition(0, 0);
         stage.getActors().get(0).setSize(WIDTH, HEIGHT);
-        stage.getActors().get(1).setSize(ICON_SIZE, ICON_SIZE);
+        stage.getActors().get(1).setSize(ICON_SIZE+ 30, ICON_SIZE+ 30);
         stage.getActors().get(1).setPosition(xSound, xSound);
-        stage.getActors().get(2).setSize(ICON_SIZE, ICON_SIZE);
+        stage.getActors().get(2).setSize(ICON_SIZE + 30, ICON_SIZE+ 30);
         stage.getActors().get(2).setPosition(xSound, xSound);
-        stage.getActors().get(3).setSize(ICON_SIZE, ICON_SIZE);
+        stage.getActors().get(3).setSize(ICON_SIZE + 30, ICON_SIZE + 30);
         stage.getActors().get(3).setPosition(xSound, xSound);
-        stage.getActors().get(4).setSize(ICON_SIZE, ICON_SIZE);
+        stage.getActors().get(4).setSize(ICON_SIZE + 30, ICON_SIZE + 30);
         stage.getActors().get(4).setPosition(xSound, xSound);
         stage.getActors().get(5).setSize(playButtonWidth, playButtonHeight);
         stage.getActors().get(5).setPosition(xPlay, yPlay);
         stage.getActors().get(6).setSize(playButtonWidth, playButtonHeight);
         stage.getActors().get(6).setPosition(xPlay, yPlay);
-        stage.getActors().get(7).setSize(ICON_SIZE, ICON_SIZE);
-        stage.getActors().get(7).setPosition(WIDTH - xSound - ICON_SIZE, xSound);
-        stage.getActors().get(8).setSize(ICON_SIZE, ICON_SIZE);
-        stage.getActors().get(8).setPosition(WIDTH - xSound - ICON_SIZE, xSound);
-        stage.getActors().get(9).setSize(600, 586);
-        stage.getActors().get(9).setPosition((WIDTH - 600) / 2, (HEIGHT - 586) / 2);
+        stage.getActors().get(7).setSize(ICON_SIZE + 30, ICON_SIZE + 30);
+        stage.getActors().get(7).setPosition(WIDTH - xSound - ICON_SIZE - 30, xSound);
+        stage.getActors().get(8).setSize(ICON_SIZE + 30, ICON_SIZE + 30);
+        stage.getActors().get(8).setPosition(WIDTH - xSound - ICON_SIZE - 30, xSound);
+        stage.getActors().get(9).setSize(playButtonWidth - 35, playButtonHeight - 35);
+        stage.getActors().get(9).setPosition(xPlay + 15, yPlay - playButtonHeight + 40);
+        stage.getActors().get(10).setSize( playButtonWidth - 35, playButtonHeight - 35);
+        stage.getActors().get(10).setPosition(xPlay + 15, yPlay - playButtonHeight + 40);
+        stage.getActors().get(11).setSize(600, 586);
+        stage.getActors().get(11).setPosition((WIDTH - 600) / 2, (HEIGHT - 586) / 2);
     }
 }
