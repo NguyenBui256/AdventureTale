@@ -16,7 +16,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import helper.TileMapHelper;
 import helper.WorldContactListener;
-import jdk.internal.net.http.common.Pair;
 import objects.box.*;
 import objects.player.Player;
 

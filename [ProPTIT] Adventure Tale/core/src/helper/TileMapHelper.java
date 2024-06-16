@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.Main;
-import jdk.internal.net.http.common.Pair;
 import objects.box.*;
 import com.mygdx.game.GameScreen;
 import objects.player.Player;
