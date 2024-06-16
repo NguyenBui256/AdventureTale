@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 
 import java.io.IOException;
-
 import static helper.Constants.APP_HEIGHT;
 import static helper.Constants.APP_WIDTH;
 

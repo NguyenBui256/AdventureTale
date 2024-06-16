@@ -11,10 +11,12 @@ import helper.DrawText;
 import java.util.ArrayList;
 
 import static helper.Constants.BonusSound;
+import static helper.Constants.APP_HEIGHT;
+import static helper.Constants.ICON_SIZE;
 
 public class LevelScreen implements Screen {
     public static ArrayList<Boolean> point;
-    Texture level, levelClick, lock, soundOffButton, soundOffButtonClick, soundOnButton, soundOnButtonClick;
+    Texture level, levelClick, lock, soundOffButton, soundOffButtonClick, soundOnButton, soundOnButtonClick, back, backClick;
     float levelWidth = 100;
     float levelHeight = 100;
     float space = 30;
@@ -34,6 +36,8 @@ public class LevelScreen implements Screen {
         soundOffButtonClick = new Texture("soundOffPress.png");
         soundOnButton = new Texture("soundOn.png");
         soundOnButtonClick = new Texture("soundOnPress.png");
+        back = new Texture("back.png");
+        backClick = new Texture("backClick.png");
         point = new ArrayList<>();
         for (int i = 0; i < 12; ++i) {
             point.add(false);
@@ -89,6 +93,19 @@ public class LevelScreen implements Screen {
                 }
                 ++d;
             }
+        }
+        int xBack = 20;
+        if (Gdx.input.getX() >= xBack && Gdx.input.getX() <= xBack + ICON_SIZE && Gdx.input.getY() <= xBack + ICON_SIZE && Gdx.input.getY() >= xBack) {
+            main.batch.draw(backClick, xBack, APP_HEIGHT - 3 * xBack, ICON_SIZE, ICON_SIZE);
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                bonusSound.play();
+                main.menuScreen.bgMusic.stop();
+                main.menuScreen = new MenuScreen(main);
+                main.setScreen(main.menuScreen);
+            }
+        } else {
+            main.batch.draw(back, xBack, APP_HEIGHT - 3 * xBack, ICON_SIZE, ICON_SIZE);
         }
         main.batch.end();
     }

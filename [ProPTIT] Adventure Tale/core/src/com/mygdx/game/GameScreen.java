@@ -30,7 +30,7 @@ import static helper.Constants.*;
 public class GameScreen implements Screen {
     public float stateTime;
     public NhanVat nhanVat;
-    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false,  winn = false, isZoomOut = false;;
+    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false,  winn = false, soundOn = true, musicOn = true, checkDoor = false, isZoomOut = false;
     protected Hud hud;
     public Main game;
     public LevelScreen levelScreen;
@@ -40,8 +40,7 @@ public class GameScreen implements Screen {
     public Door door;
     public Button button;
     public ArrayList<Glass> glassList;
-//    public ArrayList<Pair<Rectangle, Pair<Integer, Integer>>> brokenGlassList;
-    public Texture CuCaiButton, BachTuocButton, CucDaButton, menu, restart, pause;
+    public Texture CuCaiButton, BachTuocButton, CucDaButton, restart, pause;
     public ArrayList<Fire> fireList;
     public ArrayList<Box> boxList;
     public ArrayList<Bubble> bubbleList, destroyList;
@@ -91,6 +90,7 @@ public class GameScreen implements Screen {
         ingameBGMusic.setVolume(0.4f);
         ingameBGMusic.setLooping(true);
         ingameBGMusic.play();
+        ingameBGMusic.setLooping(true);
     }
     @Override
     public void show() {
@@ -245,9 +245,6 @@ public class GameScreen implements Screen {
             box2DDebugRenderer.render(world, playerCamera.combined.scl(PPM));
             box2DDebugRenderer.render(world, staticCamera.combined.scl(PPM));
 
-            hud.stage.act(Gdx.graphics.getDeltaTime());
-            hud.stage.draw();
-
             stateTime += delta;
 
             game.batch.setProjectionMatrix(staticCamera.combined);
@@ -273,6 +270,22 @@ public class GameScreen implements Screen {
 
             hud.stage.act(Gdx.graphics.getDeltaTime());
             hud.stage.draw();
+            if(!hud.sound && soundOn){
+                player.soundOn = false;
+                soundOn = false;
+            }
+            else if(hud.sound && !soundOn){
+                player.soundOn = true;
+                soundOn = true;
+            }
+            if(!hud.music && musicOn){
+                ingameBGMusic.stop();
+                musicOn = false;
+            }
+            else if(hud.music && !musicOn){
+                ingameBGMusic.play();
+                musicOn = true;
+            }
             if(hud.level){
                 ingameBGMusic.stop();
                 game.menuScreen.bgMusic.play();
@@ -291,14 +304,27 @@ public class GameScreen implements Screen {
                         game.fw.write(Main.level + "");
                         game.fw.close();
 //                        System.out.println(Main.level);
+//                         System.out.println("Save file");
+//                         System.out.println(Main.level);
+//                         Main.fw.write(Main.level);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
-                    //hud.nextlevel = true;
+                //hud.nextlevel = true;
                 hud.win();
                 if (hud.goToNextLevel) {
                     ++Main.chooseLevel;
+                  if (Main.level == 13) {
+                        --Main.level;
+                        ingameBGMusic.stop();
+                        game.menuScreen.bgMusic.play();
+                        TRS.fadeInStage.dispose();
+                        game.batch = new SpriteBatch();
+                        this.dispose();
+                        game.setScreen(game.levelScreen);
+//                        this.tileMapHelper = new TileMapHelper(this);
+                    }
                     TRS.transitionState = 2;
                     TRS.transitionRunnning = true;
                     endMap = true;

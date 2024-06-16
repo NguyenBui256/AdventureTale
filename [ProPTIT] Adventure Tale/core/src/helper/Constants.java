@@ -20,7 +20,7 @@ public class Constants {
     public static final int TB_WIDTH = 417, TB_HEIGHT = 429;
     public static final int TB_POS_X = (APP_WIDTH - TB_WIDTH)/2, TB_POS_Y = (APP_HEIGHT-TB_HEIGHT)/2 + 50;
     public static final float PPM = 18.0f;
-    public static final float TILE_SIZE = 18f; //square
+    public static final float TILE_SIZE = 18f, ICON_SIZE = 40f; //square
     public static final float MAP_WIDTH = TILE_SIZE * 60;
     public static final float MAP_HEIGHT = TILE_SIZE * 40;
     public static final float CORNER_SENSOR_SIZE = 1f, EDGE_SENSOR_SIZE = 6f;
@@ -37,8 +37,7 @@ public class Constants {
             CuCaiButtonPath = "cucaibtn.png",
             BachTuocButtonPath = "bachtuocbtn.png",
             CucDaButtonPath = "cucdabtn.png",
-    //MenuButtonPath = "menu.png",
-    RestartButtonPath = "restart.png",
+            RestartButtonPath = "restart.png",
             RestartClickButtonPath = "restartpress.png",
             PauseButtonPath = "Pause.png",
             PauseClickButtonPath = "Pausepress.png",
@@ -48,8 +47,17 @@ public class Constants {
             ContinueClickPath = "Startpress.png",
             LevelPath = "Level.png",
             LevelClickPath = "Levelpress.png",
-            BlackFadePath = "blackfade.png",
             SAVE_FILE_PATH = "savedata.txt";
+            MusicOnPath = "musicOn.png",
+            MusicOnClickPath = "musicOnPress.png",
+            MusicOffPath = "musicOff.png",
+            MusicOffClickPath = "musicOffPress.png",
+            SoundOnPath = "soundOn.png",
+            SoundOnClickPath = "soundOnPress.png",
+            SoundOffPath = "soundOff.png",
+            SoundOffClickPath = "soundOffPress.png",
+            BlackFadePath = "blackfade.png",
+            BackGroundMenuPath = "bgfn.png";
 
 
     //----------Audios path strings

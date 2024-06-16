@@ -48,7 +48,6 @@ public class Main extends Game {
 
     @Override
     public void create() {
-
         if(reader.hasNext()){
             level = reader.nextInt();
             System.out.println("dau vao:" + level);
@@ -56,6 +55,29 @@ public class Main extends Game {
 
         batch = new SpriteBatch();
         font = new BitmapFont();
+//         try {
+//             fw = new FileWriter("tex", false);
+//         } catch (IOException e) {
+//             throw new RuntimeException(e);
+//         }
+
+//         Pixmap pixmap = new Pixmap((Gdx.files.internal("cursor.png")));
+//         int xHotspot = 15, yHotspot = 15;
+//         Cursor cursor = Gdx.graphics.newCursor(pixmap,xHotspot,yHotspot);
+//         pixmap.dispose();
+//         Gdx.graphics.setCursor(cursor);
+
+//         Scanner sc;
+//         try {
+//             sc = new Scanner(new File("tex"));
+//         } catch (FileNotFoundException e) {
+//             throw new RuntimeException(e);
+//         }
+//         if(sc.hasNextInt()) level = sc.nextInt();
+//         else level = 1;
+//         batch = new SpriteBatch();
+//         font = new BitmapFont();
+// //        level = 1;
         menuScreen = new MenuScreen(this);
         transitionScreen = new TransitionScreen(this);
         this.setScreen(menuScreen);

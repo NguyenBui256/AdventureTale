@@ -21,8 +21,11 @@ public class Hud {
     public boolean restart = false;
     public boolean level = false;
     public boolean nextlevel = false, goToNextLevel = false;
+    public boolean sound = true, music = true;
     protected ImageButton CuCaiButton, BachTuocButton, CucDaButton, PauseButton, PauseClickButton, RestartButton, RestartClickButton;
     protected ImageButton PauseTB, WinTB, ContinueButton, LevelButton, ContinueClickButton, LevelClickButton, RestartButton2, RestartClickButton2;
+    protected ImageButton SoundOnButton, SoundOnClickButton, SoundOffButton, SoundOffClickButton;
+    protected ImageButton MusicOnButton, MusicOnClickButton, MusicOffButton, MusicOffClickButton;
     protected ImageButton DarkBackground;
     protected boolean BachTuocAddFlag, CucDaAddFlag;
     public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound));
@@ -47,6 +50,46 @@ public class Hud {
         DarkBackground = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(BlackFadePath))));
 
         bonusSound.setVolume(0.4f);
+        SoundOnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SoundOnPath))));
+        SoundOnClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SoundOnClickPath))));
+        SoundOffButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SoundOffPath))));
+        SoundOffClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SoundOffClickPath))));
+        MusicOnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOnPath))));
+        MusicOnClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOnClickPath))));
+        MusicOffButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOffPath))));
+        MusicOffClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOffClickPath))));
+//        CuCaiButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                super.clicked(event, x, y);
+//                if(player.nhanVat != Player.NhanVat.CUCAI) {
+//                    player.changeCharacterStateTo(Player.NhanVat.CUCAI);
+//                    focusTo(0);
+//                }
+//            }
+//        });
+
+//        BachTuocButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                super.clicked(event, x, y);
+//                if(player.nhanVat != Player.NhanVat.BACHTUOC) {
+//                    player.changeCharacterStateTo(Player.NhanVat.BACHTUOC);
+//                    focusTo(1);
+//                }
+//            }
+//        });
+
+//        CucDaButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                super.clicked(event, x, y);
+//                if(player.nhanVat != Player.NhanVat.CUCDA) {
+//                    player.changeCharacterStateTo(Player.NhanVat.CUCDA);
+//                    focusTo(2);
+//                }
+//            }
+//        });
 
         PauseButton.addListener(new InputListener(){
             @Override
@@ -83,6 +126,34 @@ public class Hud {
                 RestartClickButton.setVisible(false);
             }
         });
+        SoundOnButton.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                SoundOnButton.setVisible(false);
+                SoundOnClickButton.setVisible(true);
+                sound = false;
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                SoundOffButton.setVisible(true);
+                SoundOnClickButton.setVisible(false);
+            }
+        });
+        SoundOffButton.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                SoundOffButton.setVisible(false);
+                SoundOffClickButton.setVisible(true);
+                sound = true;
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                SoundOnButton.setVisible(true);
+                SoundOffClickButton.setVisible(false);
+            }
+        });
         RestartButton2.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -100,6 +171,34 @@ public class Hud {
                 ContinueButton.setVisible(false);
                 LevelButton.setVisible(false);
                 DarkBackground.setVisible(false);
+            }
+        });
+        MusicOnButton.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                MusicOnButton.setVisible(false);
+                MusicOnClickButton.setVisible(true);
+                music = false;
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                MusicOffButton.setVisible(true);
+                MusicOnClickButton.setVisible(false);
+            }
+        });
+        MusicOffButton.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                MusicOffButton.setVisible(false);
+                MusicOffClickButton.setVisible(true);
+                music = true;
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                MusicOnButton.setVisible(true);
+                MusicOffClickButton.setVisible(false);
             }
         });
         ContinueButton.addListener(new InputListener(){
@@ -140,6 +239,10 @@ public class Hud {
         CuCaiButton.setVisible(true); BachTuocButton.setVisible(false); CucDaButton.setVisible(false);
         RestartButton.setVisible(true); PauseButton.setVisible(true);
         RestartClickButton.setVisible(false); PauseClickButton.setVisible(false);
+        SoundOnButton.setVisible(true); SoundOnClickButton.setVisible(false);
+        SoundOffButton.setVisible(false); SoundOffClickButton.setVisible(false);
+        MusicOnButton.setVisible(true); MusicOnClickButton.setVisible(false);
+        MusicOffButton.setVisible(false); MusicOffClickButton.setVisible(false);
         ContinueButton.setVisible(false); ContinueClickButton.setVisible(false);
         LevelButton.setVisible(false); LevelClickButton.setVisible(false);
         RestartButton2.setVisible(false); RestartClickButton2.setVisible(false);
@@ -152,15 +255,23 @@ public class Hud {
         stage.addActor(RestartClickButton); //index 4
         stage.addActor(PauseButton); //index 5
         stage.addActor(PauseClickButton); //index 6
-        stage.addActor(DarkBackground); //index 7
-        stage.addActor(PauseTB); //index 8
-        stage.addActor(WinTB); //index 9
-        stage.addActor(ContinueButton); //index 10
-        stage.addActor(ContinueClickButton); //index 11
-        stage.addActor(LevelButton); //index 12
-        stage.addActor(LevelClickButton); //index 13
-        stage.addActor(RestartButton2); //index 14
-        stage.addActor(RestartClickButton2); //index 15
+        stage.addActor(SoundOnButton); //index 7
+        stage.addActor(SoundOnClickButton); //index 8
+        stage.addActor(SoundOffButton); //index 9
+        stage.addActor(SoundOffClickButton); //index 10
+        stage.addActor(MusicOnButton); //index 11
+        stage.addActor(MusicOnClickButton); //index 12
+        stage.addActor(MusicOffButton); //index 13
+        stage.addActor(MusicOffClickButton); //index 14
+        stage.addActor(DarkBackground); //index 15
+        stage.addActor(PauseTB); //index 16
+        stage.addActor(WinTB); //index 17
+        stage.addActor(ContinueButton); //index 18
+        stage.addActor(ContinueClickButton); //index 19
+        stage.addActor(LevelButton); //index 20
+        stage.addActor(LevelClickButton); //index 21
+        stage.addActor(RestartButton2); //index 22
+        stage.addActor(RestartClickButton2); //index 23
         focusTo(0);
     }
 
@@ -173,23 +284,39 @@ public class Hud {
         stage.getActors().get(5).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE - BUTTON_DISTANCE, BUTTON_POS_Y2);
         stage.getActors().get(6).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
         stage.getActors().get(6).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE - BUTTON_DISTANCE, BUTTON_POS_Y2);
-        stage.getActors().get(7).setPosition(0, 0);
-        stage.getActors().get(8).setSize(TB_WIDTH, TB_HEIGHT);
-        stage.getActors().get(8).setPosition(TB_POS_X, TB_POS_Y);
-        stage.getActors().get(9).setSize(TB_WIDTH, TB_HEIGHT);
-        stage.getActors().get(9).setPosition(TB_POS_X, TB_POS_Y);
-        stage.getActors().get(10).setSize(BIG_BUTTON_SIZE, BIG_BUTTON_SIZE);
-        stage.getActors().get(10).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 5, TB_POS_Y + 95);
-        stage.getActors().get(11).setSize(BIG_BUTTON_SIZE, BIG_BUTTON_SIZE);
-        stage.getActors().get(11).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 5, TB_POS_Y + 95);
-        stage.getActors().get(12).setSize(BUTTON_SIZE, BUTTON_SIZE);
-        stage.getActors().get(12).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - BIG_BUTTON_SIZE - 5, TB_POS_Y + 95);
-        stage.getActors().get(13).setSize(BUTTON_SIZE, BUTTON_SIZE);
-        stage.getActors().get(13).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - BIG_BUTTON_SIZE - 5, TB_POS_Y + 95);
-        stage.getActors().get(14).setSize(BUTTON_SIZE, BUTTON_SIZE);
-        stage.getActors().get(14).setPosition((APP_WIDTH - BUTTON_SIZE)/2 + BIG_BUTTON_SIZE + 5, TB_POS_Y + 95);
-        stage.getActors().get(15).setSize(BUTTON_SIZE, BUTTON_SIZE);
-        stage.getActors().get(15).setPosition((APP_WIDTH - BUTTON_SIZE)/2 + BIG_BUTTON_SIZE + 5, TB_POS_Y + 95);
+        stage.getActors().get(7).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
+        stage.getActors().get(7).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 3- BUTTON_DISTANCE, BUTTON_POS_Y2);
+        stage.getActors().get(8).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
+        stage.getActors().get(8).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 3 - BUTTON_DISTANCE, BUTTON_POS_Y2);
+        stage.getActors().get(9).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
+        stage.getActors().get(9).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 3 - BUTTON_DISTANCE, BUTTON_POS_Y2);
+        stage.getActors().get(10).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
+        stage.getActors().get(10).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 3 - BUTTON_DISTANCE, BUTTON_POS_Y2);
+        stage.getActors().get(11).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
+        stage.getActors().get(11).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 4 - BUTTON_DISTANCE, BUTTON_POS_Y2);
+        stage.getActors().get(12).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
+        stage.getActors().get(12).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 4 - BUTTON_DISTANCE, BUTTON_POS_Y2);
+        stage.getActors().get(13).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
+        stage.getActors().get(13).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 4 - BUTTON_DISTANCE, BUTTON_POS_Y2);
+        stage.getActors().get(14).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
+        stage.getActors().get(14).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 4 - BUTTON_DISTANCE, BUTTON_POS_Y2);
+        stage.getActors().get(15).setPosition(0, 0);
+        stage.getActors().get(16).setSize(TB_WIDTH, TB_HEIGHT);
+        stage.getActors().get(16).setPosition(TB_POS_X, TB_POS_Y);
+        stage.getActors().get(17).setSize(TB_WIDTH, TB_HEIGHT);
+        stage.getActors().get(17).setPosition(TB_POS_X, TB_POS_Y);
+        stage.getActors().get(18).setSize(BIG_BUTTON_SIZE, BIG_BUTTON_SIZE);
+        stage.getActors().get(18).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 5, TB_POS_Y + 95);
+        stage.getActors().get(19).setSize(BIG_BUTTON_SIZE, BIG_BUTTON_SIZE);
+        stage.getActors().get(19).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 5, TB_POS_Y + 95);
+        stage.getActors().get(20).setSize(BUTTON_SIZE, BUTTON_SIZE);
+        stage.getActors().get(20).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - BIG_BUTTON_SIZE - 5, TB_POS_Y + 95);
+        stage.getActors().get(21).setSize(BUTTON_SIZE, BUTTON_SIZE);
+        stage.getActors().get(21).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - BIG_BUTTON_SIZE - 5, TB_POS_Y + 95);
+        stage.getActors().get(22).setSize(BUTTON_SIZE, BUTTON_SIZE);
+        stage.getActors().get(22).setPosition((APP_WIDTH - BUTTON_SIZE)/2 + BIG_BUTTON_SIZE + 5, TB_POS_Y + 95);
+        stage.getActors().get(23).setSize(BUTTON_SIZE, BUTTON_SIZE);
+        stage.getActors().get(23).setPosition((APP_WIDTH - BUTTON_SIZE)/2 + BIG_BUTTON_SIZE + 5, TB_POS_Y + 95);
         if(player.BachTuocFlag && !this.BachTuocAddFlag) {
             stage.addActor(BachTuocButton);
             stage.getActors().get(1).setVisible(true);

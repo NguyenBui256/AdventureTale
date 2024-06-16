@@ -82,20 +82,20 @@ public class WorldContactListener implements ContactListener {
         || (sensorDirectionB == NhanVat.BACHTUOC && sensorDirectionA == NhanVat.MAIN)) {
             removeBubble(NhanVat.BACHTUOC);
             screen.player.BachTuocFlag = true;
-            screen.player.bonusSound.play();
+            if(screen.player.soundOn) screen.player.bonusSound.play();
         }
         if((sensorDirectionA == NhanVat.CUCDA && sensorDirectionB == NhanVat.MAIN)
         || (sensorDirectionB == NhanVat.CUCDA && sensorDirectionA == NhanVat.MAIN)){
             removeBubble(NhanVat.CUCDA);
             screen.player.CucDaFlag = true;
-            screen.player.bonusSound.play();
+            if(screen.player.soundOn) screen.player.bonusSound.play();
         }
 
         if((sensorDirectionA == VatThe.DOOR && sensorDirectionB == NhanVat.MAIN)
         || (sensorDirectionB == VatThe.DOOR && sensorDirectionA == NhanVat.MAIN)){
             if (screen.isPass) {
                 screen.TRS.transitionOutFlag = true;
-                screen.player.endlevelMusic.play();
+                if(screen.player.soundOn) screen.player.endlevelMusic.play();
                 screen.ingameBGMusic.stop();
             }
         }
@@ -119,9 +119,10 @@ public class WorldContactListener implements ContactListener {
         (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX)){
             Button.isClick = true;
         }
+
         if (screen.nhanVat == NhanVat.CUCDA && ((isGlass(sensorDirectionA) && sensorDirectionB == NhanVat.MAIN)
                 || (sensorDirectionA == NhanVat.MAIN && isGlass(sensorDirectionB)))) {
-            if(!screen.glassList.get(index).isBroken) screen.player.glassSound.play();
+            if(!screen.glassList.get(index).isBroken && screen.player.soundOn) screen.player.glassSound.play();
             screen.glassList.get(index).isBroken = true;
         }
     }
@@ -193,10 +194,11 @@ public class WorldContactListener implements ContactListener {
                 if(screen.player.senBRCount <= 1) screen.player.senBR = false;
             }
         }
-        if((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
-                (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON) ||
-                (sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
-                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX)){
+        if(Button.isClick && ((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
+                (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON))){
+            Button.isClick = false;
+        } else if (Button.isClick && ((sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
+                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX))) {
             Button.isClick = false;
         }
     }
