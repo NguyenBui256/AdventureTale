@@ -82,20 +82,20 @@ public class WorldContactListener implements ContactListener {
         || (sensorDirectionB == NhanVat.BACHTUOC && sensorDirectionA == NhanVat.MAIN)) {
             removeBubble(NhanVat.BACHTUOC);
             screen.player.BachTuocFlag = true;
-            screen.player.bonusSound.play();
+            if(screen.player.soundOn) screen.player.bonusSound.play();
         }
         if((sensorDirectionA == NhanVat.CUCDA && sensorDirectionB == NhanVat.MAIN)
         || (sensorDirectionB == NhanVat.CUCDA && sensorDirectionA == NhanVat.MAIN)){
             removeBubble(NhanVat.CUCDA);
             screen.player.CucDaFlag = true;
-            screen.player.bonusSound.play();
+            if(screen.player.soundOn) screen.player.bonusSound.play();
         }
 
         if((sensorDirectionA == VatThe.DOOR && sensorDirectionB == NhanVat.MAIN)
         || (sensorDirectionB == VatThe.DOOR && sensorDirectionA == NhanVat.MAIN)){
             if (screen.isPass) {
                 screen.TRS.transitionOutFlag = true;
-                screen.player.endlevelMusic.play();
+                if(screen.player.soundOn) screen.player.endlevelMusic.play();
                 screen.ingameBGMusic.stop();
             }
         }
@@ -120,6 +120,7 @@ public class WorldContactListener implements ContactListener {
 
         if((sensorDirectionA == VatThe.FIRE && sensorDirectionB == NhanVat.MAIN)
                 || (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.FIRE)) {
+            screen.ingameBGMusic.stop();
             screen.player.reset();
             screen.game.gameScreen = new GameScreen(screen.game, screen.levelScreen);
             screen.game.setScreen(screen.game.gameScreen);
@@ -127,7 +128,7 @@ public class WorldContactListener implements ContactListener {
         }
         if (screen.nhanVat == NhanVat.CUCDA && ((isGlass(sensorDirectionA) && sensorDirectionB == NhanVat.MAIN)
                 || (sensorDirectionA == NhanVat.MAIN && isGlass(sensorDirectionB)))) {
-            if(!screen.glassList.get(index).isBroken) screen.player.glassSound.play();
+            if(!screen.glassList.get(index).isBroken && screen.player.soundOn) screen.player.glassSound.play();
             screen.glassList.get(index).isBroken = true;
         }
     }

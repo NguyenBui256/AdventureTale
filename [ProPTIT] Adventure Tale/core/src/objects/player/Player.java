@@ -31,7 +31,7 @@ public class Player extends Sprite {
     public Texture smokeTexture;
     public TextureRegion[][] smokeRegion;
     public Animation smokeAnimation;
-    public boolean isTransition = false;
+    public boolean isTransition = false, soundOn = true;
     public static boolean senTL = false, senTR = false, senBL = false, senBR = false,
             senT = false, senR = false, senB = false, senL = false;
     public static int senTLCount = 0, senTRCount = 0, senBLCount = 0, senBRCount = 0,
@@ -225,21 +225,21 @@ public class Player extends Sprite {
 
     public void checkCharacterInput(){
         if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
-            transformSound.play();
+            if(soundOn) transformSound.play();
             body.setGravityScale(1);
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
             changeCharacterStateTo(NhanVat.CUCAI);
         }
         if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
-            transformSound.play();
+            if(soundOn) transformSound.play();
             currentState = State.ROUND1;
             previousState = State.ROUND1;
             roll = 0;
             changeCharacterStateTo(NhanVat.BACHTUOC);
         }
         if(CucDaFlag && nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
-            transformSound.play();
+            if(soundOn) transformSound.play();
             body.setGravityScale(1);
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
@@ -262,13 +262,13 @@ public class Player extends Sprite {
 
             velX = 0;
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                if(!isJumping) walkingSound.play();
+                if(!isJumping && soundOn) walkingSound.play();
                 hasKeyPressed = true;
                 currentState = State.RUNNINGRIGHT;
                 velX = 1;
             }
             if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                if(!isJumping) walkingSound.play();
+                if(!isJumping && soundOn) walkingSound.play();
                 hasKeyPressed = true;
                 currentState = State.RUNNINGLEFT;
                 velX = -1;
@@ -289,7 +289,7 @@ public class Player extends Sprite {
                     soundCuCaiPlaying[0] = true;
                     isJumping = false;
                 }
-                if(soundCuCaiPlaying[0]){
+                if(soundCuCaiPlaying[0] && soundOn){
                     walkingSound.play();
                 }
             }
@@ -379,7 +379,7 @@ public class Player extends Sprite {
                 }
             }
             if(allowRight && Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                octopusSound.play();
+                if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
                 --roll;
                 if (roll == -1) {
@@ -390,7 +390,7 @@ public class Player extends Sprite {
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
             else if(allowLeft && Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                octopusSound.play();
+                if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
                 ++roll;
                 if (roll == 8) {
@@ -401,7 +401,7 @@ public class Player extends Sprite {
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
             else if(allowUp && Gdx.input.isKeyPressed(Input.Keys.UP)){
-                octopusSound.play();
+                if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
                 --roll;
                 if (roll == -1) {
@@ -413,7 +413,7 @@ public class Player extends Sprite {
             }
             else if(allowDown && Gdx.input.isKeyPressed(Input.Keys.DOWN))
             {
-                octopusSound.play();
+                if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
                 ++roll;
                 if (roll == 8) {
@@ -443,12 +443,12 @@ public class Player extends Sprite {
             });
             velX = 0;
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                rockSound.play();
+                if(soundOn) rockSound.play();
                 currentState = State.RUNNINGRIGHT;
                 velX = 1;
             }
             if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                rockSound.play();
+                if(soundOn) rockSound.play();
                 currentState = State.RUNNINGLEFT;
                 velX = -1;
             }
@@ -460,7 +460,7 @@ public class Player extends Sprite {
                     soundCucDaPlaying[0] = true;
                     isJumping = false;
                 }
-                if(soundCucDaPlaying[0]){
+                if(soundCucDaPlaying[0] && soundOn){
                     rockSound.play();
                 }
             }

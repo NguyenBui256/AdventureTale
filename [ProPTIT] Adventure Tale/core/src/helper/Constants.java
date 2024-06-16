@@ -46,6 +46,14 @@ public class Constants {
             ContinueClickPath = "Startpress.png",
             LevelPath = "Level.png",
             LevelClickPath = "Levelpress.png",
+            MusicOnPath = "musicOn.png",
+            MusicOnClickPath = "musicOnPress.png",
+            MusicOffPath = "musicOff.png",
+            MusicOffClickPath = "musicOffPress.png",
+            SoundOnPath = "soundOn.png",
+            SoundOnClickPath = "soundOnPress.png",
+            SoundOffPath = "soundOff.png",
+            SoundOffClickPath = "soundOffPress.png",
             BlackFadePath = "blackfade.png";
 
 

@@ -89,7 +89,6 @@ public class MenuScreen implements Screen {
 			}
 		} else {
 			if (checkSound) {
-
 				main.batch.draw(soundOnButton, xSound, xSound, iconSize, iconSize);
 			} else {
 				main.batch.draw(soundOffButton, xSound, xSound, iconSize, iconSize);
