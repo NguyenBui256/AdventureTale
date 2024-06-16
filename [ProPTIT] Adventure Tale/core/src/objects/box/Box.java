@@ -26,7 +26,7 @@ public class Box extends Sprite {
         Animation animation = new Animation(0.3f, region[0]);
         setRegion((TextureRegion) animation.getKeyFrame(screen.stateTime));
 
-        setBounds(body.getPosition().x,body.getPosition().y,tiledSize/PPM, tiledSize/PPM);
+        setBounds(body.getPosition().x,body.getPosition().y,TILE_SIZE/PPM, TILE_SIZE/PPM);
         this.body = body;
         MassData massData = new MassData();
         massData.mass = 10;

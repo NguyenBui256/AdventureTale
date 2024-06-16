@@ -3,6 +3,8 @@ package objects.player;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -18,36 +20,41 @@ import java.awt.geom.RectangularShape;
 import static helper.Constants.*;
 
 public class Player extends Sprite {
-    public enum State {IDLELEFT, IDLERIGHT, RUNNINGLEFT, RUNNINGRIGHT, JUMPINGLEFT, JUMPINGRIGHT, ROUND1, ROUND2, ROUND3, ROUND4, ROUND5, ROUND6, ROUND7, ROUND8};
-    public enum NhanVat {CUCAI, BACHTUOC, CUCDA};
     public NhanVat nhanVat, previousNhanVat;
     public Character NhanVatCuCai, NhanVatCucDa, NhanVatBachTuoc;
-    public State currentState;
-    public State previousState;
+    public State currentState, previousState;
     public Main game;
     public World world;
     public Body body;
     public int roll;
     public float speed, velX, velY, stateTimer;
-
-    public Texture boxTexture, smokeTexture;
-    public TextureRegion[][] boxRegion, smokeRegion;
-    public Animation boxAnimation, smokeAnimation;
-    public boolean isTransition = false;
-
-    public static boolean senTL = false, senTR = false, senBL = false, senBR = false, senT = false, senR = false, senB = false, senL = false;
-    public static int senTLCount = 0, senTRCount = 0, senBLCount = 0, senBRCount = 0;
+    public Texture smokeTexture;
+    public TextureRegion[][] smokeRegion;
+    public Animation smokeAnimation;
+    public boolean isTransition = false, soundOn = true;
+    public static boolean senTL = false, senTR = false, senBL = false, senBR = false,
+            senT = false, senR = false, senB = false, senL = false;
+    public static int senTLCount = 0, senTRCount = 0, senBLCount = 0, senBRCount = 0,
+            senTCount = 0, senBCount = 0, senLCount = 0, senRCount = 0;
     public boolean BachTuocFlag = false, CucDaFlag = false, isJumping = false;
-    public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null, topLeftSensor = null, topRightSensor = null, bottomLeftSensor = null, bottomRightSensor = null;
+    public Body leftSensor = null, rightSensor = null, topSensor = null, bottomSensor = null, topLeftSensor = null,
+            topRightSensor = null, bottomLeftSensor = null, bottomRightSensor = null;
 
+    final boolean[] soundCuCaiPlaying = { false }, soundBachTuocPlaying = { false }, soundCucDaPlaying = { false };
+    public Music walkingSound = Gdx.audio.newMusic(Gdx.files.internal(WalkingSoundPath)),
+                octopusSound = Gdx.audio.newMusic(Gdx.files.internal(OctopusSound)),
+                bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound)),
+                endlevelMusic = Gdx.audio.newMusic(Gdx.files.internal(EndLevelMusic)),
+                transformSound = Gdx.audio.newMusic(Gdx.files.internal(TransformSound)),
+                rockSound = Gdx.audio.newMusic(Gdx.files.internal(RockSound)),
+                glassSound = Gdx.audio.newMusic(Gdx.files.internal(GlassSound));
 
     public Player(GameScreen screen, Body body) {
         this.game = screen.game;
         this.world = screen.world;
         this.body = body;
 
-        setBounds(body.getPosition().x, body.getPosition().y,tiledSize/PPM,tiledSize/PPM);
-
+        setBounds(body.getPosition().x, body.getPosition().y,TILE_SIZE/PPM,TILE_SIZE/PPM);
 
         currentState = State.IDLERIGHT;
         previousState = State.IDLERIGHT;
@@ -74,7 +81,7 @@ public class Player extends Sprite {
                 null
         );
         NhanVatBachTuoc = new Character(
-                32, 32,
+                36, 36,
                 null,
                 null,
                 null,
@@ -83,26 +90,28 @@ public class Player extends Sprite {
                 null
         );
 
-        leftSensor = createSensor(0,sizeSensorSize, "leftSensor");
-        rightSensor = createSensor(0,sizeSensorSize, "rightSensor");
-        topSensor = createSensor(sizeSensorSize,0, "topSensor");
-        bottomSensor = createSensor(sizeSensorSize,0, "bottomSensor");
-        topLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "topLeftSensor", 0, 0);
-        topRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "topRightSensor", 0, 0);
-        bottomLeftSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomLeftSensor", 0, 0);
-        bottomRightSensor = createEdgeSensor(cornerSensorSize, cornerSensorSize, "bottomRightSensor", 0, 0);
+        leftSensor = createSensor(0,EDGE_SENSOR_SIZE, SensorDirection.LEFT);
+        rightSensor = createSensor(0,EDGE_SENSOR_SIZE, SensorDirection.RIGHT);
+        topSensor = createSensor(EDGE_SENSOR_SIZE,0, SensorDirection.TOP);
+        bottomSensor = createSensor(EDGE_SENSOR_SIZE,0, SensorDirection.BOT);
+        topLeftSensor = createEdgeSensor(CORNER_SENSOR_SIZE, CORNER_SENSOR_SIZE, SensorDirection.TOPLEFT, 0, 0);
+        topRightSensor = createEdgeSensor(CORNER_SENSOR_SIZE, CORNER_SENSOR_SIZE, SensorDirection.TOPRIGHT, 0, 0);
+        bottomLeftSensor = createEdgeSensor(CORNER_SENSOR_SIZE, CORNER_SENSOR_SIZE, SensorDirection.BOTLEFT, 0, 0);
+        bottomRightSensor = createEdgeSensor(CORNER_SENSOR_SIZE, CORNER_SENSOR_SIZE, SensorDirection.BOTRIGHT, 0, 0);
 
-        boxTexture = new Texture("tile_0026.png");
-        boxRegion = TextureRegion.split(boxTexture, 18, 18);
-        boxAnimation = new Animation(0.3f, boxRegion[0]);
-
-        smokeTexture = new Texture("smokeAnimation.png");
+        smokeTexture = new Texture(SmokeAnimationPath);
         smokeRegion = TextureRegion.split(smokeTexture, 64,64);
         smokeAnimation = new Animation(0.05f, smokeRegion[0]);
 
         stateTimer = 0;
         this.body = body;
-        this.speed = 10f;
+        this.speed = 9f;
+
+        octopusSound.setVolume(1);
+        rockSound.setVolume(0.7f);
+        transformSound.setVolume(0.4f);
+        walkingSound.setVolume(1);
+        bonusSound.setVolume(0.4f);
     }
     public void update(float dt) {
 
@@ -120,7 +129,6 @@ public class Player extends Sprite {
         checkCharacterInput();
         checkMovingInput();
 
-
         //Transition animation between characters changes
         if(isTransition) {
             stateTimer = 0;
@@ -128,9 +136,10 @@ public class Player extends Sprite {
         }
         if(nhanVat != previousNhanVat && !smokeAnimation.isAnimationFinished(stateTimer)){
             setRegion((TextureRegion) smokeAnimation.getKeyFrame(stateTimer, false));
-
-            setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3,2*tiledSize/PPM,2*tiledSize/PPM);
-
+            setBounds(body.getPosition().x - getWidth() / 2,
+                    body.getPosition().y - getHeight() / 3,
+                    2*TILE_SIZE/PPM,
+                    2*TILE_SIZE/PPM);
             stateTimer += Gdx.graphics.getDeltaTime();
             return;
         }
@@ -145,7 +154,7 @@ public class Player extends Sprite {
             massData.mass = 0;
             body.setMassData(massData);
             setRegion(getFrame(NhanVatCuCai,dt));
-            setBounds(body.getPosition().x, body.getPosition().y,2*tiledSize/PPM,2*tiledSize/PPM);
+            setBounds(body.getPosition().x, body.getPosition().y,2*TILE_SIZE/PPM,2*TILE_SIZE/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 4);
         }
         else if(nhanVat == NhanVat.BACHTUOC) {
@@ -153,17 +162,16 @@ public class Player extends Sprite {
             massData.mass = 0;
             body.setMassData(massData);
             setRegion(getFrame(NhanVatBachTuoc,dt));
-            setBounds(body.getPosition().x,body.getPosition().y,2*tiledSize/PPM, 2*tiledSize/PPM);
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
+            setBounds(body.getPosition().x,body.getPosition().y,2*TILE_SIZE/PPM, 2*TILE_SIZE/PPM);
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         }
         else if(nhanVat == NhanVat.CUCDA){
             MassData massData = new MassData();
-            massData.mass = 2;
+            massData.mass = 2f;
             body.setMassData(massData);
             setRegion(getFrame(NhanVatCucDa,dt));
-            setBounds(body.getPosition().x, body.getPosition().y,(2*tiledSize - 6)/PPM,(2*tiledSize - 6)/PPM);
+            setBounds(body.getPosition().x, body.getPosition().y,(2*TILE_SIZE - 6)/PPM,(2*TILE_SIZE - 6)/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
-
         }
     }
 
@@ -214,20 +222,24 @@ public class Player extends Sprite {
         previousState = currentState;
         return region;
     }
+
     public void checkCharacterInput(){
         if(nhanVat != NhanVat.CUCAI && Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
+            if(soundOn) transformSound.play();
             body.setGravityScale(1);
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
             changeCharacterStateTo(NhanVat.CUCAI);
         }
         if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
+            if(soundOn) transformSound.play();
             currentState = State.ROUND1;
             previousState = State.ROUND1;
             roll = 0;
             changeCharacterStateTo(NhanVat.BACHTUOC);
         }
         if(CucDaFlag && nhanVat != NhanVat.CUCDA && Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
+            if(soundOn) transformSound.play();
             body.setGravityScale(1);
             currentState = State.IDLERIGHT;
             previousState = State.IDLERIGHT;
@@ -238,96 +250,136 @@ public class Player extends Sprite {
     public void checkMovingInput(){
 
         if(Gdx.input.isTouched()){
-            System.out.println("TL T TR: " + senTL + senT + senTR +  "| BL B BR: " + senBL + senB + senBR + "| L R: " + senL + senR);
-
+            System.out.println("TL T TR: " + senTL + senT + senTR +  "| BL B BR: " +
+                    senBL + senB + senBR + "| L R: " + senL + senR);
         }
         if (nhanVat == NhanVat.CUCAI) {
+            boolean hasKeyPressed = false;
+            walkingSound.setOnCompletionListener(music -> {
+                soundCuCaiPlaying[0] = false;
+                walkingSound.stop();
+            });
+
             velX = 0;
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                if(!isJumping && soundOn) walkingSound.play();
+                hasKeyPressed = true;
                 currentState = State.RUNNINGRIGHT;
                 velX = 1;
             }
             if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+                if(!isJumping && soundOn) walkingSound.play();
+                hasKeyPressed = true;
                 currentState = State.RUNNINGLEFT;
                 velX = -1;
             }
             if(!isJumping && Gdx.input.isKeyPressed(Input.Keys.UP) && body.getLinearVelocity().y == 0){
+                isJumping = true;
+                hasKeyPressed = true;
                 float force = (body.getMass() + 0.05f) * 10f;
                 body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
-                isJumping = true;
-
             }
             if(body.getLinearVelocity().y!=0) {
+                isJumping = true;
                 if(currentState == State.RUNNINGLEFT || currentState == State.IDLELEFT) currentState = State.JUMPINGLEFT;
                 else if(currentState == State.RUNNINGRIGHT || currentState == State.IDLERIGHT) currentState = State.JUMPINGRIGHT;
             }
-            else isJumping = false;
-
+            else {
+                if(isJumping){
+                    soundCuCaiPlaying[0] = true;
+                    isJumping = false;
+                }
+                if(soundCuCaiPlaying[0] && soundOn){
+                    walkingSound.play();
+                }
+            }
             if(this.velX == 0 && body.getLinearVelocity().y == 0){
                 if(currentState == State.RUNNINGRIGHT || currentState == State.JUMPINGRIGHT) currentState = State.IDLERIGHT;
                 else if(currentState == State.RUNNINGLEFT || currentState == State.JUMPINGLEFT) currentState = State.IDLELEFT;
             }
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
+            if(!soundCuCaiPlaying[0] && !hasKeyPressed) {
+                walkingSound.stop();
+            }
         }
         else if (nhanVat == NhanVat.BACHTUOC) {
+            octopusSound.setOnCompletionListener(music -> {
+                soundBachTuocPlaying[0] = false;
+                octopusSound.stop();
+            });
             boolean hasKeyPressed = false;
             velX = 0;
             velY = 0;
             boolean allowLeft = false, allowRight = false, allowUp = false, allowDown = false;
             //4 corners
-            if(senBRCount == 2 && !senB && !senBL && !senR && !senTR) //top left
+            if(senBRCount >= 2 && !senB && !senBL && !senR && !senTR) //top left
             {
-                System.out.println("top left");
+//                System.out.println("top left");
                 body.setLinearVelocity(1,-2);
                 allowLeft = false; allowUp = false;
                 allowDown = true; allowRight = true;
             }
-            if(senBLCount == 2 && !senB && !senBR && !senL && !senTL) //top right
+            else if(senBLCount >= 2 && !senB && !senBR && !senL && !senTL) //top right
             {
+//                System.out.println("top right");
                 body.setLinearVelocity(-1,-2);
-                System.out.println("top right");
                 allowRight = false; allowUp = false;
                 allowDown = true; allowLeft = true;
             }
-            if(senTRCount == 2 && !senT && !senTL && !senR && !senBR) //bot left
+            else if(senTRCount >= 2 && !senT && !senTL && !senR && !senBR) //bot left
             {
-                System.out.println("bot left");
+//                System.out.println("bot left");
                 body.setLinearVelocity(1,2);
                 allowLeft = false; allowDown = false;
                 allowRight = true; allowUp = true;
             }
-            if(senTLCount == 2 && !senT && !senTR && !senL && !senBL) //bot right
+            else if(senTLCount >= 2 && !senT && !senTR && !senL && !senBL) //bot right
             {
-                System.out.println("bot right");
+//                System.out.println("bot right");
                 body.setLinearVelocity(-1,2);
                 allowRight = false; allowDown = false;
                 allowLeft = true; allowUp = true;
             }
 
-            if((senBL && senB && senBR) || (senBL && senB) || (senB && senBR) || (senTL && senT && senTR) || (senTL && senT) || (senT && senTR)){
+            if((senBL && senB && senBR) || (senBL && senB) || (senB && senBR)
+            || (senTL && senT && senTR) || (senTL && senT) || (senT && senTR)){
                 if((senBL && senB && senBR) || (senBL && senB) || (senB && senBR)) body.setGravityScale(1); //ground
                 if((senTL && senT && senTR) || (senTL && senT) || (senT && senTR)) body.setGravityScale(-1); //ceilling
                 allowLeft = true; allowRight = true;
                 if((senTL && senL && senBL) || (senTR && senR && senBR)) {
                     allowUp = true;
                     allowDown = true;
+                    if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+                        allowLeft = allowRight = false;
+                    }
+                    if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                        allowUp = allowDown = false;
+                    }
                 }
                 else{
                     allowUp = false;
                     allowDown = false;
                 }
             }
-            if((senTL && senL && senBL) || (senTL && senL) || (senBL && senL) || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR)){
+            else if((senTL && senL && senBL) || (senTL && senL) || (senBL && senL)
+            || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR)){
 //                System.out.println("side");
                 body.setGravityScale(0);
                 allowUp = true; allowDown = true;
                 if((senBL && senB && senBR) || (senTL && senT && senTR)){
                     allowLeft = true; allowRight = true;
+                    if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+                        allowLeft = allowRight = false;
+                    }
+                    if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                        allowUp = allowDown = false;
+                    }
                 }else{
                     allowLeft = false; allowRight = false;
                 }
             }
             if(allowRight && Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
                 --roll;
                 if (roll == -1) {
@@ -337,7 +389,8 @@ public class Player extends Sprite {
                 velX = 1;
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
-            if(allowLeft && Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            else if(allowLeft && Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+                if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
                 ++roll;
                 if (roll == 8) {
@@ -347,7 +400,8 @@ public class Player extends Sprite {
                 velX = -1;
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
             }
-            if(allowUp && Gdx.input.isKeyPressed(Input.Keys.UP)){
+            else if(allowUp && Gdx.input.isKeyPressed(Input.Keys.UP)){
+                if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
                 --roll;
                 if (roll == -1) {
@@ -357,8 +411,9 @@ public class Player extends Sprite {
                 velY = 1;
                 body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, speed);
             }
-            if(allowDown && Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            else if(allowDown && Gdx.input.isKeyPressed(Input.Keys.DOWN))
             {
+                if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
                 ++roll;
                 if (roll == 8) {
@@ -368,27 +423,55 @@ public class Player extends Sprite {
                 velY = -1;
                 body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, -speed);
             }
+            if(!soundBachTuocPlaying[0] && !hasKeyPressed) {
+                octopusSound.stop();
+            }
             if(!hasKeyPressed){
                 if(body.getLinearVelocity().y == 0)  body.setLinearVelocity(0,0);
-                if(body.getLinearVelocity().x == 0 && (senL || senR)) body.setLinearVelocity(0,0);
-
-       
+                if(body.getLinearVelocity().x == 0 &&
+                        ((senTL && senL && senBL) || (senTL && senL) || (senBL && senL)
+                        || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR))) {
+                    body.setLinearVelocity(0, 0);
+                }
             }
-        } else {
+        }
+        else {
+            boolean hasKeyPressed = false;
+            rockSound.setOnCompletionListener(music -> {
+                soundCucDaPlaying[0] = false;
+                rockSound.stop();
+            });
             velX = 0;
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                if(soundOn) rockSound.play();
                 currentState = State.RUNNINGRIGHT;
                 velX = 1;
             }
             if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+                if(soundOn) rockSound.play();
                 currentState = State.RUNNINGLEFT;
                 velX = -1;
+            }
+            if (body.getLinearVelocity().y != 0) {
+                isJumping = true;
+            }
+            else {
+                if(isJumping){
+                    soundCucDaPlaying[0] = true;
+                    isJumping = false;
+                }
+                if(soundCucDaPlaying[0] && soundOn){
+                    rockSound.play();
+                }
             }
             if(this.velX == 0 && body.getLinearVelocity().y == 0){
                 if(currentState == State.RUNNINGRIGHT) currentState = State.IDLERIGHT;
                 else if(currentState == State.RUNNINGLEFT) currentState = State.IDLELEFT;
             }
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
+            if(!soundCucDaPlaying[0] && !hasKeyPressed) {
+                walkingSound.stop();
+            }
         }
     }
 
@@ -397,7 +480,7 @@ public class Player extends Sprite {
         nhanVat = state;
     }
 
-    public Body createSensor(float width, float height, String data){
+    public Body createSensor(float width, float height, SensorDirection data){
         Body sensorBody;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -411,7 +494,7 @@ public class Player extends Sprite {
         boxShape.dispose();
         return sensorBody;
     }
-    public Body createEdgeSensor(float width, float height, String data, float x, float y){
+    public Body createEdgeSensor(float width, float height, SensorDirection data, float x, float y){
         Body sensorBody;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -425,5 +508,11 @@ public class Player extends Sprite {
         boxShape.dispose();
         return sensorBody;
     }
-}
 
+    public void reset(){
+        senTL = false; senTR = false; senBL = false; senBR = false; senT = false; senR = false; senB = false; senL = false;
+        BachTuocFlag = false; CucDaFlag = false; isJumping = false;
+        senTLCount = 0; senTRCount = 0; senBLCount = 0; senBRCount = 0;
+        senTCount = 0; senBCount = 0; senLCount = 0; senRCount = 0;
+    }
+}
