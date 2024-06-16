@@ -23,7 +23,7 @@ public class MenuScreen implements Screen{
 	public static final int HEIGHT = APP_HEIGHT;
 	Main main;
 
-	public Music bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/background-DLTTAD.ogg"));
+	public Music bgMusic = Gdx.audio.newMusic(Gdx.files.internal(MenuBGMusicPath));
 	Menu menu;
 	public MenuScreen(Main main) {
 		this.main = main;

@@ -47,7 +47,7 @@ public class Constants {
             ContinueClickPath = "Startpress.png",
             LevelPath = "Level.png",
             LevelClickPath = "Levelpress.png",
-            SAVE_FILE_PATH = "savedata.txt";
+            SAVE_FILE_PATH = "savedata.txt",
             MusicOnPath = "musicOn.png",
             MusicOnClickPath = "musicOnPress.png",
             MusicOffPath = "musicOff.png",

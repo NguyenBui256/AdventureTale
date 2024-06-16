@@ -25,7 +25,7 @@ public class Menu {
     protected ImageButton MusicOnButton, MusicOnClickButton, MusicOffButton, MusicOffClickButton;
 
     public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal("sound/bonussound.ogg")),
-            bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/background-DLTTAD.ogg"));
+            bgMusic = Gdx.audio.newMusic(Gdx.files.internal(MenuBGMusicPath));
     public Menu (Main main) {
         this.main = main;
         stage = new Stage();
