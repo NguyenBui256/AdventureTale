@@ -510,7 +510,7 @@ public class Player extends Sprite {
     }
 
     public void reset(){
-        senTL = false;senTR = false; senBL = false; senBR = false; senT = false; senR = false; senB = false; senL = false;
+        senTL = false; senTR = false; senBL = false; senBR = false; senT = false; senR = false; senB = false; senL = false;
         BachTuocFlag = false; CucDaFlag = false; isJumping = false;
         senTLCount = 0; senTRCount = 0; senBLCount = 0; senBRCount = 0;
         senTCount = 0; senBCount = 0; senLCount = 0; senRCount = 0;

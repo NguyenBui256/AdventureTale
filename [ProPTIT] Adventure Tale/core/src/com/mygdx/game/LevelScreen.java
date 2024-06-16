@@ -73,9 +73,6 @@ public class LevelScreen implements Screen {
                 ++d;
             }
         }
-        if (Gdx.input.isTouched()) {
-            System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
-        }
         d = 0;
         for (int j = 0; j < 3; ++j) {
             for (int i = 0; i < 4; ++i) {
@@ -88,7 +85,7 @@ public class LevelScreen implements Screen {
                         bonusSound.play();
                         main.gameScreen = new GameScreen(main, this);
                         main.setScreen(main.gameScreen);
-                        main.menuScreen.bgMusic.stop();
+                        main.menuScreen.menu.bgMusic.stop();
                     }
                 }
                 ++d;
@@ -100,8 +97,6 @@ public class LevelScreen implements Screen {
             if (Gdx.input.isTouched()) {
                 this.dispose();
                 bonusSound.play();
-                main.menuScreen.bgMusic.stop();
-                main.menuScreen = new MenuScreen(main);
                 main.setScreen(main.menuScreen);
             }
         } else {

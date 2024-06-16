@@ -28,7 +28,6 @@ public class MenuScreen implements Screen{
 	public MenuScreen(Main main) {
 		this.main = main;
 		this.menu = new Menu(main);
-//		Gdx.input.setInputProcessor(menu.stage);
 	}
 
 	@Override

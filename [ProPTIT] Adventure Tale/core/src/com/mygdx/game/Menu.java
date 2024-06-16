@@ -24,7 +24,7 @@ public class Menu {
     Stage stage;
     protected ImageButton MusicOnButton, MusicOnClickButton, MusicOffButton, MusicOffClickButton;
 
-    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal("sound/bonussound.ogg")),
+    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound)),
             bgMusic = Gdx.audio.newMusic(Gdx.files.internal(MenuBGMusicPath));
     public Menu (Main main) {
         this.main = main;
@@ -83,7 +83,6 @@ public class Menu {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 playButton.setVisible(true);
                 playButtonClick.setVisible(false);
-                bgMusic.stop();
                 bonusSound.play();
                 main.levelScreen = new LevelScreen(main);
                 main.setScreen(main.levelScreen);

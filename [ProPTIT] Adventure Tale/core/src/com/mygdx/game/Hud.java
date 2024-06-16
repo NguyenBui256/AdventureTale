@@ -58,42 +58,11 @@ public class Hud {
         MusicOnClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOnClickPath))));
         MusicOffButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOffPath))));
         MusicOffClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOffClickPath))));
-//        CuCaiButton.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                super.clicked(event, x, y);
-//                if(player.nhanVat != Player.NhanVat.CUCAI) {
-//                    player.changeCharacterStateTo(Player.NhanVat.CUCAI);
-//                    focusTo(0);
-//                }
-//            }
-//        });
-
-//        BachTuocButton.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                super.clicked(event, x, y);
-//                if(player.nhanVat != Player.NhanVat.BACHTUOC) {
-//                    player.changeCharacterStateTo(Player.NhanVat.BACHTUOC);
-//                    focusTo(1);
-//                }
-//            }
-//        });
-
-//        CucDaButton.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                super.clicked(event, x, y);
-//                if(player.nhanVat != Player.NhanVat.CUCDA) {
-//                    player.changeCharacterStateTo(Player.NhanVat.CUCDA);
-//                    focusTo(2);
-//                }
-//            }
-//        });
 
         PauseButton.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bonusSound.setPosition(0);
                 bonusSound.play();
                 DarkBackground.setVisible(true);
                 DarkBackground.setColor(0, 0, 0, 0.2f);
@@ -114,6 +83,7 @@ public class Hud {
         RestartButton.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bonusSound.setPosition(0);
                 bonusSound.play();
                 RestartButton.setVisible(false);
                 RestartClickButton.setVisible(true);
@@ -157,6 +127,7 @@ public class Hud {
         RestartButton2.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bonusSound.setPosition(0);
                 bonusSound.play();
                 RestartButton2.setVisible(false);
                 RestartClickButton2.setVisible(true);
@@ -176,6 +147,8 @@ public class Hud {
         MusicOnButton.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bonusSound.setPosition(0);
+                bonusSound.play();
                 MusicOnButton.setVisible(false);
                 MusicOnClickButton.setVisible(true);
                 music = false;
@@ -204,6 +177,7 @@ public class Hud {
         ContinueButton.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bonusSound.setPosition(0);
                 bonusSound.play();
                 if(nextlevel) {
                     System.out.println("Duoc roi ne!!");
@@ -225,6 +199,7 @@ public class Hud {
         LevelButton.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bonusSound.setPosition(0);
                 bonusSound.play();
                 LevelButton.setVisible(false);
                 LevelClickButton.setVisible(true);

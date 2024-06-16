@@ -64,7 +64,6 @@ public class GameScreen implements Screen {
         this.destroyList = new ArrayList<>();
         this.fireList = new ArrayList<>();
         this.glassList = new ArrayList<>();
-//        this.brokenGlassList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         box2DDebugRenderer.setDrawJoints(false);
         box2DDebugRenderer.setDrawBodies(false);
@@ -102,14 +101,12 @@ public class GameScreen implements Screen {
     public void update(float dt){
         if(DestroyFlag){
             for(Bubble bubble : destroyList){
-//                System.out.println("Destroyed!");
                 world.destroyBody(bubble.body);
                 bubbleList.remove(bubble);
             }
             destroyList.clear();
             DestroyFlag = false;
         }
-//        System.out.println(destroyList.size());
 
         for (int i = 0; i < glassList.size(); ++i) {
             if (glassList.get(i).isBroken && !glassList.get(i).isVisited) {
@@ -117,9 +114,6 @@ public class GameScreen implements Screen {
                 for (Fixture fixture : glassList.get(i).body.getFixtureList()) {
                     fixture.setSensor(true);
                 }
-//                world.destroyBody(glassList.get(i).body);
-//                Pair<Rectangle, Pair<Integer, Integer>> brokenGlass = brokenGlassList.get(i);
-//                glassList.set(i, new Glass(this, tileMapHelper.createBubble(brokenGlass.first, "glass" + i, true, true), brokenGlass.second.first, brokenGlass.second.second));
                 glassList.get(i).isVisited = true;
             }
         }
@@ -209,7 +203,6 @@ public class GameScreen implements Screen {
             } else {
                 if(TRS.transitionState == 2){
                     ingameBGMusic.stop();
-//                    game.menuScreen.bgMusic.play();
                     TRS.fadeInStage.dispose();
                     game.batch = new SpriteBatch();
                     this.dispose();
@@ -224,10 +217,6 @@ public class GameScreen implements Screen {
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            if(Gdx.input.isTouched()){
-                System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
-                System.out.println(Math.round(player.body.getPosition().x * PPM * 10 / 10f) + " " + Math.round(player.body.getPosition().y * PPM * 10 / 10f));
-            }
             if(Gdx.input.isKeyJustPressed(Input.Keys.P)|| hud.restart){
                 player.reset();
                 ingameBGMusic.stop();
@@ -287,8 +276,9 @@ public class GameScreen implements Screen {
                 musicOn = true;
             }
             if(hud.level){
+                player.reset();
                 ingameBGMusic.stop();
-                game.menuScreen.bgMusic.play();
+                game.menuScreen.menu.bgMusic.play();
                 TRS.fadeInStage.dispose();
                 game.batch = new SpriteBatch();
                 this.dispose();
@@ -297,23 +287,20 @@ public class GameScreen implements Screen {
             }
             if(winn) {
                 if (Main.chooseLevel == Main.level) {
+                    player.reset();
                     ++Main.level;
                     try {
                         System.out.println("da luu file");
                         game.fw = new FileWriter(SAVE_FILE_PATH, false);
                         game.fw.write(Main.level + "");
                         game.fw.close();
-//                        System.out.println(Main.level);
-//                         System.out.println("Save file");
-//                         System.out.println(Main.level);
-//                         Main.fw.write(Main.level);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
-                //hud.nextlevel = true;
                 hud.win();
                 if (hud.goToNextLevel) {
+                    player.reset();
                     ++Main.chooseLevel;
                   if (Main.level == 13) {
                         --Main.level;
@@ -323,7 +310,6 @@ public class GameScreen implements Screen {
                         game.batch = new SpriteBatch();
                         this.dispose();
                         game.setScreen(game.levelScreen);
-//                        this.tileMapHelper = new TileMapHelper(this);
                     }
                     TRS.transitionState = 2;
                     TRS.transitionRunnning = true;

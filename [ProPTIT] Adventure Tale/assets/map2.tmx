@@ -150,13 +150,13 @@
    <polygon points="0,0 54,0 54,216 0,216"/>
   </object>
   <object id="15" x="396" y="540">
-   <polygon points="0,0 -54,0 -54,54 0,54"/>
+   <polygon points="0,0 -54,0 -54,35.9583 0,35.9583"/>
   </object>
   <object id="16" x="684" y="540">
-   <polygon points="0,0 54,0 54,54 0,54"/>
+   <polygon points="0,0 53.9486,0 53.9486,36 0,36"/>
   </object>
-  <object id="17" x="396" y="576">
-   <polygon points="0,0 288,0 288,18 0,18"/>
+  <object id="17" x="342" y="576">
+   <polygon points="0,0 395.955,0 395.955,18 0,18"/>
   </object>
   <object id="18" x="756" y="396">
    <polygon points="0,0 126,0 126,54 0,54"/>
