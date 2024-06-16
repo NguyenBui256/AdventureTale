@@ -53,7 +53,8 @@ public class Constants {
             SoundOnClickPath = "soundOnPress.png",
             SoundOffPath = "soundOff.png",
             SoundOffClickPath = "soundOffPress.png",
-            BlackFadePath = "blackfade.png";
+            BlackFadePath = "blackfade.png",
+            BackGroundMenuPath = "bgfn.png";
 
 
     //----------Audios path strings

@@ -215,9 +215,6 @@ public class GameScreen implements Screen {
             box2DDebugRenderer.render(world, playerCamera.combined.scl(PPM));
             box2DDebugRenderer.render(world, staticCamera.combined.scl(PPM));
 
-            hud.stage.act(Gdx.graphics.getDeltaTime());
-            hud.stage.draw();
-
             stateTime += delta;
 
             game.batch.setProjectionMatrix(staticCamera.combined);
@@ -283,6 +280,16 @@ public class GameScreen implements Screen {
                 hud.win();
                 if (hud.goToNextLevel) {
                     ++Main.chooseLevel;
+                  if (Main.level == 13) {
+                        --Main.level;
+                        ingameBGMusic.stop();
+                        game.menuScreen.bgMusic.play();
+                        TRS.fadeInStage.dispose();
+                        game.batch = new SpriteBatch();
+                        this.dispose();
+                        game.setScreen(game.levelScreen);
+//                        this.tileMapHelper = new TileMapHelper(this);
+                    }
                     TRS.transitionState = 2;
                     TRS.transitionRunnning = true;
                     endMap = true;
