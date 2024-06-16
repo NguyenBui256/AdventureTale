@@ -27,7 +27,7 @@ import static helper.Constants.*;
 public class GameScreen implements Screen {
     public float stateTime;
     public NhanVat nhanVat;
-    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false,  winn = false, checkDoor = false;
+    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false,  winn = false, soundOn = true, musicOn = true, checkDoor = false;
     protected Hud hud;
     public Main game;
     public LevelScreen levelScreen;
@@ -243,6 +243,22 @@ public class GameScreen implements Screen {
 
             hud.stage.act(Gdx.graphics.getDeltaTime());
             hud.stage.draw();
+            if(!hud.sound && soundOn){
+                player.soundOn = false;
+                soundOn = false;
+            }
+            else if(hud.sound && !soundOn){
+                player.soundOn = true;
+                soundOn = true;
+            }
+            if(!hud.music && musicOn){
+                ingameBGMusic.stop();
+                musicOn = false;
+            }
+            else if(hud.music && !musicOn){
+                ingameBGMusic.play();
+                musicOn = true;
+            }
             if(hud.level){
                 ingameBGMusic.stop();
                 game.menuScreen.bgMusic.play();
