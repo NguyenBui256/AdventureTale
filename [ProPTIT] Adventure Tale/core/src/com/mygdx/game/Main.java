@@ -38,13 +38,13 @@ public class Main extends Game {
     public void create() {
         if(reader.hasNext()){
             level = reader.nextInt();
-            System.out.println("dau vao:" + level);
+//            System.out.println("dau vao:" + level);
         }else level = 1;
 
         batch = new SpriteBatch();
         font = new BitmapFont();
 
-        Pixmap pixmap = new Pixmap((Gdx.files.internal("cursor.png")));
+        Pixmap pixmap = new Pixmap((Gdx.files.internal(CURSOR_ICON)));
         int xHotspot = 15, yHotspot = 15;
         Cursor cursor = Gdx.graphics.newCursor(pixmap,xHotspot,yHotspot);
         pixmap.dispose();
@@ -58,7 +58,7 @@ public class Main extends Game {
 
         stage = new Stage(new StretchViewport(APP_WIDTH, APP_HEIGHT));
         Gdx.input.setInputProcessor(stage);
-        blackFade = new Image(new Texture(Gdx.files.internal("blackFade.png")));
+        blackFade = new Image(new Texture(Gdx.files.internal(BLACK_SCENE)));
         blackFade.setOrigin(blackFade.getWidth() / 2, blackFade.getHeight() / 2);
 
         stage.addActor(blackFade);

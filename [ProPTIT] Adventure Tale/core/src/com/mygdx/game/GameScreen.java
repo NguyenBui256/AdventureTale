@@ -29,7 +29,8 @@ import static helper.Constants.*;
 public class GameScreen implements Screen {
     public float stateTime;
     public NhanVat nhanVat;
-    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false,  winn = false, soundOn = true, musicOn = true, checkDoor = false, isZoomOut = false;
+    public boolean endMap = false, DestroyFlag = false, checkButton = false, isPass = false, isPause = false,
+            winn = false, soundOn = true, musicOn = true, checkDoor = false, isZoomOut = false;
     protected Hud hud;
     public Main game;
     public LevelScreen levelScreen;
@@ -49,7 +50,7 @@ public class GameScreen implements Screen {
     public OrthogonalTiledMapRenderer renderer;
     public Box2DDebugRenderer box2DDebugRenderer;
     public Vector3 center;
-    public Music ingameBGMusic = Gdx.audio.newMusic(Gdx.files.internal(IngameBGMPath));
+    public Music ingameBGMusic = Gdx.audio.newMusic(Gdx.files.internal(INGAME_BG_MUSIC));
 
     public GameScreen (Main game, LevelScreen levelScreen){
         this.TRS = new TransitionScreen(game);
@@ -73,11 +74,11 @@ public class GameScreen implements Screen {
 
         this.hud = new Hud(player);
         Gdx.input.setInputProcessor(hud.stage);
-        CuCaiButton = new Texture(CuCaiButtonPath);
-        BachTuocButton = new Texture(BachTuocButtonPath);
-        CucDaButton = new Texture(CucDaButtonPath);
-        restart = new Texture(RestartButtonPath);
-        pause = new Texture(PauseButtonPath);
+        CuCaiButton = new Texture(CU_CAI_BTN);
+        BachTuocButton = new Texture(BACH_TUOC_BTN);
+        CucDaButton = new Texture(CUC_DA_BTN);
+        restart = new Texture(RESTART_BTN);
+        pause = new Texture(PAUSE_BUTTON);
 
         this.nhanVat = NhanVat.CUCAI;
 
@@ -181,26 +182,26 @@ public class GameScreen implements Screen {
             TRS.time = System.currentTimeMillis();
             TRS.transitionInFlag = false;
             TRS.transitionRunnning = true;
-            TRS.transitionState = 1;
+            TRS.transitionState = TransitionScreen.TrangThai.IN;
         }
         else if(TRS.transitionOutFlag){
             winn = true;
             TRS.time = System.currentTimeMillis();
             TRS.transitionOutFlag = false;
-            TRS.transitionState = 2;
+            TRS.transitionState = TransitionScreen.TrangThai.OUT;
         }
         else if(TRS.transitionRunnning) {
             if (System.currentTimeMillis() < TRS.time + 1000) {
-                if(TRS.transitionState == 1){
+                if(TRS.transitionState == TransitionScreen.TrangThai.IN){
                     TRS.fadeInStage.act(delta);
                     TRS.fadeInStage.draw();
                 }
-                else if(TRS.transitionState == 2){
+                else if(TRS.transitionState == TransitionScreen.TrangThai.OUT){
                     TRS.fadeOutStage.act(delta);
                     TRS.fadeOutStage.draw();
                 }
             } else {
-                if(TRS.transitionState == 2){
+                if(TRS.transitionState == TransitionScreen.TrangThai.OUT){
                     ingameBGMusic.stop();
                     TRS.fadeInStage.dispose();
                     game.batch = new SpriteBatch();
@@ -225,6 +226,17 @@ public class GameScreen implements Screen {
             }
             if (Gdx.input.isKeyPressed(Input.Keys.Z)) isZoomOut = true;
             else isZoomOut = false;
+
+            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+                if(!isPause) {
+                    hud.showPauseNoti();
+                    isPause = true;
+                }
+                else {
+                    hud.hidePauseNoti();
+                    isPause = false;
+                }
+            }
 
             this.update(delta);
 
@@ -289,7 +301,7 @@ public class GameScreen implements Screen {
                     player.reset();
                     ++Main.level;
                     try {
-                        System.out.println("da luu file");
+//                        System.out.println("da luu file");
                         game.fw = new FileWriter(SAVE_FILE_PATH, false);
                         game.fw.write(Main.level + "");
                         game.fw.close();
@@ -297,7 +309,7 @@ public class GameScreen implements Screen {
                         throw new RuntimeException(e);
                     }
                 }
-                hud.win();
+                hud.winProcess();
                 if (hud.goToNextLevel) {
                     player.reset();
                     ++Main.chooseLevel;
@@ -310,7 +322,7 @@ public class GameScreen implements Screen {
                         this.dispose();
                         game.setScreen(game.levelScreen);
                     }
-                    TRS.transitionState = 2;
+                    TRS.transitionState = TransitionScreen.TrangThai.OUT;
                     TRS.transitionRunnning = true;
                     endMap = true;
                 }

@@ -1,10 +1,7 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.Pixmap;
 
 import java.io.IOException;
 import static helper.Constants.APP_HEIGHT;
@@ -17,7 +14,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Adventure Tale");
 		config.setWindowedMode(APP_WIDTH, APP_HEIGHT);
-		config.setWindowIcon("cucaibb.png");
+		config.setWindowIcon("textures/characters/cucaibb.png");
 		config.setResizable(false);
 
 		new Lwjgl3Application(new Main(), config);

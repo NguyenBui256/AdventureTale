@@ -27,7 +27,7 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        map = new TmxMapLoader().load("map" + Main.chooseLevel + ".tmx");
+        map = new TmxMapLoader().load("maps/map" + Main.chooseLevel + ".tmx");
         parseMapObjects(map.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(map);
     }
@@ -60,7 +60,7 @@ public class TileMapHelper {
                             rectangle.getHeight(),
                             false,
                             gameScreen.world,
-                            1,
+                            5,
                             VatThe.BOX
                     );
                     gameScreen.boxList.add(new Box(gameScreen, body));
@@ -68,12 +68,12 @@ public class TileMapHelper {
                 else if(rectangleName.equals("BachTuoc")){
                     gameScreen.bubbleList.add(new Bubble(
                         gameScreen, createBubble(rectangle, NhanVat.BACHTUOC),
-                        BachTuocBubblePath, 171, 171));
+                        BACH_TUOC_BUBBLE, 171, 171));
                 }
                 else if(rectangleName.equals("CucDa")){
                     gameScreen.bubbleList.add(new Bubble(
                         gameScreen, createBubble(rectangle, NhanVat.CUCDA),
-                        CucDaBubblePath, 169, 169));
+                        CUC_DA_BUBBLE, 169, 169));
                 }
                 else if(rectangleName.equals("door")){
                     gameScreen.door = new Door(gameScreen, createStaticObject(rectangle, VatThe.DOOR), 80, 100);
@@ -104,7 +104,7 @@ public class TileMapHelper {
                             rectangle.getHeight(),
                             false,
                             gameScreen.world,
-                            2,
+                            5,
                             VatThe.BUTTON
                     );
                     gameScreen.button = new Button(gameScreen, body);

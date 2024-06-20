@@ -113,11 +113,14 @@ public class WorldContactListener implements ContactListener {
             screen.tileMapHelper = new TileMapHelper(screen.game.gameScreen);
         }
 
-        if((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
-        (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON) ||
-        (sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
-        (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX)){
-            Button.isClick = true;
+        if(((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
+        (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON))){
+            Button.pressCount++;
+            if(Button.pressCount > 0) Button.isClick = true;
+        }else if(((sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
+                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX))){
+            Button.pressCount++;
+            if(Button.pressCount > 0) Button.isClick = true;
         }
 
         if (screen.nhanVat == NhanVat.CUCDA && ((isGlass(sensorDirectionA) && sensorDirectionB == NhanVat.MAIN)
@@ -130,7 +133,7 @@ public class WorldContactListener implements ContactListener {
         return (object != null && object.toString().length() > 5 && object.toString().charAt(5) >= '0' && object.toString().charAt(5) <='9');
     }
     public void removeBubble(NhanVat data){
-        System.out.println("Bubble collided");
+//        System.out.println("Bubble collided");
         for(Bubble bubble : screen.bubbleList){
             for(Fixture fixture : bubble.body.getFixtureList()){
                 if(fixture.getUserData() != null && fixture.getUserData().equals(data)) {
@@ -194,13 +197,15 @@ public class WorldContactListener implements ContactListener {
                 if(screen.player.senBRCount <= 1) screen.player.senBR = false;
             }
         }
-        if(Button.isClick && ((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
-                (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON))){
-            Button.isClick = false;
-        } else if (Button.isClick && ((sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
-                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX))) {
-            Button.isClick = false;
-        }
+        if(
+            ((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
+            (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON) ||
+            (sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
+            (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX)))
+            {
+                Button.pressCount--;
+                if (Button.pressCount == 0) Button.isClick = false;
+            }
     }
 
     @Override

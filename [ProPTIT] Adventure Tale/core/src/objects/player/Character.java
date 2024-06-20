@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
 
+import static helper.Constants.BACHTUOC_TEXTURE_PATH;
+
 
 public class Character {
     public Texture IdleRight, IdleLeft, RunningLeft, RunningRight, JumpingLeft, JumpingRight;
@@ -14,10 +16,10 @@ public class Character {
 
     public Character(
             int tileWidth, int tileHeight,
-            String IdleRightPath,
             String IdleLeftPath,
-            String RunningRightPath,
+            String IdleRightPath,
             String RunningLeftPath,
+            String RunningRightPath,
             String JumpingLeftPath,
             String JumpingRightPath)
     {
@@ -58,7 +60,7 @@ public class Character {
         }
         else {
             for (int i = 0; i < 8; ++i) {
-                String path = "Sprite-000" + (i + 1) + ".png";
+                String path = BACHTUOC_TEXTURE_PATH + (i + 1) + ".png";
                 list.add(new Texture(path));
             }
             for (int i = 0; i < 8; ++i) {
