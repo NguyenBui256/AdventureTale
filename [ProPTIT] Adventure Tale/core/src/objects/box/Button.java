@@ -17,13 +17,14 @@ public class Button extends Sprite {
     public TextureRegion[][] region;
     public Texture texture, textureClick;
     public static boolean isClick;
+    public static int pressCount = 0;
     public GameScreen screen;
     public Button(GameScreen screen, Body body) {
         this.world = screen.world;
         this.screen = screen;
         this.body = body;
-        textureClick = new Texture("button-pressed.png");
-        texture = new Texture("button-unpressed.png");
+        textureClick = new Texture(GAME_BTN_TEXTURE);
+        texture = new Texture(GAME_BTN_PRESSED_TEXTURE);
         isClick = false;
         region = TextureRegion.split(texture, 18, 18);
         Animation animation = new Animation(0.3f, region[0]);
