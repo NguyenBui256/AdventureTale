@@ -116,7 +116,7 @@ Diễn giải:
 ![alt text](sc1.png)
 
 **Video Demo:**
-[Video Link]([#](https://www.youtube.com/watch?v=4SE8XSRuOIM))
+[Video Link](https://www.youtube.com/watch?v=4SE8XSRuOIM)
 
 
 ## 6. Các Vấn Đề Gặp Phải
