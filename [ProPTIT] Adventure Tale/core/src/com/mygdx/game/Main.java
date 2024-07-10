@@ -40,6 +40,7 @@ public class Main extends Game {
             level = reader.nextInt();
 //            System.out.println("dau vao:" + level);
         }else level = 1;
+        if (level == 13) level = 1;
 
         batch = new SpriteBatch();
         font = new BitmapFont();
