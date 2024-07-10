@@ -302,12 +302,12 @@ public class Player extends Sprite {
                     isJumping = false;
                 }
                 if(soundCuCaiPlaying[0] && soundOn){
-                    System.out.println("hereCC");
+//                    System.out.println("hereCC");
                     walkingSound.play();
                 }
             }
             if(this.velX == 0 && body.getLinearVelocity().y == 0){
-                System.out.println("Standby");
+//                System.out.println("Standby");
                 soundCuCaiPlaying[0] = false;
                 isJumping = false;
                 if(currentState == State.RUNNINGRIGHT || currentState == State.JUMPINGRIGHT) currentState = State.IDLERIGHT;

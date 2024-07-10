@@ -75,7 +75,7 @@ public class Constants {
             GAME_BTN_TEXTURE = "textures/objects/button-pressed.png",
             GAME_BTN_PRESSED_TEXTURE = "textures/objects/button-unpressed.png",
             BOX_TEXTURE = "textures/objects/box.png",
-            BLACK_SCENE = "textures/blackfade.png";
+            BLACK_SCENE = "textures/blackFade.png";
 
     //----------HUD Textures
     public static final String
