@@ -41,7 +41,6 @@ public class Main extends Game {
 ////            System.out.println("dau vao:" + level);
 //        }else level = 1;
 //        if (level == 13) level = 1;
-
         level = 12;
 
         batch = new SpriteBatch();
