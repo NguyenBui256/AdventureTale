@@ -32,15 +32,11 @@ public class Main extends Game {
     public Scanner reader;
 
     public Main() throws IOException {
-        reader = new Scanner(new File(SAVE_FILE_PATH));
+//        reader = new Scanner(new File(SAVE_FILE_PATH));
     }
     @Override
     public void create() {
-        if(reader.hasNext()){
-            level = reader.nextInt();
-//            System.out.println("dau vao:" + level);
-        }else level = 1;
-        if (level == 13) level = 1;
+        level = 1;
 
         batch = new SpriteBatch();
         font = new BitmapFont();

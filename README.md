@@ -5,10 +5,10 @@
 **Link Dự Án:** [GitHub Link](https://github.com/NguyenBui256/PGJ-Adventure-Tale)
 
 **Thành Viên Nhóm:**
-- Đỗ Lý Minh Anh
-- Nguyễn Thị Như Quỳnh
-- Bùi Thế Vĩnh Nguyên
-- Mentor: Nguyễn Quốc Hưng
+- [Đỗ Lý Minh Anh](https://github.com/minhengdey)
+- [Nguyễn Thị Như Quỳnh](https://github.com/milometqua)
+- [Bùi Thế Vĩnh Nguyên](https://github.com/NguyenBui256)
+- Mentor: [Nguyễn Quốc Hưng](https://github.com/quochung-cyou)
 
 
 
@@ -28,7 +28,7 @@ Team hoạt động theo Gitflow để quản lý code. Mỗi thành viên sẽ 
   - `develop`: Chứa code mới nhất, đã qua review và test
   - `feature/`: Các nhánh chứa code đang phát triển, short-live, sau khi hoàn thành sẽ merge vào `develop`. 
 
-![alt text](image.png)
+![alt text]([ProPTIT]%20Adventure%20Tale/assets//readme/image.png)
 
 Sau mỗi tuần, team sẽ merge `develop` vào `master` để release phiên bản mới.
 
@@ -107,13 +107,13 @@ Diễn giải:
 
 **Ảnh Demo:**
 
-![alt text](sc7.png)
-![alt text](sc6.png)
-![alt text](sc5.png)
-![alt text](sc4.png)
-![alt text](sc3.png)
-![alt text](sc2.png)
-![alt text](sc1.png)
+![alt text]([ProPTIT]%20Adventure%20Tale/assets/readme/sc7.png)
+![alt text]([ProPTIT]%20Adventure%20Tale/assets/readme/sc6.png)
+![alt text]([ProPTIT]%20Adventure%20Tale/assets/readme/sc5.png)
+![alt text]([ProPTIT]%20Adventure%20Tale/assets/readme/sc4.png)
+![alt text]([ProPTIT]%20Adventure%20Tale/assets/readme/sc3.png)
+![alt text]([ProPTIT]%20Adventure%20Tale/assets/readme/sc2.png)
+![alt text]([ProPTIT]%20Adventure%20Tale/assets/readme/sc1.png)
 
 **Video Demo:**
 [Video Link](https://www.youtube.com/watch?v=4SE8XSRuOIM)

@@ -1,1 +1,0 @@
-...\PGJ-Adventure-Tale\bin\Adventure Tale.cmd
