@@ -36,12 +36,7 @@ public class Main extends Game {
     }
     @Override
     public void create() {
-//        if(reader.hasNext()){
-//            level = reader.nextInt();
-////            System.out.println("dau vao:" + level);
-//        }else level = 1;
-//        if (level == 13) level = 1;
-        level = 12;
+        level = 1;
 
         batch = new SpriteBatch();
         font = new BitmapFont();

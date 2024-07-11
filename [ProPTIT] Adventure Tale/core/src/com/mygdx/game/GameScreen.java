@@ -299,16 +299,7 @@ public class GameScreen implements Screen {
             if(winn) {
                 if (Main.chooseLevel == Main.level) {
                     player.reset();
-//                    ++Main.level;
-//                    try {
-////                        System.out.println("da luu file");
-//                        game.fw = new FileWriter(SAVE_FILE_PATH, false);
-//                        if(Main.level <= 12) game.fw.write(Main.level + "");
-//                        else game.fw.write(12 + "");
-//                        game.fw.close();
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
+                    ++Main.level;
                 }
                 hud.winProcess();
                 if (hud.goToNextLevel) {
