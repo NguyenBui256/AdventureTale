@@ -2,6 +2,7 @@ package helper;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.GameScreen;
+import com.mygdx.game.Main;
 import objects.box.Box;
 import objects.box.Bubble;
 import helper.Constants.*;
@@ -36,6 +37,20 @@ public class WorldContactListener implements ContactListener {
                 index = index * 10 + sensorDirectionB.toString().charAt(6) - '0';
             }
         }
+
+        if((sensorDirectionA == NhanVat.BACHTUOC && sensorDirectionB == NhanVat.MAIN)
+                || (sensorDirectionB == NhanVat.BACHTUOC && sensorDirectionA == NhanVat.MAIN)) {
+            removeBubble(NhanVat.BACHTUOC);
+            screen.player.BachTuocFlag = true;
+            if(screen.player.soundOn) screen.player.bonusSound.play();
+        }
+        if((sensorDirectionA == NhanVat.CUCDA && sensorDirectionB == NhanVat.MAIN)
+                || (sensorDirectionB == NhanVat.CUCDA && sensorDirectionA == NhanVat.MAIN)){
+            removeBubble(NhanVat.CUCDA);
+            screen.player.CucDaFlag = true;
+            if(screen.player.soundOn) screen.player.bonusSound.play();
+        }
+
         if (index == -1 || !screen.glassList.get(index).isBroken) {
             if(sensorDirectionA == SensorDirection.LEFT || sensorDirectionB == SensorDirection.LEFT){
                 screen.player.senL = true;
@@ -53,13 +68,13 @@ public class WorldContactListener implements ContactListener {
 //            System.out.println("Top here");
             }
             if(sensorDirectionA == SensorDirection.TOPLEFT || sensorDirectionB == SensorDirection.TOPLEFT){
-                screen.player.senTLCount++;
                 screen.player.senTL = true;
+                screen.player.senTLCount++;
 //            System.out.println("TL here");
             }
             if(sensorDirectionA == SensorDirection.TOPRIGHT|| sensorDirectionB == SensorDirection.TOPRIGHT){
-                screen.player.senTRCount++;
                 screen.player.senTR = true;
+                screen.player.senTRCount++;
 //            System.out.println("TR here");
             }
             if(sensorDirectionA == SensorDirection.BOT|| sensorDirectionB == SensorDirection.BOT){
@@ -68,28 +83,17 @@ public class WorldContactListener implements ContactListener {
 //            System.out.println("Bot here");
             }
             if(sensorDirectionA == SensorDirection.BOTLEFT|| sensorDirectionB == SensorDirection.BOTLEFT){
-                screen.player.senBLCount++;
                 screen.player.senBL = true;
+                screen.player.senBLCount++;
 //            System.out.println("BL here");
             }
             if(sensorDirectionA == SensorDirection.BOTRIGHT || sensorDirectionB == SensorDirection.BOTRIGHT){
-                screen.player.senBRCount++;
                 screen.player.senBR = true;
+                screen.player.senBRCount++;
 //            System.out.println("BR here");
             }
         }
-        if((sensorDirectionA == NhanVat.BACHTUOC && sensorDirectionB == NhanVat.MAIN)
-        || (sensorDirectionB == NhanVat.BACHTUOC && sensorDirectionA == NhanVat.MAIN)) {
-            removeBubble(NhanVat.BACHTUOC);
-            screen.player.BachTuocFlag = true;
-            if(screen.player.soundOn) screen.player.bonusSound.play();
-        }
-        if((sensorDirectionA == NhanVat.CUCDA && sensorDirectionB == NhanVat.MAIN)
-        || (sensorDirectionB == NhanVat.CUCDA && sensorDirectionA == NhanVat.MAIN)){
-            removeBubble(NhanVat.CUCDA);
-            screen.player.CucDaFlag = true;
-            if(screen.player.soundOn) screen.player.bonusSound.play();
-        }
+
 
         if((sensorDirectionA == VatThe.DOOR && sensorDirectionB == NhanVat.MAIN)
         || (sensorDirectionB == VatThe.DOOR && sensorDirectionA == NhanVat.MAIN)){
@@ -108,9 +112,10 @@ public class WorldContactListener implements ContactListener {
         {
             screen.player.reset();
             screen.ingameBGMusic.stop();
-            screen.game.gameScreen = new GameScreen(screen.game, screen.game.levelScreen);
-            screen.game.setScreen(screen.game.gameScreen);
-            screen.tileMapHelper = new TileMapHelper(screen.game.gameScreen);
+            Main.gameScreen = new GameScreen(screen.game, Main.levelScreen);
+            screen.tileMapHelper = new TileMapHelper(screen);
+            screen.world.setContactListener(this);
+            screen.game.setScreen(Main.gameScreen);
         }
 
         if(((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||

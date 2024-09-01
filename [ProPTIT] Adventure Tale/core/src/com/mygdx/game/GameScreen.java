@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
     public Music ingameBGMusic = Gdx.audio.newMusic(Gdx.files.internal(INGAME_BG_MUSIC));
 
     public GameScreen (Main game, LevelScreen levelScreen){
-        this.TRS = new TransitionScreen(game);
+        this.TRS = new TransitionScreen();
         TRS.transitionInFlag = true;
         this.levelScreen = levelScreen;
         this.world = new World(new Vector2(0,-25f), false);
@@ -65,9 +65,9 @@ public class GameScreen implements Screen {
         this.fireList = new ArrayList<>();
         this.glassList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-        box2DDebugRenderer.setDrawJoints(false);
-        box2DDebugRenderer.setDrawBodies(false);
-        box2DDebugRenderer.setDrawContacts(false);
+//        box2DDebugRenderer.setDrawJoints(false);
+//        box2DDebugRenderer.setDrawBodies(false);
+//        box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
 
@@ -204,10 +204,10 @@ public class GameScreen implements Screen {
                 if(TRS.transitionState == TransitionScreen.TrangThai.OUT){
                     ingameBGMusic.stop();
                     TRS.fadeInStage.dispose();
-                    game.batch = new SpriteBatch();
+                    Main.batch = new SpriteBatch();
                     this.dispose();
-                    game.gameScreen = new GameScreen(game, game.levelScreen);
-                    game.setScreen(game.gameScreen);
+                    Main.gameScreen = new GameScreen(game, Main.levelScreen);
+                    game.setScreen(Main.gameScreen);
                     this.tileMapHelper = new TileMapHelper(this);
                 }
                 TRS.transitionRunnning = false;
@@ -220,8 +220,8 @@ public class GameScreen implements Screen {
             if(Gdx.input.isKeyJustPressed(Input.Keys.P)|| hud.restart){
                 player.reset();
                 ingameBGMusic.stop();
-                game.gameScreen = new GameScreen(game, levelScreen);
-                game.setScreen(game.gameScreen);
+                Main.gameScreen = new GameScreen(game, levelScreen);
+                game.setScreen(Main.gameScreen);
                 this.tileMapHelper = new TileMapHelper(this);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.Z)) isZoomOut = true;
@@ -247,26 +247,26 @@ public class GameScreen implements Screen {
 
             stateTime += delta;
 
-            game.batch.setProjectionMatrix(staticCamera.combined);
-            game.batch.begin();
-            for(Bubble bubble : bubbleList) bubble.draw(game.batch);
-            for(Box box : boxList) box.draw(game.batch);
-            game.batch.end();
+            Main.batch.setProjectionMatrix(staticCamera.combined);
+            Main.batch.begin();
+            for(Bubble bubble : bubbleList) bubble.draw(Main.batch);
+            for(Box box : boxList) box.draw(Main.batch);
+            Main.batch.end();
 
-            game.batch.setProjectionMatrix(playerCamera.combined);
-            game.batch.begin();
-            player.draw(game.batch);
-            door.draw(game.batch);
+            Main.batch.setProjectionMatrix(playerCamera.combined);
+            Main.batch.begin();
+            player.draw(Main.batch);
+            door.draw(Main.batch);
             for (Fire fire : fireList) {
-                fire.draw(game.batch);
+                fire.draw(Main.batch);
             }
             for (Glass glass : glassList) {
-                glass.draw(game.batch);
+                glass.draw(Main.batch);
             }
             if (checkButton) {
-                button.draw(game.batch);
+                button.draw(Main.batch);
             }
-            game.batch.end();
+            Main.batch.end();
 
             hud.stage.act(Gdx.graphics.getDeltaTime());
             hud.stage.draw();
@@ -289,11 +289,11 @@ public class GameScreen implements Screen {
             if(hud.level){
                 player.reset();
                 ingameBGMusic.stop();
-                game.menuScreen.menu.bgMusic.play();
+                Main.menuScreen.menu.bgMusic.play();
                 TRS.fadeInStage.dispose();
-                game.batch = new SpriteBatch();
+                Main.batch = new SpriteBatch();
                 this.dispose();
-                game.setScreen(game.levelScreen);
+                game.setScreen(Main.levelScreen);
                 this.tileMapHelper = new TileMapHelper(this);
             }
             if(winn) {
@@ -305,14 +305,14 @@ public class GameScreen implements Screen {
                 if (hud.goToNextLevel) {
                     player.reset();
                     ++Main.chooseLevel;
-                  if (Main.level == 13) {
+                  if (Main.level == MAX_LEVEL) {
                         --Main.level;
                         ingameBGMusic.stop();
-                        game.menuScreen.bgMusic.play();
+                        Main.menuScreen.bgMusic.play();
                         TRS.fadeInStage.dispose();
-                        game.batch = new SpriteBatch();
+                        Main.batch = new SpriteBatch();
                         this.dispose();
-                        game.setScreen(game.levelScreen);
+                        game.setScreen(Main.levelScreen);
                     }
                     TRS.transitionState = TransitionScreen.TrangThai.OUT;
                     TRS.transitionRunnning = true;

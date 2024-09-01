@@ -18,11 +18,11 @@ import java.util.Scanner;
 import static helper.Constants.*;
 
 public class Main extends Game {
-    public MenuScreen menuScreen;
-    public LevelScreen levelScreen;
-    public GameScreen gameScreen;
-    public SpriteBatch batch;
-    public BitmapFont font;
+    public static MenuScreen menuScreen;
+    public static LevelScreen levelScreen;
+    public static GameScreen gameScreen;
+    public static SpriteBatch batch;
+    public static BitmapFont font;
     public Image blackFade;
     public Stage stage;
     public TransitionScreen transitionScreen;
@@ -36,7 +36,7 @@ public class Main extends Game {
     }
     @Override
     public void create() {
-        level = 1;
+        level = 12;
 
         batch = new SpriteBatch();
         font = new BitmapFont();
@@ -50,7 +50,7 @@ public class Main extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont();
         menuScreen = new MenuScreen(this);
-        transitionScreen = new TransitionScreen(this);
+        transitionScreen = new TransitionScreen();
         this.setScreen(menuScreen);
 
         stage = new Stage(new StretchViewport(APP_WIDTH, APP_HEIGHT));

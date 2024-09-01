@@ -14,15 +14,12 @@ import static helper.Constants.*;
 public class TransitionScreen {
     public enum TrangThai {IN, OUT};
     public TrangThai transitionState;
-    public Main main;
     public Stage fadeInStage, fadeOutStage;
     public Image fadeIn, fadeOut;
     public boolean transitionInFlag = false, transitionOutFlag = false, transitionRunnning = false;
     public long time = 0;
 
-    public TransitionScreen(Main main){
-
-        this.main = main;
+    public TransitionScreen(){
 
         fadeInStage = new Stage(new StretchViewport(APP_WIDTH, APP_HEIGHT));
         fadeOutStage = new Stage(new StretchViewport(APP_WIDTH, APP_HEIGHT));

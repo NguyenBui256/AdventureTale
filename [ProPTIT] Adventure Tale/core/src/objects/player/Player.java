@@ -55,6 +55,8 @@ public class Player extends Sprite {
         this.world = screen.world;
         this.body = body;
         stateTimer = 0;
+        senTL = senTR =  senBL =  senBR = senT = senR = senB = senL = false;
+        senTLCount = senTRCount = senBLCount = senBRCount = senTCount = senBCount = senLCount = senRCount = 0;
 
         cuCaiAndBachTuocMassData = new MassData();
         cucDaMassData = new MassData();
@@ -162,8 +164,8 @@ public class Player extends Sprite {
             return;
         }
         if(nhanVat != previousNhanVat && smokeAnimation.isAnimationFinished(stateTimer)){
-//            System.out.println("Done");
-//            System.out.println(nhanVat);
+            System.out.println("Done");
+            System.out.println(nhanVat);
             previousNhanVat = nhanVat;
             stateTimer = 0;
         }
@@ -190,6 +192,7 @@ public class Player extends Sprite {
         }
     }
 
+    // Set texture for character
     public TextureRegion getFrame(Character character, float dt){
         TextureRegion region = null;
         if (nhanVat == NhanVat.CUCAI) {
@@ -248,6 +251,7 @@ public class Player extends Sprite {
         }
         if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
             if(soundOn) transformSound.play();
+            body.setGravityScale(0.5f);
             currentState = State.ROUND1;
             previousState = State.ROUND1;
             roll = 0;
@@ -321,11 +325,9 @@ public class Player extends Sprite {
             }
         }
         else if (nhanVat == NhanVat.BACHTUOC) {
-            boolean hasKeyPressed = false;
+            boolean hasKeyPressed = false, allowLeft = false, allowRight = false, allowUp = false, allowDown = false;
             velX = 0;
             velY = 0;
-            boolean allowLeft = false, allowRight = false, allowUp = false, allowDown = false;
-            //4 corners
             if(senBRCount >= 2 && !senB && !senBL && !senR && !senTR) //top left
             {
 //                System.out.println("top left");
@@ -521,8 +523,9 @@ public class Player extends Sprite {
     }
 
     public void reset(){
-        senTL = false; senTR = false; senBL = false; senBR = false; senT = false; senR = false; senB = false; senL = false;
-        BachTuocFlag = false; CucDaFlag = false; isJumping = false;
+        senTL = senTR =  senBL =  senBR = senT = senR = senB = senL = false;
+        senTLCount = senTRCount = senBLCount = senBRCount = senTCount = senBCount = senLCount = senRCount = 0;
+        BachTuocFlag = CucDaFlag = isJumping = false;
         senTLCount = 0; senTRCount = 0; senBLCount = 0; senBRCount = 0;
         senTCount = 0; senBCount = 0; senLCount = 0; senRCount = 0;
     }

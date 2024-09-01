@@ -12,7 +12,7 @@ import static helper.Constants.APP_WIDTH;
 public class DesktopLauncher {
 	public static void main (String[] arg) throws IOException {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
+		config.setForegroundFPS(70);
 		config.setTitle("Adventure Tale");
 		config.setWindowedMode(APP_WIDTH, APP_HEIGHT);
 		config.setWindowIcon("textures/characters/cucaibb.png");
