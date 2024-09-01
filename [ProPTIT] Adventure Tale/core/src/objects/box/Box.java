@@ -29,7 +29,7 @@ public class Box extends Sprite {
         setBounds(body.getPosition().x,body.getPosition().y,TILE_SIZE/PPM, TILE_SIZE/PPM);
         this.body = body;
         MassData massData = new MassData();
-        massData.mass = 20;
+        massData.mass = 25;
         this.body.setMassData(massData);
     }
 

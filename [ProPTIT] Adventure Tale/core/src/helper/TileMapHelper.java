@@ -98,17 +98,7 @@ public class TileMapHelper {
                 }
                 else if (rectangleName.equals("button")) {
                     gameScreen.checkButton = true;
-                    Body body = BodyHelperService.createBody(
-                            rectangle.getX() + rectangle.getWidth() / 2,
-                            rectangle.getY() + rectangle.getHeight() / 2,
-                            rectangle.getWidth(),
-                            rectangle.getHeight(),
-                            false,
-                            gameScreen.world,
-                            5,
-                            VatThe.BUTTON
-                    );
-                    gameScreen.button = new Button(gameScreen, body);
+                    gameScreen.button = new Button(gameScreen, createButton(rectangle, VatThe.BUTTON));
                 }
                 else if (rectangleName.equals("fire")) {
                     gameScreen.fireList.add(new Fire(gameScreen, createStaticObject(rectangle, VatThe.FIRE), 446));
@@ -121,6 +111,28 @@ public class TileMapHelper {
                 }
             }
         }
+    }
+
+    public Body createButton(Rectangle rectangle, Object data) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.position.set(
+                (rectangle.getX() + rectangle.getWidth() / 2) / PPM,
+                (rectangle.getY() + 10 + rectangle.getHeight() / 2) / PPM);
+        bodyDef.fixedRotation = true;
+        Body body = gameScreen.world.createBody(bodyDef);
+
+        MassData massData = new MassData();
+        massData.mass = 0;
+        body.setMassData(massData);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(rectangle.getWidth() / 2 / PPM, rectangle.getHeight() / 2 / PPM);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef).setUserData(data);
+        shape.dispose();
+        return body;
     }
 
     public Body createBubble(Rectangle rectangle, Object data) {

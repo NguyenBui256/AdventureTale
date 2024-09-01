@@ -176,7 +176,7 @@
   <object id="56" x="738" y="360">
    <polygon points="0,0 0,180 18,180 18,0"/>
   </object>
-  <object id="59" name="button" x="378" y="540" width="18"/>
+  <object id="59" name="button" x="378" y="550" width="18"/>
   <object id="61" name="box" x="450" y="522" width="18" height="18"/>
   <object id="88" name="glass" x="162" y="684" width="108" height="36"/>
   <object id="117" x="108" y="486">

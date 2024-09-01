@@ -187,7 +187,7 @@ public class Player extends Sprite {
             body.setMassData(cucDaMassData);
             this.speed = CUCDA_SPEED;
             setRegion(getFrame(NhanVatCucDa,dt));
-            setBounds(body.getPosition().x, body.getPosition().y,(2*TILE_SIZE - 6)/PPM,(2*TILE_SIZE - 6)/PPM);
+            setBounds(body.getPosition().x,body.getPosition().y,2*TILE_SIZE/PPM, 2*TILE_SIZE/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
         }
     }
@@ -251,7 +251,7 @@ public class Player extends Sprite {
         }
         if(BachTuocFlag && nhanVat != NhanVat.BACHTUOC && Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
             if(soundOn) transformSound.play();
-            body.setGravityScale(0.5f);
+            body.setGravityScale(1);
             currentState = State.ROUND1;
             previousState = State.ROUND1;
             roll = 0;

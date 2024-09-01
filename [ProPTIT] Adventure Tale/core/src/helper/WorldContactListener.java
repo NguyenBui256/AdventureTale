@@ -3,14 +3,9 @@ package helper;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.Main;
-import objects.box.Box;
 import objects.box.Bubble;
 import helper.Constants.*;
 import objects.box.Button;
-import objects.box.Glass;
-import objects.player.Player;
-
-import static helper.Constants.PPM;
 
 public class WorldContactListener implements ContactListener {
     protected World world;
@@ -37,21 +32,7 @@ public class WorldContactListener implements ContactListener {
                 index = index * 10 + sensorDirectionB.toString().charAt(6) - '0';
             }
         }
-
-        if((sensorDirectionA == NhanVat.BACHTUOC && sensorDirectionB == NhanVat.MAIN)
-                || (sensorDirectionB == NhanVat.BACHTUOC && sensorDirectionA == NhanVat.MAIN)) {
-            removeBubble(NhanVat.BACHTUOC);
-            screen.player.BachTuocFlag = true;
-            if(screen.player.soundOn) screen.player.bonusSound.play();
-        }
-        if((sensorDirectionA == NhanVat.CUCDA && sensorDirectionB == NhanVat.MAIN)
-                || (sensorDirectionB == NhanVat.CUCDA && sensorDirectionA == NhanVat.MAIN)){
-            removeBubble(NhanVat.CUCDA);
-            screen.player.CucDaFlag = true;
-            if(screen.player.soundOn) screen.player.bonusSound.play();
-        }
-
-        if (index == -1 || !screen.glassList.get(index).isBroken) {
+        if (index == -1 || !screen.glassList.get(index).isBroken && screen.nhanVat != NhanVat.CUCDA) {
             if(sensorDirectionA == SensorDirection.LEFT || sensorDirectionB == SensorDirection.LEFT){
                 screen.player.senL = true;
                 screen.player.senLCount++;
@@ -94,6 +75,18 @@ public class WorldContactListener implements ContactListener {
             }
         }
 
+        if((sensorDirectionA == NhanVat.BACHTUOC && sensorDirectionB == NhanVat.MAIN)
+                || (sensorDirectionB == NhanVat.BACHTUOC && sensorDirectionA == NhanVat.MAIN)) {
+            removeBubble(NhanVat.BACHTUOC);
+            screen.player.BachTuocFlag = true;
+            if(screen.player.soundOn) screen.player.bonusSound.play();
+        }
+        if((sensorDirectionA == NhanVat.CUCDA && sensorDirectionB == NhanVat.MAIN)
+                || (sensorDirectionB == NhanVat.CUCDA && sensorDirectionA == NhanVat.MAIN)){
+            removeBubble(NhanVat.CUCDA);
+            screen.player.CucDaFlag = true;
+            if(screen.player.soundOn) screen.player.bonusSound.play();
+        }
 
         if((sensorDirectionA == VatThe.DOOR && sensorDirectionB == NhanVat.MAIN)
         || (sensorDirectionB == VatThe.DOOR && sensorDirectionA == NhanVat.MAIN)){
@@ -119,11 +112,9 @@ public class WorldContactListener implements ContactListener {
         }
 
         if(((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
-        (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON))){
-            Button.pressCount++;
-            if(Button.pressCount > 0) Button.isClick = true;
-        }else if(((sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
-                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX))){
+        (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON)) ||
+        ((sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
+        (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX))){
             Button.pressCount++;
             if(Button.pressCount > 0) Button.isClick = true;
         }
@@ -168,7 +159,8 @@ public class WorldContactListener implements ContactListener {
                 index = index * 10 + sensorDirectionB.toString().charAt(6) - '0';
             }
         }
-        if (index == -1 || !screen.glassList.get(index).isBroken) {
+        if (index == -1 || !screen.glassList.get(index).isBroken && screen.nhanVat != NhanVat.CUCDA)
+        {
             if(sensorDirectionA == SensorDirection.LEFT || sensorDirectionB == SensorDirection.LEFT){
                 screen.player.senLCount--;
                 if(screen.player.senLCount <= 1) screen.player.senL = false;
@@ -202,6 +194,8 @@ public class WorldContactListener implements ContactListener {
                 if(screen.player.senBRCount <= 1) screen.player.senBR = false;
             }
         }
+
+
         if(
             ((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
             (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON) ||

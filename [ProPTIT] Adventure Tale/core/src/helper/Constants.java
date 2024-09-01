@@ -27,7 +27,7 @@ public class Constants {
             LEVEL_BUTTON_SIZE = 100, LEVEL_BUTTON_PADDING = 30,
             TILE_SIZE = 18f, ICON_SIZE = 50f,
             MAP_WIDTH = TILE_SIZE * 60, MAP_HEIGHT = TILE_SIZE * 40,
-            CORNER_SENSOR_SIZE = 1f, EDGE_SENSOR_SIZE = 6f; //square
+            CORNER_SENSOR_SIZE = 0.5f, EDGE_SENSOR_SIZE = 6f; //square
 
 
 

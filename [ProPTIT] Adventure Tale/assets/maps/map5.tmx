@@ -113,7 +113,7 @@
   <object id="29" x="126" y="414">
    <polygon points="0,0 18,0 18,36 0,36"/>
   </object>
-  <object id="30" name="button" x="864" y="671" width="18"/>
+  <object id="30" name="button" x="863.966" y="676.06" width="18" height="0.0284091"/>
   <object id="36" x="0" y="234">
    <polygon points="0,0 54,0 54,216 0,216"/>
   </object>
