@@ -32,7 +32,7 @@ public class WorldContactListener implements ContactListener {
                 index = index * 10 + sensorDirectionB.toString().charAt(6) - '0';
             }
         }
-        if (index == -1 || !screen.glassList.get(index).isBroken && screen.nhanVat != NhanVat.CUCDA) {
+        if (index == -1 || (!screen.glassList.get(index).isBroken && screen.nhanVat != NhanVat.CUCDA)) {
             if(sensorDirectionA == SensorDirection.LEFT || sensorDirectionB == SensorDirection.LEFT){
                 screen.player.senL = true;
                 screen.player.senLCount++;
@@ -103,12 +103,7 @@ public class WorldContactListener implements ContactListener {
         || (sensorDirectionA == VatThe.FIRE && sensorDirectionB == NhanVat.MAIN)
         || (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.FIRE))
         {
-            screen.player.reset();
-            screen.ingameBGMusic.stop();
-            Main.gameScreen = new GameScreen(screen.game, Main.levelScreen);
-            screen.tileMapHelper = new TileMapHelper(screen);
-            screen.world.setContactListener(this);
-            screen.game.setScreen(Main.gameScreen);
+            screen.gameScreenReset();
         }
 
         if(((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
@@ -144,9 +139,15 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-//        System.out.println("end contact");
         Object sensorDirectionA = contact.getFixtureA().getUserData();
         Object sensorDirectionB = contact.getFixtureB().getUserData();
+
+        // Bỏ qua nếu va chạm với FIRE hoặc MAPBOUND
+//        if ((sensorDirectionA == VatThe.MAPBOUND || sensorDirectionB == VatThe.MAPBOUND) ||
+//                (sensorDirectionA == VatThe.FIRE || sensorDirectionB == VatThe.FIRE)) {
+//            return;
+//        }
+
         int index = -1;
         if (isGlass(sensorDirectionA)) {
             index = sensorDirectionA.toString().charAt(5) - '0';
@@ -159,53 +160,68 @@ public class WorldContactListener implements ContactListener {
                 index = index * 10 + sensorDirectionB.toString().charAt(6) - '0';
             }
         }
-        if (index == -1 || !screen.glassList.get(index).isBroken && screen.nhanVat != NhanVat.CUCDA)
-        {
-            if(sensorDirectionA == SensorDirection.LEFT || sensorDirectionB == SensorDirection.LEFT){
-                screen.player.senLCount--;
-                if(screen.player.senLCount <= 1) screen.player.senL = false;
+
+        if (index == -1 || (!screen.glassList.get(index).isBroken && screen.nhanVat != NhanVat.CUCDA)) {
+            // Giảm số lượng sensor tương ứng
+            if (sensorDirectionA == SensorDirection.LEFT || sensorDirectionB == SensorDirection.LEFT) {
+                if (screen.player.senLCount > 0) {
+                    screen.player.senLCount--;
+                    if (screen.player.senLCount <= 0) screen.player.senL = false;
+                }
             }
-            if(sensorDirectionA == SensorDirection.RIGHT || sensorDirectionB == SensorDirection.RIGHT){
-                screen.player.senRCount--;
-                if(screen.player.senRCount <= 1) screen.player.senR = false;
+            if (sensorDirectionA == SensorDirection.RIGHT || sensorDirectionB == SensorDirection.RIGHT) {
+                if (screen.player.senRCount > 0) {
+                    screen.player.senRCount--;
+                    if (screen.player.senRCount <= 0) screen.player.senR = false;
+                }
             }
-            if(sensorDirectionA == SensorDirection.TOP || sensorDirectionB == SensorDirection.TOP){
-                screen.player.senTCount--;
-                if(screen.player.senTCount <= 1) screen.player.senT = false;
+            if (sensorDirectionA == SensorDirection.TOP || sensorDirectionB == SensorDirection.TOP) {
+                if (screen.player.senTCount > 0) {
+                    screen.player.senTCount--;
+                    if (screen.player.senTCount <= 0) screen.player.senT = false;
+                }
             }
-            if(sensorDirectionA == SensorDirection.TOPLEFT || sensorDirectionB == SensorDirection.TOPLEFT){
-                screen.player.senTLCount--;
-                if(screen.player.senTLCount <= 1) screen.player.senTL = false;
+            if (sensorDirectionA == SensorDirection.TOPLEFT || sensorDirectionB == SensorDirection.TOPLEFT) {
+                if (screen.player.senTLCount > 0) {
+                    screen.player.senTLCount--;
+                    if (screen.player.senTLCount <= 0) screen.player.senTL = false;
+                }
             }
-            if(sensorDirectionA == SensorDirection.TOPRIGHT || sensorDirectionB == SensorDirection.TOPRIGHT){
-                screen.player.senTRCount--;
-                if(screen.player.senTRCount <= 1) screen.player.senTR = false;
+            if (sensorDirectionA == SensorDirection.TOPRIGHT || sensorDirectionB == SensorDirection.TOPRIGHT) {
+                if (screen.player.senTRCount > 0) {
+                    screen.player.senTRCount--;
+                    if (screen.player.senTRCount <= 0) screen.player.senTR = false;
+                }
             }
-            if(sensorDirectionA == SensorDirection.BOT || sensorDirectionB == SensorDirection.BOT){
-                screen.player.senBCount--;
-                if(screen.player.senBCount <= 1) screen.player.senB = false;
+            if (sensorDirectionA == SensorDirection.BOT || sensorDirectionB == SensorDirection.BOT) {
+                if (screen.player.senBCount > 0) {
+                    screen.player.senBCount--;
+                    if (screen.player.senBCount <= 0) screen.player.senB = false;
+                }
             }
-            if(sensorDirectionA == SensorDirection.BOTLEFT || sensorDirectionB == SensorDirection.BOTLEFT){
-                screen.player.senBLCount--;
-                if(screen.player.senBLCount <= 1) screen.player.senBL = false;
+            if (sensorDirectionA == SensorDirection.BOTLEFT || sensorDirectionB == SensorDirection.BOTLEFT) {
+                if (screen.player.senBLCount > 0) {
+                    screen.player.senBLCount--;
+                    if (screen.player.senBLCount <= 0) screen.player.senBL = false;
+                }
             }
-            if(sensorDirectionA == SensorDirection.BOTRIGHT || sensorDirectionB == SensorDirection.BOTRIGHT){
-                screen.player.senBRCount--;
-                if(screen.player.senBRCount <= 1) screen.player.senBR = false;
+            if (sensorDirectionA == SensorDirection.BOTRIGHT || sensorDirectionB == SensorDirection.BOTRIGHT) {
+                if (screen.player.senBRCount > 0) {
+                    screen.player.senBRCount--;
+                    if (screen.player.senBRCount <= 0) screen.player.senBR = false;
+                }
             }
         }
 
-
-        if(
-            ((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
-            (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON) ||
-            (sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
-            (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX)))
-            {
-                Button.pressCount--;
-                if (Button.pressCount == 0) Button.isClick = false;
-            }
+        if (((sensorDirectionA == VatThe.BUTTON && sensorDirectionB == NhanVat.MAIN) ||
+                (sensorDirectionA == NhanVat.MAIN && sensorDirectionB == VatThe.BUTTON) ||
+                (sensorDirectionA == VatThe.BOX && sensorDirectionB == VatThe.BUTTON) ||
+                (sensorDirectionA == VatThe.BUTTON && sensorDirectionB == VatThe.BOX))) {
+            Button.pressCount--;
+            if (Button.pressCount == 0) Button.isClick = false;
+        }
     }
+
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {

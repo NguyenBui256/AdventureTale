@@ -218,11 +218,7 @@ public class GameScreen implements Screen {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
             if(Gdx.input.isKeyJustPressed(Input.Keys.P)|| hud.restart){
-                player.reset();
-                ingameBGMusic.stop();
-                Main.gameScreen = new GameScreen(game, levelScreen);
-                game.setScreen(Main.gameScreen);
-                this.tileMapHelper = new TileMapHelper(this);
+                gameScreenReset();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.Z)) isZoomOut = true;
             else isZoomOut = false;
@@ -322,6 +318,13 @@ public class GameScreen implements Screen {
         }
     }
 
+    public void gameScreenReset() {
+        player.reset();
+        ingameBGMusic.stop();
+        Main.gameScreen = new GameScreen(game, levelScreen);
+        game.setScreen(Main.gameScreen);
+        this.tileMapHelper = new TileMapHelper(this);
+    }
 
 
     @Override

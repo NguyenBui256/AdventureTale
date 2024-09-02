@@ -18,16 +18,16 @@ public class Constants {
             TB_POS_Y = (APP_HEIGHT- TB_HEIGHT)/2 + 50,
             MAX_LEVEL = 13;
     public static final float
-            PPM = 18.0f, MAX_HEIGHT_JUMP = 15f,
+            PPM = 18.0f, SENSOR_GAP = 0.05f,
             CUCAI_BACHTUOC_SPEED = 9f, CUCDA_SPEED = 6f,
             CUCAI_BACHTUOC_MASS = 1, CUCDA_MASS = 15f,
-            CAMERA_VIEWPORT_WIDTH = 360, CAMERA_VIEWPORT_HEIGHT = 240,
+            CAMERA_VIEWPORT_WIDTH = 120, CAMERA_VIEWPORT_HEIGHT = 80,
             BUTTON_PADDING = 20, BUTTON_SIZE = 64, BIG_BUTTON_SIZE = 96, SMALL_BUTTON_SIZE = 54,
             BUTTON_POS_Y = 700, BUTTON_POS_Y2 = 720, BUTTON_DISTANCE = 10,
             LEVEL_BUTTON_SIZE = 100, LEVEL_BUTTON_PADDING = 30,
             TILE_SIZE = 18f, ICON_SIZE = 50f,
             MAP_WIDTH = TILE_SIZE * 60, MAP_HEIGHT = TILE_SIZE * 40,
-            CORNER_SENSOR_SIZE = 0.5f, EDGE_SENSOR_SIZE = 6f; //square
+            CORNER_SENSOR_SIZE = 0.5f, EDGE_SENSOR_SIZE = 8f; //square
 
 
 
