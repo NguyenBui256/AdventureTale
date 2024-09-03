@@ -223,17 +223,6 @@ public class GameScreen implements Screen {
             if (Gdx.input.isKeyPressed(Input.Keys.Z)) isZoomOut = true;
             else isZoomOut = false;
 
-            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-                if(!isPause) {
-                    hud.showPauseNoti();
-                    isPause = true;
-                }
-                else {
-                    hud.hidePauseNoti();
-                    isPause = false;
-                }
-            }
-
             this.update(delta);
 
             renderer.setView(playerCamera);

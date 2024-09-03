@@ -25,16 +25,15 @@ public class Box extends Sprite {
         region = TextureRegion.split(texture, 18, 18);
         Animation animation = new Animation(0.3f, region[0]);
         setRegion((TextureRegion) animation.getKeyFrame(screen.stateTime));
-
         setBounds(body.getPosition().x,body.getPosition().y,TILE_SIZE/PPM, TILE_SIZE/PPM);
         this.body = body;
         MassData massData = new MassData();
-        massData.mass = 25;
+        massData.mass = 35;
         this.body.setMassData(massData);
     }
 
     public void update(float dt){
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 - 0.05f);
     }
 
 

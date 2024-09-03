@@ -45,46 +45,50 @@ public class WorldContactListener implements ContactListener {
         }
 
         if (index == -1 || (!screen.glassList.get(index).isBroken && screen.nhanVat != NhanVat.CUCDA)) {
-            if (sensorDirectionA == SensorDirection.LEFT || sensorDirectionB == SensorDirection.LEFT) {
-                Player.senL = true;
-                Player.senLCount++;
+            if(sensorDirectionA != VatThe.FIRE && sensorDirectionB != VatThe.FIRE
+                    && sensorDirectionA != VatThe.MAPBOUND && sensorDirectionB != VatThe.MAPBOUND) {
+                if (sensorDirectionA == SensorDirection.LEFT || sensorDirectionB == SensorDirection.LEFT) {
+                    Player.senL = true;
+                    Player.senLCount++;
 //            System.out.println("Left here");
-            }
-            if (sensorDirectionA == SensorDirection.RIGHT || sensorDirectionB == SensorDirection.RIGHT) {
-                Player.senR = true;
-                Player.senRCount++;
+                }
+                if (sensorDirectionA == SensorDirection.RIGHT || sensorDirectionB == SensorDirection.RIGHT) {
+                    Player.senR = true;
+                    Player.senRCount++;
 //            System.out.println("Right here");
-            }
-            if (sensorDirectionA == SensorDirection.TOP || sensorDirectionB == SensorDirection.TOP) {
-                Player.senT = true;
-                Player.senTCount++;
+                }
+                if (sensorDirectionA == SensorDirection.TOP || sensorDirectionB == SensorDirection.TOP) {
+                    Player.senT = true;
+                    Player.senTCount++;
 //            System.out.println("Top here");
-            }
-            if (sensorDirectionA == SensorDirection.TOPLEFT || sensorDirectionB == SensorDirection.TOPLEFT) {
-                Player.senTL = true;
-                Player.senTLCount++;
+                }
+                if (sensorDirectionA == SensorDirection.TOPLEFT || sensorDirectionB == SensorDirection.TOPLEFT) {
+                    Player.senTL = true;
+                    Player.senTLCount++;
 //            System.out.println("TL here");
-            }
-            if (sensorDirectionA == SensorDirection.TOPRIGHT || sensorDirectionB == SensorDirection.TOPRIGHT) {
-                Player.senTR = true;
-                Player.senTRCount++;
+                }
+                if (sensorDirectionA == SensorDirection.TOPRIGHT || sensorDirectionB == SensorDirection.TOPRIGHT) {
+                    Player.senTR = true;
+                    Player.senTRCount++;
 //            System.out.println("TR here");
-            }
-            if (sensorDirectionA == SensorDirection.BOT || sensorDirectionB == SensorDirection.BOT) {
-                Player.senB = true;
-                Player.senBCount++;
+                }
+                if (sensorDirectionA == SensorDirection.BOT || sensorDirectionB == SensorDirection.BOT) {
+                    Player.senB = true;
+                    Player.senBCount++;
 //            System.out.println("Bot here");
-            }
-            if (sensorDirectionA == SensorDirection.BOTLEFT || sensorDirectionB == SensorDirection.BOTLEFT) {
-                Player.senBL = true;
-                Player.senBLCount++;
+                }
+                if (sensorDirectionA == SensorDirection.BOTLEFT || sensorDirectionB == SensorDirection.BOTLEFT) {
+                    Player.senBL = true;
+                    Player.senBLCount++;
 //            System.out.println("BL here");
-            }
-            if (sensorDirectionA == SensorDirection.BOTRIGHT || sensorDirectionB == SensorDirection.BOTRIGHT) {
-                Player.senBR = true;
-                Player.senBRCount++;
+                }
+                if (sensorDirectionA == SensorDirection.BOTRIGHT || sensorDirectionB == SensorDirection.BOTRIGHT) {
+                    Player.senBR = true;
+                    Player.senBRCount++;
 //            System.out.println("BR here");
+                }
             }
+
         }
 
         if((sensorDirectionA == NhanVat.BACHTUOC && sensorDirectionB == NhanVat.MAIN)

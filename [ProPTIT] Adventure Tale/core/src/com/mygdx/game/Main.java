@@ -28,11 +28,8 @@ public class Main extends Game {
     public TransitionScreen transitionScreen;
     public static int level;
     public static int chooseLevel;
-    public FileWriter fw;
-    public Scanner reader;
 
     public Main() throws IOException {
-//        reader = new Scanner(new File(SAVE_FILE_PATH));
     }
     @Override
     public void create() {

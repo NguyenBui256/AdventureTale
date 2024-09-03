@@ -64,6 +64,7 @@ public class Hud {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 showPauseNoti();
+                Main.gameScreen.isPause = true;
                 PauseButton.setVisible(false);
                 PauseClickButton.setVisible(true);
                 return true;
@@ -181,6 +182,7 @@ public class Hud {
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Main.gameScreen.isPause = false;
                 PauseTB.setVisible(false);
                 DarkBackground.setVisible(false);
                 ContinueClickButton.setVisible(false);
@@ -271,9 +273,9 @@ public class Hud {
         stage.getActors().get(17).setSize(TB_WIDTH, TB_HEIGHT);
         stage.getActors().get(17).setPosition(TB_POS_X, TB_POS_Y);
         stage.getActors().get(18).setSize(BIG_BUTTON_SIZE, BIG_BUTTON_SIZE);
-        stage.getActors().get(18).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 5, TB_POS_Y + 95);
+        stage.getActors().get(18).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 15, TB_POS_Y + 95);
         stage.getActors().get(19).setSize(BIG_BUTTON_SIZE, BIG_BUTTON_SIZE);
-        stage.getActors().get(19).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 5, TB_POS_Y + 95);
+        stage.getActors().get(19).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 15, TB_POS_Y + 95);
         stage.getActors().get(20).setSize(BUTTON_SIZE, BUTTON_SIZE);
         stage.getActors().get(20).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - BIG_BUTTON_SIZE - 5, TB_POS_Y + 95);
         stage.getActors().get(21).setSize(BUTTON_SIZE, BUTTON_SIZE);

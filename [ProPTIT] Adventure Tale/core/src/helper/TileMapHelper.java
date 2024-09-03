@@ -164,8 +164,8 @@ public class TileMapHelper {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.world.createBody(bodyDef);
         FixtureDef fdef = new FixtureDef();
-        fdef.friction = 5;
-        fdef.density = 1000;
+        fdef.friction = 2;
+        fdef.density = 0;
         fdef.shape = createPolygonShape(mapObject);
         body.createFixture(fdef);
     }

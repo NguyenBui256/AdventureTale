@@ -196,10 +196,6 @@ public class Player extends Sprite {
             setBounds(body.getPosition().x,body.getPosition().y,2*TILE_SIZE/PPM, 2*TILE_SIZE/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 3);
         }
-
-
-
-
     }
 
     // Set texture for character
@@ -277,12 +273,15 @@ public class Player extends Sprite {
     }
 
     public void checkMovingInput(){
-
-            System.out.println("TL T TR: " + senTL + senT + senTR +  "| BL B BR: " +
-                    senBL + senB + senBR + "| L R: " + senL + senR);
-            System.out.println("TL T TR: " + senTLCount + senTCount + senTRCount +  "| BL B BR: " +
-                    senBLCount + senBCount + senBRCount + "| L R: " + senLCount + senRCount);
-            System.out.println(body.getGravityScale());
+        if(Main.gameScreen.isPause || Main.gameScreen.winn || Main.gameScreen.endMap) {
+            body.setLinearVelocity(0,0);
+            return;
+        }
+//            System.out.println("TL T TR: " + senTL + senT + senTR +  "| BL B BR: " +
+//                    senBL + senB + senBR + "| L R: " + senL + senR);
+//            System.out.println("TL T TR: " + senTLCount + senTCount + senTRCount +  "| BL B BR: " +
+//                    senBLCount + senBCount + senBRCount + "| L R: " + senLCount + senRCount);
+//            System.out.println(body.getLinearVelocity());
 
         if (nhanVat == NhanVat.CUCAI) {
             boolean hasKeyPressed = false;
@@ -347,24 +346,25 @@ public class Player extends Sprite {
             if (senBLCount >= 1 && !senB && !senBR && !senL && !senTL) {
                 // Nhân vật ở góc trên phải
                 body.setLinearVelocity(-2, -2);
-                allowRight = false; allowUp = false;
+//                allowRight = false; allowUp = false;
                 allowDown = true; allowLeft = true;
             } else if (senBRCount >= 1 && !senB && !senBL && !senR && !senTR) {
                 // Nhân vật ở góc trên trái
                 body.setLinearVelocity(2, -2);
-                allowLeft = false; allowUp = false;
+//                allowLeft = false; allowUp = false;
                 allowDown = true; allowRight = true;
             } else if (senTLCount >= 1 && !senT && !senTR && !senL && !senBL) {
                 // Nhân vật ở góc dưới phải
                 body.setLinearVelocity(-2, 2);
-                allowRight = false; allowDown = false;
+//                allowRight = false; allowDown = false;
                 allowLeft = true; allowUp = true;
             } else if (senTRCount >= 1 && !senT && !senTL && !senR && !senBR) {
                 // Nhân vật ở góc dưới trái
                 body.setLinearVelocity(2, 2);
-                allowLeft = false; allowDown = false;
+//                allowLeft = false; allowDown = false;
                 allowRight = true; allowUp = true;
             } else {
+                // Rơi tự do
                 if (!senBR && !senL && !senBL && !senR && !senTL && !senTR && !senT && !senB) {
                     body.setGravityScale(1);
                 }
@@ -376,7 +376,6 @@ public class Player extends Sprite {
                     body.setGravityScale(-1); // ceiling
                     allowLeft = allowRight = true;
                 }
-
                 if (senL || senR) {
                     body.setGravityScale(0); // side
                     allowUp = allowDown = true;
@@ -393,8 +392,9 @@ public class Player extends Sprite {
                     roll = 7;
                 }
                 currentState = State.valueOf("ROUND" + (roll + 1));
-                body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, speed);
-            } else if (allowDown && downPressed && !upPressed) {
+                body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, velY * speed);
+            }
+            else if (allowDown && downPressed && !upPressed) {
                 velY = -1;
                 if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
@@ -403,7 +403,7 @@ public class Player extends Sprite {
                     roll = 0;
                 }
                 currentState = State.valueOf("ROUND" + (roll + 1));
-                body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, -speed);
+                body.setLinearVelocity(body.getLinearVelocity().x < 15 ? body.getLinearVelocity().x : 15, velY * speed);
             }
 
             if (allowLeft && leftPressed && !rightPressed) {
@@ -415,9 +415,9 @@ public class Player extends Sprite {
                     roll = 0;
                 }
                 currentState = State.valueOf("ROUND" + (roll + 1));
-                velX = -1;
                 body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 15 ? body.getLinearVelocity().y : 15);
-            } else if (allowRight && rightPressed && !leftPressed) {
+            }
+            else if (allowRight && rightPressed && !leftPressed) {
                 velX = 1;
                 if(soundOn) octopusSound.play();
                 hasKeyPressed = true;
@@ -431,14 +431,14 @@ public class Player extends Sprite {
             if(!soundBachTuocPlaying[0] && !hasKeyPressed) {
                 octopusSound.stop();
             }
-            if(!hasKeyPressed || (velX == 0 && velY == 0)){
+            if(!hasKeyPressed){
                 if(body.getLinearVelocity().y == 0)  body.setLinearVelocity(0,0);
-                if(body.getLinearVelocity().x == 0 &&
-                        ((senTL && senL && senBL) || (senTL && senL) || (senBL && senL)
-                                || (senTR && senR && senBR) || (senTR && senR) || (senR && senBR))) {
+                if(body.getLinearVelocity().x == 0 && ((senTL && senL) || (senBL && senL) || (senTR && senR) || (senR && senBR))) {
                     body.setLinearVelocity(0, 0);
                 }
             }
+
+//            System.out.println("" + allowUp + allowDown + allowLeft + allowRight + " " + velX + " " + velY + body.getLinearVelocity());
 
         }
         else {
