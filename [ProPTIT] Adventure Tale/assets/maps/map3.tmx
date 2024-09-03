@@ -159,8 +159,8 @@
   <object id="13" x="270" y="630">
    <polygon points="0,0 504,0 504,36 0,36"/>
   </object>
-  <object id="14" x="324" y="594">
-   <polygon points="0,0 18,0 18,36 0,36"/>
+  <object id="14" x="322.545" y="594">
+   <polygon points="0,0 20.3636,0 20.3636,36 0,36"/>
   </object>
   <object id="15" x="684" y="612">
    <polygon points="0,0 90.0417,0 90.0417,18 0,18"/>

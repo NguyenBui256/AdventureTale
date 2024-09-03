@@ -9,10 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.Main;
+import helper.TileMapHelper;
 import org.w3c.dom.Text;
 
 import java.awt.geom.RectangularShape;
@@ -49,7 +53,7 @@ public class Player extends Sprite {
                 rockSound = Gdx.audio.newMusic(Gdx.files.internal(ROCK_SOUND)),
                 glassSound = Gdx.audio.newMusic(Gdx.files.internal(GLASS_SOUND));
 
-    public MassData cuCaiAndBachTuocMassData, cucDaMassData;
+    public MassData cuCaiMassData, bachTuocMassData, cucDaMassData;
     public Player(GameScreen screen, Body body) {
         this.game = screen.game;
         this.world = screen.world;
@@ -58,9 +62,11 @@ public class Player extends Sprite {
         senTL = senTR =  senBL =  senBR = senT = senR = senB = senL = false;
         senTLCount = senTRCount = senBLCount = senBRCount = senTCount = senBCount = senLCount = senRCount = 0;
 
-        cuCaiAndBachTuocMassData = new MassData();
+        cuCaiMassData = new MassData();
+        bachTuocMassData = new MassData();
         cucDaMassData = new MassData();
-        cuCaiAndBachTuocMassData.mass = CUCAI_BACHTUOC_MASS;
+        cuCaiMassData.mass = CUCAI_MASS;
+        bachTuocMassData.mass = BACHTUOC_MASS;
         cucDaMassData.mass = CUCDA_MASS;
 
         setBounds(body.getPosition().x, body.getPosition().y,TILE_SIZE/PPM,TILE_SIZE/PPM);
@@ -170,15 +176,15 @@ public class Player extends Sprite {
             stateTimer = 0;
         }
         if(nhanVat == NhanVat.CUCAI) {
-            body.setMassData(cuCaiAndBachTuocMassData);
-            this.speed = CUCAI_BACHTUOC_SPEED;
+            body.setMassData(cuCaiMassData);
+            this.speed = CUCAI_SPEED;
             setRegion(getFrame(NhanVatCuCai,dt));
             setBounds(body.getPosition().x, body.getPosition().y,2*TILE_SIZE/PPM,2*TILE_SIZE/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 4 - 0.05f);
         }
         else if(nhanVat == NhanVat.BACHTUOC) {
-            body.setMassData(cuCaiAndBachTuocMassData);
-            this.speed = CUCAI_BACHTUOC_SPEED;
+            body.setMassData(bachTuocMassData);
+            this.speed = BACHTUOC_SPEED;
             setRegion(getFrame(NhanVatBachTuoc,dt));
             setBounds(body.getPosition().x,body.getPosition().y,2*TILE_SIZE/PPM, 2*TILE_SIZE/PPM);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -272,13 +278,12 @@ public class Player extends Sprite {
 
     public void checkMovingInput(){
 
-        if(Gdx.input.isTouched()){
             System.out.println("TL T TR: " + senTL + senT + senTR +  "| BL B BR: " +
                     senBL + senB + senBR + "| L R: " + senL + senR);
             System.out.println("TL T TR: " + senTLCount + senTCount + senTRCount +  "| BL B BR: " +
                     senBLCount + senBCount + senBRCount + "| L R: " + senLCount + senRCount);
             System.out.println(body.getGravityScale());
-        }
+
         if (nhanVat == NhanVat.CUCAI) {
             boolean hasKeyPressed = false;
             velX = 0;
@@ -360,16 +365,19 @@ public class Player extends Sprite {
                 allowLeft = false; allowDown = false;
                 allowRight = true; allowUp = true;
             } else {
+                if (!senBR && !senL && !senBL && !senR && !senTL && !senTR && !senT && !senB) {
+                    body.setGravityScale(1);
+                }
                 // Xử lý khi nhân vật đi theo tường
-                if ((senBL && senB) || (senB && senBR)) {
+                if (senB) {
                     body.setGravityScale(1); // ground
                     allowLeft = allowRight = true;
-                } else if ((senTL && senT) || (senT && senTR)) {
+                } else if (senT) {
                     body.setGravityScale(-1); // ceiling
                     allowLeft = allowRight = true;
                 }
 
-                if ((senTL && senL) || (senBL && senL) || (senTR && senR) || (senR && senBR)) {
+                if (senL || senR) {
                     body.setGravityScale(0); // side
                     allowUp = allowDown = true;
                 }

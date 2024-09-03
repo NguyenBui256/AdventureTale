@@ -100,7 +100,7 @@
   <object id="9" name="glass" x="432" y="360" width="108" height="36"/>
   <object id="11" name="glass" x="540" y="360" width="108" height="36"/>
   <object id="12" name="door" x="720" y="288" width="36" height="36"/>
-  <object id="14" name="box" x="270" y="594" width="18" height="18"/>
+  <object id="14" name="box" x="269.667" y="592" width="20" height="19.6667"/>
   <object id="15" name="button" x="396" y="676" width="18"/>
   <object id="16" name="player" x="360" y="270" width="18" height="18"/>
   <object id="17" name="CucDa" x="261" y="262" width="18" height="18"/>
@@ -153,8 +153,8 @@
   <object id="75" x="684" y="540">
    <polygon points="0,0 -36,0 -36,-216 0,-216"/>
   </object>
-  <object id="77" x="684" y="324">
-   <polygon points="0,0 0,36 144,36 144,0"/>
+  <object id="77" x="684" y="324.182">
+   <polygon points="0,0 0,35.8182 144,35.8182 144,0"/>
   </object>
   <object id="78" x="828" y="270">
    <polygon points="0,0 -36,0 -36,54 0,54"/>

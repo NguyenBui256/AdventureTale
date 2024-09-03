@@ -137,7 +137,7 @@
  <objectgroup id="2" name="objects">
   <object id="1" name="bound" x="0" y="702" width="1080" height="18"/>
   <object id="2" name="fire" x="36" y="666" width="144" height="36"/>
-  <object id="3" name="player" x="270" y="612" width="16" height="16"/>
+  <object id="3" name="player" x="270" y="612" width="18" height="17.8182"/>
   <object id="4" name="fire" x="324" y="666" width="144" height="36"/>
   <object id="5" name="fire" x="630" y="666" width="161.333" height="36"/>
   <object id="6" name="door" x="1008" y="306" width="36" height="36"/>

@@ -10,7 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4e5d2c4-0866-4a49-aa3b-028e9e1b7f03" name="Changes" comment="fix: release config">
-      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/TileMapHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/TileMapHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map3.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map3.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map5.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map5.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map6.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map6.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map7.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map7.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/WorldContactListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/WorldContactListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/objects/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/objects/player/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +47,12 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="[ProPTIT] Adventure Tale" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -73,19 +86,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "develop",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/buiph/Desktop/CODE/main/PGJ-Adventure-Tale/[ProPTIT] Adventure Tale",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15332031",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.[ProPTIT] Adventure Tale [runGame].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/buiph/Desktop/CODE/main/PGJ-Adventure-Tale/[ProPTIT] Adventure Tale&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15332031&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale" />
@@ -240,6 +255,13 @@
         <item itemvalue="Gradle.[ProPTIT] Adventure Tale [./gradlew :desktop:dist]" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-4caba194b151-23eed401" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
