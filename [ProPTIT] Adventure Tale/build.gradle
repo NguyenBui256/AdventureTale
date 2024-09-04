@@ -1,5 +1,5 @@
 buildscript {
-    
+
 
     repositories {
         mavenLocal()
@@ -18,7 +18,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "Adventure Tale"
+        appName = "AdventureTale"
         gdxVersion = '1.12.1'
         roboVMVersion = '2.3.20'
         box2DLightsVersion = '1.5'
@@ -46,8 +46,9 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        
+
     }
 }
 
@@ -56,7 +57,8 @@ project(":core") {
 
 
     dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+//        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
     }
 }

@@ -7,10 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import helper.TileMapHelper;
 import objects.player.Player;
 
 import static helper.Constants.*;
@@ -28,50 +26,45 @@ public class Hud {
     protected ImageButton MusicOnButton, MusicOnClickButton, MusicOffButton, MusicOffClickButton;
     protected ImageButton DarkBackground;
     protected boolean BachTuocAddFlag, CucDaAddFlag;
-    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound));
+    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(CLICK_SOUND));
     public Hud(Player player){
         stage = new Stage();
         this.player = player;
-        CuCaiButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(CuCaiButtonPath))));
-        BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(BachTuocButtonPath))));
-        CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(CucDaButtonPath))));
-        PauseButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(PauseButtonPath))));
-        PauseClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(PauseClickButtonPath))));
-        RestartButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(RestartButtonPath))));
-        RestartClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(RestartClickButtonPath))));
-        PauseTB = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(PauseTbPath))));
-        WinTB = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(WinTbPath))));
-        ContinueButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(ContinuePath))));
-        ContinueClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(ContinueClickPath))));
-        LevelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(LevelPath))));
-        LevelClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(LevelClickPath))));
-        RestartButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(RestartButtonPath))));
-        RestartClickButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(RestartClickButtonPath))));
-        DarkBackground = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(BlackFadePath))));
+        CuCaiButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(CU_CAI_BTN))));
+        BachTuocButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(BACH_TUOC_BTN))));
+        CucDaButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(CUC_DA_BTN))));
+        PauseButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(PAUSE_BUTTON))));
+        PauseClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(PAUSE_BTN_HOVER))));
+        RestartButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(RESTART_BTN))));
+        RestartClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(RESTART_BTN_HOVER))));
+        PauseTB = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(PAUSE_NOTI))));
+        WinTB = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(WIN_NOTI))));
+        ContinueButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(CONTINUE_BTN))));
+        ContinueClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(CONTINUE_BTN_HOVER))));
+        LevelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(LEVEL_BTN_PATH))));
+        LevelClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(LEVEL_BTN_HOVER))));
+        RestartButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(RESTART_BTN))));
+        RestartClickButton2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(RESTART_BTN_HOVER))));
+        DarkBackground = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(BLACK_SCENE))));
+
+        SoundOnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SOUND_ON_BTN))));
+        SoundOnClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SOUND_ON_BTN_HOVER))));
+        SoundOffButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SOUND_OFF_BTN))));
+        SoundOffClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SOUND_OFF_BTN_HOVER))));
+        MusicOnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MUSIC_ON_BTN))));
+        MusicOnClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MUSIC_ON_BTN_HOVER))));
+        MusicOffButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MUSIC_OFF_BTN))));
+        MusicOffClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MUSIC_OFF_BTN_HOVER))));
 
         bonusSound.setVolume(0.4f);
-        SoundOnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SoundOnPath))));
-        SoundOnClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SoundOnClickPath))));
-        SoundOffButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SoundOffPath))));
-        SoundOffClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(SoundOffClickPath))));
-        MusicOnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOnPath))));
-        MusicOnClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOnClickPath))));
-        MusicOffButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOffPath))));
-        MusicOffClickButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(MusicOffClickPath))));
 
         PauseButton.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                bonusSound.setPosition(0);
-                bonusSound.play();
-                DarkBackground.setVisible(true);
-                DarkBackground.setColor(0, 0, 0, 0.2f);
+                showPauseNoti();
+                Main.gameScreen.isPause = true;
                 PauseButton.setVisible(false);
                 PauseClickButton.setVisible(true);
-                PauseTB.setVisible(true);
-                ContinueButton.setVisible(true);
-                LevelButton.setVisible(true);
-                RestartButton2.setVisible(true);
                 return true;
             }
             @Override
@@ -127,7 +120,6 @@ public class Hud {
         RestartButton2.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                bonusSound.setPosition(0);
                 bonusSound.play();
                 RestartButton2.setVisible(false);
                 RestartClickButton2.setVisible(true);
@@ -177,10 +169,9 @@ public class Hud {
         ContinueButton.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                bonusSound.setPosition(0);
                 bonusSound.play();
                 if(nextlevel) {
-                    System.out.println("Duoc roi ne!!");
+//                    System.out.println("Duoc roi ne!!");
                     goToNextLevel = true;
                 }
                 ContinueButton.setVisible(false);
@@ -189,6 +180,7 @@ public class Hud {
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Main.gameScreen.isPause = false;
                 PauseTB.setVisible(false);
                 DarkBackground.setVisible(false);
                 ContinueClickButton.setVisible(false);
@@ -247,10 +239,6 @@ public class Hud {
         stage.addActor(LevelClickButton); //index 21
         stage.addActor(RestartButton2); //index 22
         stage.addActor(RestartClickButton2); //index 23
-        focusTo(0);
-    }
-
-    public void update(){
         stage.getActors().get(3).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
         stage.getActors().get(3).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 2 - BUTTON_DISTANCE, BUTTON_POS_Y2);
         stage.getActors().get(4).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
@@ -281,9 +269,9 @@ public class Hud {
         stage.getActors().get(17).setSize(TB_WIDTH, TB_HEIGHT);
         stage.getActors().get(17).setPosition(TB_POS_X, TB_POS_Y);
         stage.getActors().get(18).setSize(BIG_BUTTON_SIZE, BIG_BUTTON_SIZE);
-        stage.getActors().get(18).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 5, TB_POS_Y + 95);
+        stage.getActors().get(18).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 15, TB_POS_Y + 95);
         stage.getActors().get(19).setSize(BIG_BUTTON_SIZE, BIG_BUTTON_SIZE);
-        stage.getActors().get(19).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 5, TB_POS_Y + 95);
+        stage.getActors().get(19).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - 15, TB_POS_Y + 95);
         stage.getActors().get(20).setSize(BUTTON_SIZE, BUTTON_SIZE);
         stage.getActors().get(20).setPosition((APP_WIDTH - BUTTON_SIZE)/2 - BIG_BUTTON_SIZE - 5, TB_POS_Y + 95);
         stage.getActors().get(21).setSize(BUTTON_SIZE, BUTTON_SIZE);
@@ -292,17 +280,19 @@ public class Hud {
         stage.getActors().get(22).setPosition((APP_WIDTH - BUTTON_SIZE)/2 + BIG_BUTTON_SIZE + 5, TB_POS_Y + 95);
         stage.getActors().get(23).setSize(BUTTON_SIZE, BUTTON_SIZE);
         stage.getActors().get(23).setPosition((APP_WIDTH - BUTTON_SIZE)/2 + BIG_BUTTON_SIZE + 5, TB_POS_Y + 95);
+
+        focusTo(0);
+    }
+
+    public void update(){
         if(player.BachTuocFlag && !this.BachTuocAddFlag) {
-            stage.addActor(BachTuocButton);
             stage.getActors().get(1).setVisible(true);
             this.BachTuocAddFlag = true;
         }
         if(player.CucDaFlag && !this.CucDaAddFlag){
-            stage.addActor(CucDaButton);
             stage.getActors().get(2).setVisible(true);
             this.CucDaAddFlag = true;
         }
-
         if(player.nhanVat == NhanVat.CUCAI) focusTo(0);
         else if(player.nhanVat == NhanVat.BACHTUOC) focusTo(1);
         else if(player.nhanVat == NhanVat.CUCDA) focusTo(2);
@@ -332,7 +322,7 @@ public class Hud {
             stage.getActors().get(2).setPosition(3*BUTTON_PADDING + 2*BUTTON_SIZE,BUTTON_POS_Y - (BIG_BUTTON_SIZE - BUTTON_SIZE) / 2);
         }
     }
-    public void win(){
+    public void winProcess(){
         this.nextlevel = true;
         DarkBackground.setVisible(true);
         DarkBackground.setColor(0, 0, 0, 0.2f);
@@ -342,5 +332,23 @@ public class Hud {
         ContinueButton.setVisible(true);
         LevelButton.setVisible(true);
         RestartButton2.setVisible(true);
+    }
+
+    public void showPauseNoti(){
+        bonusSound.play();
+        DarkBackground.setVisible(true);
+        DarkBackground.setColor(0, 0, 0, 0.2f);
+        PauseTB.setVisible(true);
+        ContinueButton.setVisible(true);
+        LevelButton.setVisible(true);
+        RestartButton2.setVisible(true);
+    }
+
+    public void hidePauseNoti(){
+        ContinueButton.setVisible(false);
+        PauseTB.setVisible(false);
+        DarkBackground.setVisible(false);
+        LevelButton.setVisible(false);
+        RestartButton2.setVisible(false);
     }
 }

@@ -27,7 +27,8 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        map = new TmxMapLoader().load("map" + Main.chooseLevel + ".tmx");
+        Button.pressCount = 0;
+        map = new TmxMapLoader().load("maps/map" + Main.chooseLevel + ".tmx");
         parseMapObjects(map.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(map);
     }
@@ -60,7 +61,7 @@ public class TileMapHelper {
                             rectangle.getHeight(),
                             false,
                             gameScreen.world,
-                            1,
+                            5,
                             VatThe.BOX
                     );
                     gameScreen.boxList.add(new Box(gameScreen, body));
@@ -68,12 +69,12 @@ public class TileMapHelper {
                 else if(rectangleName.equals("BachTuoc")){
                     gameScreen.bubbleList.add(new Bubble(
                         gameScreen, createBubble(rectangle, NhanVat.BACHTUOC),
-                        BachTuocBubblePath, 171, 171));
+                        BACH_TUOC_BUBBLE, 171, 171));
                 }
                 else if(rectangleName.equals("CucDa")){
                     gameScreen.bubbleList.add(new Bubble(
                         gameScreen, createBubble(rectangle, NhanVat.CUCDA),
-                        CucDaBubblePath, 169, 169));
+                        CUC_DA_BUBBLE, 169, 169));
                 }
                 else if(rectangleName.equals("door")){
                     gameScreen.door = new Door(gameScreen, createStaticObject(rectangle, VatThe.DOOR), 80, 100);
@@ -97,17 +98,7 @@ public class TileMapHelper {
                 }
                 else if (rectangleName.equals("button")) {
                     gameScreen.checkButton = true;
-                    Body body = BodyHelperService.createBody(
-                            rectangle.getX() + rectangle.getWidth() / 2,
-                            rectangle.getY() + rectangle.getHeight() / 2,
-                            rectangle.getWidth(),
-                            rectangle.getHeight(),
-                            false,
-                            gameScreen.world,
-                            2,
-                            VatThe.BUTTON
-                    );
-                    gameScreen.button = new Button(gameScreen, body);
+                    gameScreen.button = new Button(gameScreen, createButton(rectangle, VatThe.BUTTON));
                 }
                 else if (rectangleName.equals("fire")) {
                     gameScreen.fireList.add(new Fire(gameScreen, createStaticObject(rectangle, VatThe.FIRE), 446));
@@ -120,6 +111,28 @@ public class TileMapHelper {
                 }
             }
         }
+    }
+
+    public Body createButton(Rectangle rectangle, Object data) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.position.set(
+                (rectangle.getX() + rectangle.getWidth() / 2) / PPM,
+                (rectangle.getY() + 10 + rectangle.getHeight() / 2) / PPM);
+        bodyDef.fixedRotation = true;
+        Body body = gameScreen.world.createBody(bodyDef);
+
+        MassData massData = new MassData();
+        massData.mass = 0;
+        body.setMassData(massData);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(rectangle.getWidth() / 2 / PPM, rectangle.getHeight() / 2 / PPM);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef).setUserData(data);
+        shape.dispose();
+        return body;
     }
 
     public Body createBubble(Rectangle rectangle, Object data) {
@@ -151,8 +164,8 @@ public class TileMapHelper {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.world.createBody(bodyDef);
         FixtureDef fdef = new FixtureDef();
-        fdef.friction = 5;
-        fdef.density = 1000;
+        fdef.friction = 2;
+        fdef.density = 0;
         fdef.shape = createPolygonShape(mapObject);
         body.createFixture(fdef);
     }

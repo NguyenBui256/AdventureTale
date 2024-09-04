@@ -9,8 +9,7 @@ import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GameScreen;
 
-import static helper.Constants.PPM;
-import static helper.Constants.TILE_SIZE;
+import static helper.Constants.*;
 
 public class Glass extends Sprite {
     public World world;
@@ -29,13 +28,13 @@ public class Glass extends Sprite {
         isBroken = false;
 
         if (Width > Height) {
-            glassUnbroken = new Texture("glass-unbroken.png");
-            glassBroken = new Texture("glass-broken.png");
+            glassUnbroken = new Texture(GLASS_UNBROKEN);
+            glassBroken = new Texture(GLASS_BROKEN);
             region = TextureRegion.split(glassUnbroken, Width, Height);
             setBounds(body.getPosition().x,body.getPosition().y,6 * TILE_SIZE/PPM, 2 * TILE_SIZE/PPM);
         } else {
-            glassUnbrokenSt = new Texture("glass-unbroken-stand.png");
-            glassBrokenSt = new Texture("glass-broken-stand.png");
+            glassUnbrokenSt = new Texture(GLASS_UNBROKEN_STAND);
+            glassBrokenSt = new Texture(GLASS_BROKEN_STAND);
             region = TextureRegion.split(glassUnbrokenSt, Width, Height);
             setBounds(body.getPosition().x,body.getPosition().y,2 * TILE_SIZE/PPM, 6 * TILE_SIZE/PPM);
         }

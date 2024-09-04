@@ -1,79 +1,126 @@
 package helper;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-
 public class Constants {
 
     //----------Enums
-    public enum State {IDLELEFT, IDLERIGHT, RUNNINGLEFT, RUNNINGRIGHT, JUMPINGLEFT, JUMPINGRIGHT, ROUND1,
-        ROUND2, ROUND3, ROUND4, ROUND5, ROUND6, ROUND7, ROUND8};
+    public enum State {IDLELEFT, IDLERIGHT, RUNNINGLEFT, RUNNINGRIGHT, JUMPINGLEFT, JUMPINGRIGHT, ROUND1, ROUND2, ROUND3,
+    ROUND4, ROUND5, ROUND6, ROUND7, ROUND8}
     public enum NhanVat {MAIN, CUCAI, BACHTUOC, CUCDA};
     public enum VatThe {DOOR, MAPBOUND, BOX, FIRE, BUTTON};
     public enum SensorDirection {TOP, LEFT, RIGHT, BOT, TOPLEFT, TOPRIGHT, BOTLEFT, BOTRIGHT};
 
 
     //----------Arithmetics
+    public static final int
+            APP_WIDTH = 1200, APP_HEIGHT = 800,
+            TB_WIDTH = 417, TB_HEIGHT = 429,
+            TB_POS_X = (APP_WIDTH - TB_WIDTH)/2,
+            TB_POS_Y = (APP_HEIGHT- TB_HEIGHT)/2 + 50,
+            MAX_LEVEL = 13;
+    public static final float
+            PPM = 18.0f, SENSOR_GAP = 0.05f,
+            BACHTUOC_SPEED = 6f, CUCDA_SPEED = 6f, CUCAI_SPEED = 8f,
+            CUCAI_MASS = 1, BACHTUOC_MASS = 3.5f, CUCDA_MASS = 15f,
+            CAMERA_VIEWPORT_WIDTH = 360, CAMERA_VIEWPORT_HEIGHT = 240,
+            BUTTON_PADDING = 20, BUTTON_SIZE = 64, BIG_BUTTON_SIZE = 96, SMALL_BUTTON_SIZE = 54,
+            BUTTON_POS_Y = 700, BUTTON_POS_Y2 = 720, BUTTON_DISTANCE = 10,
+            LEVEL_BUTTON_SIZE = 100, LEVEL_BUTTON_PADDING = 30,
+            TILE_SIZE = 18f, ICON_SIZE = 50f,
+            MAP_WIDTH = TILE_SIZE * 60, MAP_HEIGHT = TILE_SIZE * 40,
+            CORNER_SENSOR_SIZE = 0.5f, EDGE_SENSOR_SIZE = 8f; //square
 
-    public static final float BUTTON_PADDING = 20, BUTTON_SIZE = 64, BIG_BUTTON_SIZE = 80, SMALL_BUTTON_SIZE = 40, BUTTON_POS_Y = 560, BUTTON_POS_Y2 = 580, BUTTON_DISTANCE = 10;
-    public static final int APP_WIDTH = 960, APP_HEIGHT = 640;
-    public static final int TB_WIDTH = 417, TB_HEIGHT = 429;
-    public static final int TB_POS_X = (APP_WIDTH - TB_WIDTH)/2, TB_POS_Y = (APP_HEIGHT-TB_HEIGHT)/2 + 50;
-    public static final float PPM = 18.0f;
-    public static final float TILE_SIZE = 18f, ICON_SIZE = 50f; //square
-    public static final float MAP_WIDTH = TILE_SIZE * 60;
-    public static final float MAP_HEIGHT = TILE_SIZE * 40;
-    public static final float CORNER_SENSOR_SIZE = 1f, EDGE_SENSOR_SIZE = 6f;
-    public static final float CAMERA_VIEWPORT_WIDTH = 360, CAMERA_VIEWPORT_HEIGHT = 240;
 
 
-
-
-    //----------Images & Textures path strings
+    //----------Menu Screen Textures
     public static final String
-            BachTuocBubblePath = "bachtuocbb.png",
-            CucDaBubblePath = "cucdabb.png",
-            SmokeAnimationPath = "smokeAnimation.png",
-            CuCaiButtonPath = "cucaibtn.png",
-            BachTuocButtonPath = "bachtuocbtn.png",
-            CucDaButtonPath = "cucdabtn.png",
-            RestartButtonPath = "restart.png",
-            RestartClickButtonPath = "restartpress.png",
-            PauseButtonPath = "Pause.png",
-            PauseClickButtonPath = "Pausepress.png",
-            PauseTbPath = "PAUSETB.png",
-            WinTbPath = "WINTB.png",
-            ContinuePath = "Start.png",
-            ContinueClickPath = "Startpress.png",
-            LevelPath = "Level.png",
-            LevelClickPath = "Levelpress.png",
-            SAVE_FILE_PATH = "savedata.txt",
-            MusicOnPath = "musicOn.png",
-            MusicOnClickPath = "musicOnPress.png",
-            MusicOffPath = "musicOff.png",
-            MusicOffClickPath = "musicOffPress.png",
-            SoundOnPath = "soundOn.png",
-            SoundOnClickPath = "soundOnPress.png",
-            SoundOffPath = "soundOff.png",
-            SoundOffClickPath = "soundOffPress.png",
-            BlackFadePath = "blackfade.png",
-            BackGroundMenuPath = "bgfn.png";
+        MENU_BG_IMAGE = "textures/bgfn.png",
+        MENU_PLAY_BTN = "textures/buttons/Default.png",
+        MENU_PLAY_BTN_HOVER = "textures/buttons/Hover.png",
+        MENU_TUTORIAL_BTN = "textures/buttons/TutButton.png",
+        MENU_TUTORIAL_BTN_HOVER = "textures/buttons/TutPressButton.png",
+        MENU_TUTORIAL_CONTENT = "textures/ControlBoard.png",
+        MENU_EXIT_BTN = "textures/buttons/Exit.png",
+        MENU_EXIT_BTN_HOVER = "textures/buttons/ExitPress.png";
 
-
-    //----------Audios path strings
+    //----------Level Screen Textures
     public static final String
-            WalkingSoundPath = "sound/footstep.ogg",
-            OctopusSound = "sound/slime.ogg",
-            BonusSound = "sound/bonussound.ogg",
-            EndLevelMusic = "sound/endlevel2.ogg",
-            TransformSound = "sound/transform.ogg",
-            RockSound = "sound/rockmoving.ogg",
-            MenuBGMusicPath = "sound/menuBGM.ogg",
-            IngameBGMPath = "sound/ingameBGM.ogg",
-            GlassSound = "sound/glassbreak.ogg";
+            LEVEL_ICON_BG = "textures/buttons/Default@2x-1.png",
+            LEVEL_ICON_HOVER_BG = "textures/buttons/Hover@2x.png",
+            LEVEL_LOCK_ICON = "textures/buttons/lock (1).png",
+            LEVEL_BG_IMAGE = "textures/bg3.png",
+            LEVEL_BACK_BTN = "textures/buttons/back.png",
+            LEVEL_BACK_BTN_HOVER = "textures/buttons/backClick.png";
+
+    //----------Game Screen Textures
+    public static final String
+            SMOKE_ANIMATION = "textures/characters/smokeAnimation.png",
+            CUCAI_IDLE_LEFT = "textures/characters/IdleLeft.png",
+            CUCAI_IDLE_RIGHT = "textures/characters/IdleRight.png",
+            CUCAI_RUNNING_LEFT = "textures/characters/RunningLeft.png",
+            CUCAI_RUNNING_RIGHT = "textures/characters/RunningRight.png",
+            CUCAI_JUMPING_LEFT = "textures/characters/JumpingLeft.png",
+            CUCAI_JUMPING_RIGHT = "textures/characters/JumpingRight.png",
+            BACHTUOC_TEXTURE_PATH = "textures/characters/Sprite-000",
+            CUCDA_IDLE_LEFT = "textures/characters/RockIdleLeft.png",
+            CUCDA_IDLE_RIGHT = "textures/characters/RockIdleRight.png",
+            CUCDA_RUNNING_LEFT ="textures/characters/RockRunLeft.png",
+            CUCDA_RUNNING_RIGHT = "textures/characters/RockRunRight.png",
+            BACH_TUOC_BUBBLE = "textures/objects/bachtuocbb.png",
+            CUC_DA_BUBBLE = "textures/objects/cucdabb.png",
+            DOOR_TEXTURE_PATH = "textures/objects/door",
+            FIRE_TEXTURE_PATH = "textures/objects/fire",
+            GLASS_UNBROKEN = "textures/objects/glass-unbroken.png",
+            GLASS_BROKEN = "textures/objects/glass-broken.png",
+            GLASS_UNBROKEN_STAND = "textures/objects/glass-unbroken-stand.png",
+            GLASS_BROKEN_STAND= "textures/objects/glass-broken-stand.png",
+            GAME_BTN_TEXTURE = "textures/objects/button-pressed.png",
+            GAME_BTN_PRESSED_TEXTURE = "textures/objects/button-unpressed.png",
+            BOX_TEXTURE = "textures/objects/box.png",
+            BLACK_SCENE = "textures/blackFade.png";
+
+    //----------HUD Textures
+    public static final String
+            CU_CAI_BTN = "textures/objects/cucaibtn.png",
+            BACH_TUOC_BTN = "textures/objects/bachtuocbtn.png",
+            CUC_DA_BTN = "textures/objects/cucdabtn.png",
+            RESTART_BTN = "textures/buttons/restart.png",
+            RESTART_BTN_HOVER = "textures/buttons/restartpress.png",
+            PAUSE_BUTTON = "textures/buttons/Pause.png",
+            PAUSE_BTN_HOVER = "textures/buttons/Pausepress.png",
+            PAUSE_NOTI = "textures/PAUSETB.png",
+            WIN_NOTI = "textures/WINTB.png",
+            CONTINUE_BTN = "textures/buttons/Start.png",
+            CONTINUE_BTN_HOVER = "textures/buttons/Startpress.png",
+            LEVEL_BTN_PATH = "textures/buttons/Level.png",
+            LEVEL_BTN_HOVER = "textures/buttons/Levelpress.png",
+            MUSIC_ON_BTN = "textures/buttons/musicOn.png",
+            MUSIC_ON_BTN_HOVER = "textures/buttons/musicOnPress.png",
+            MUSIC_OFF_BTN = "textures/buttons/musicOff.png",
+            MUSIC_OFF_BTN_HOVER = "textures/buttons/musicOffPress.png",
+            SOUND_ON_BTN = "textures/buttons/soundOn.png",
+            SOUND_ON_BTN_HOVER = "textures/buttons/soundOnPress.png",
+            SOUND_OFF_BTN = "textures/buttons/soundOff.png",
+            SOUND_OFF_BTN_HOVER = "textures/buttons/soundOffPress.png";
 
 
+    //----------Images & Textures path
+    public static final String
+            CURSOR_ICON = "textures/cursor.png";
 
-    //Audios
-    public Sound walkingSound = Gdx.audio.newSound(Gdx.files.internal("sound/walkingsound.wav"));
+    //----------Save file path
+    public static final String
+            SAVE_FILE_PATH = "savedata.txt";
+
+
+    //----------Audios path
+    public static final String
+            WALKING_SOUND = "sound/footstep.ogg",
+            OCTOPUS_SOUND = "sound/slime.ogg",
+            CLICK_SOUND = "sound/bonussound.ogg",
+            END_LEVEL_MUSIC = "sound/endlevel2.ogg",
+            TRANSFORM_SOUND = "sound/transform.ogg",
+            ROCK_SOUND = "sound/rockmoving.ogg",
+            MENU_BG_MUSIC = "sound/menuBGM.ogg",
+            INGAME_BG_MUSIC = "sound/ingameBGM.ogg",
+            GLASS_SOUND = "sound/glassbreak.ogg";
 }

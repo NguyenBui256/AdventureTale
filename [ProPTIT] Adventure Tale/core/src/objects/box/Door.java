@@ -1,6 +1,5 @@
 package objects.box;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,8 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.mygdx.game.GameScreen;
 import com.badlogic.gdx.utils.Timer;
 
-import static helper.Constants.PPM;
-import static helper.Constants.TILE_SIZE;
+import static helper.Constants.*;
 
 public class Door extends Sprite {
     public Body body;
@@ -27,10 +25,10 @@ public class Door extends Sprite {
         this.height = height;
         if (screen.isPass) {
             screen.checkDoor = true;
-            for (int i = 0; i < 4; ++i) {
-                texture = new Texture("door" + (i + 1) + ".png");
+            for (int state = 0; state < 4; ++state) {
+                texture = new Texture(DOOR_TEXTURE_PATH + (state + 1) + ".png");
                 TextureRegion[][] region = TextureRegion.split(texture, width, height);
-                rolls[i] = new Animation(1.5f, region[0]);
+                rolls[state] = new Animation(1.5f, region[0]);
             }
             stateTime = 0;
             roll = -1;
@@ -46,8 +44,8 @@ public class Door extends Sprite {
                 }
             }, 0, 1/5.0f);
         } else {
-            texture = new Texture("tile_0026.png");
-            TextureRegion[][] region = TextureRegion.split(texture, 18, 18);
+            texture = new Texture(DOOR_TEXTURE_PATH + ".png");
+            TextureRegion[][] region = TextureRegion.split(texture, width, height);
             Animation animation = new Animation(0.3f, region[0]);
             setRegion((TextureRegion) animation.getKeyFrame(screen.stateTime));
         }
@@ -56,10 +54,10 @@ public class Door extends Sprite {
     public void update(float dt) {
         if (screen.isPass && !screen.checkDoor) {
             screen.checkDoor = true;
-            for (int i = 0; i < 4; ++i) {
-                texture = new Texture("door" + (i + 1) + ".png");
+            for (int state = 0; state < 4; ++state) {
+                texture = new Texture(DOOR_TEXTURE_PATH + (state + 1) + ".png");
                 TextureRegion[][] region = TextureRegion.split(texture, width, height);
-                rolls[i] = new Animation(1.5f, region[0]);
+                rolls[state] = new Animation(1.5f, region[0]);
             }
             stateTime = 0;
             roll = -1;
@@ -75,7 +73,7 @@ public class Door extends Sprite {
                 }
             }, 0, 1/5.0f);
         } else if (!screen.isPass) {
-            texture = new Texture("door.png");
+            texture = new Texture(DOOR_TEXTURE_PATH + ".png");
             TextureRegion[][] region = TextureRegion.split(texture, width, height);
             Animation animation = new Animation(0.3f, region[0]);
             setRegion((TextureRegion) animation.getKeyFrame(screen.stateTime));

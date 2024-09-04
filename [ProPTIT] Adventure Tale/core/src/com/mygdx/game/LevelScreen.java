@@ -10,39 +10,34 @@ import helper.DrawText;
 
 import java.util.ArrayList;
 
-import static helper.Constants.BonusSound;
-import static helper.Constants.APP_HEIGHT;
-import static helper.Constants.ICON_SIZE;
+import static helper.Constants.*;
 
 public class LevelScreen implements Screen {
     public static ArrayList<Boolean> point;
     Texture level, levelClick, lock, soundOffButton, soundOffButtonClick, soundOnButton, soundOnButtonClick, back, backClick;
-    float levelWidth = 100;
-    float levelHeight = 100;
-    float space = 30;
+    float levelWidth = LEVEL_BUTTON_SIZE;
+    float levelHeight = LEVEL_BUTTON_SIZE;
+    float space = LEVEL_BUTTON_PADDING;
     public static Texture background;
     Main main;
     DrawText drawText;
-    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(BonusSound));
+    public Music bonusSound = Gdx.audio.newMusic(Gdx.files.internal(CLICK_SOUND));
 
     public LevelScreen(Main main) {
         this.main = main;
-        drawText = new DrawText(main);
-        level = new Texture("Default@2x-1.png");
-        levelClick = new Texture("Hover@2x.png");
-        lock = new Texture("lock (1).png");
-        background = new Texture("bg3.png");
-        soundOffButton = new Texture("soundOff.png");
-        soundOffButtonClick = new Texture("soundOffPress.png");
-        soundOnButton = new Texture("soundOn.png");
-        soundOnButtonClick = new Texture("soundOnPress.png");
-        back = new Texture("back.png");
-        backClick = new Texture("backClick.png");
+        drawText = new DrawText();
+        level = new Texture(LEVEL_ICON_BG);
+        levelClick = new Texture(LEVEL_ICON_HOVER_BG);
+        lock = new Texture(LEVEL_LOCK_ICON);
+        background = new Texture(LEVEL_BG_IMAGE);
+        soundOffButton = new Texture(SOUND_OFF_BTN);
+        soundOffButtonClick = new Texture(SOUND_OFF_BTN_HOVER);
+        soundOnButton = new Texture(SOUND_ON_BTN);
+        soundOnButtonClick = new Texture(SOUND_ON_BTN_HOVER);
+        back = new Texture(LEVEL_BACK_BTN);
+        backClick = new Texture(LEVEL_BACK_BTN_HOVER);
         point = new ArrayList<>();
-        for (int i = 0; i < 12; ++i) {
-            point.add(false);
-        }
-
+        for (int i = 0; i < 12; ++i) point.add(false);
         bonusSound.setVolume(0.4f);
     }
     public void update() {

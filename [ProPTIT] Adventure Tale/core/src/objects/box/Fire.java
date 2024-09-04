@@ -15,15 +15,15 @@ public class Fire extends Sprite {
     public Texture texture;
     public Animation[] rolls = new Animation[7];
     public float stateTime;
-    public int roll, tmp;
+    public int currentState, step;
     public GameScreen screen;
     public Fire(GameScreen screen, Body body, int width) {
         this.screen = screen;
         int height;
         this.body = body;
-        for (int i = 0; i < 7; ++i) {
-            texture = new Texture("fire" + (i + 1) + ".png");
-            switch (i) {
+        for (int state = 0; state < 7; ++state) {
+            texture = new Texture(FIRE_TEXTURE_PATH + (state + 1) + ".png");
+            switch (state) {
                 case 0:
                     height = 39;
                     break;
@@ -49,22 +49,23 @@ public class Fire extends Sprite {
                     height = 0;
             }
             TextureRegion[][] region = TextureRegion.split(texture, width, height);
-            rolls[i] = new Animation(0.3f, region[0]);
+            rolls[state] = new Animation(0.3f, region[0]);
         }
         setBounds(body.getPosition().x,body.getPosition().y,8*TILE_SIZE/PPM, 2*TILE_SIZE/PPM);
         stateTime = 0;
-        roll = -1;
-        tmp = 1;
+        currentState = -1;
+        step = 1;
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                roll += tmp;
-                if (roll == 6) {
-                    tmp = -1;
-                } else if (roll == 0) {
-                    tmp = 1;
+                currentState += step;
+                //Back and forth animations
+                if (currentState == 6) {
+                    step = -1;
+                } else if (currentState == 0) {
+                    step = 1;
                 }
-                TextureRegion region = (TextureRegion) rolls[roll].getKeyFrame(stateTime, true);
+                TextureRegion region = (TextureRegion) rolls[currentState].getKeyFrame(stateTime, true);
                 setRegion(region);
             }
         }, 0, 1/8.0f);

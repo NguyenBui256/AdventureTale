@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="launcher" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f4e5d2c4-0866-4a49-aa3b-028e9e1b7f03" name="Changes" comment="fix: release config">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map3.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map3.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map5.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map5.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map6.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map6.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map7.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets/maps/map7.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/WorldContactListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/helper/WorldContactListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/objects/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core/src/objects/player/Player.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/[ProPTIT] Adventure Tale">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/[ProPTIT] Adventure Tale">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/[ProPTIT] Adventure Tale/desktop">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/[ProPTIT] Adventure Tale/core">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="[ProPTIT] Adventure Tale" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2gbl31S3zWqo53RT4dm1TPzBLac" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.[ProPTIT] Adventure Tale [runGame].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/buiph/Desktop/CODE/main/PGJ-Adventure-Tale/[ProPTIT] Adventure Tale&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15332031&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale" />
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale\[ProPTIT] Adventure Tale\icons" />
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale\[ProPTIT] Adventure Tale\assets\textures\characters" />
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale\[ProPTIT] Adventure Tale\assets\sound" />
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale\[ProPTIT] Adventure Tale\assets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale\[ProPTIT] Adventure Tale\assets" />
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale" />
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale\[ProPTIT] Adventure Tale" />
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale\[ProPTIT] Adventure Tale\assets\textures" />
+      <recent name="C:\Users\buiph\Desktop\CODE\main\PGJ-Adventure-Tale\[ProPTIT] Adventure Tale\assets\maps" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle build" />
+      <command value="gradle ./gradlew desktop:dist" />
+      <command value="gradle ./gradlew :desktop:dist" />
+      <command value="gradlew desktop:dist" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.[ProPTIT] Adventure Tale [runGame]">
+    <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.mygdx.game.desktop.DesktopLauncher" />
+      <module name="PGJ-Adventure-Tale.desktop.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mygdx.game.desktop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="com.soywiz.korge.intellij.UpdateResourceBeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration name="RunGame" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.mygdx.game.desktop.DesktopLauncher" />
+      <module name="[ProPTIT]_Adventure_Tale.desktop.main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/[ProPTIT] Adventure Tale/assets" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="com.soywiz.korge.intellij.UpdateResourceBeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration name="[ProPTIT] Adventure Tale [./gradlew :desktop:dist]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/[ProPTIT] Adventure Tale" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="./gradlew" />
+            <option value=":desktop:dist" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="[ProPTIT] Adventure Tale [desktop:dist]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/[ProPTIT] Adventure Tale" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="desktop:dist" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="[ProPTIT] Adventure Tale [runGame]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/[ProPTIT] Adventure Tale" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runGame" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="[ProPTIT] Adventure Tale:desktop [jpackageImage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/[ProPTIT] Adventure Tale/desktop" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jpackageImage" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.RunGame" />
+      <item itemvalue="Application.DesktopLauncher" />
+      <item itemvalue="Gradle.[ProPTIT] Adventure Tale [runGame]" />
+      <item itemvalue="Gradle.[ProPTIT] Adventure Tale [./gradlew :desktop:dist]" />
+      <item itemvalue="Gradle.[ProPTIT] Adventure Tale [desktop:dist]" />
+      <item itemvalue="Gradle.[ProPTIT] Adventure Tale:desktop [jpackageImage]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.[ProPTIT] Adventure Tale [runGame]" />
+        <item itemvalue="Application.DesktopLauncher" />
+        <item itemvalue="Gradle.[ProPTIT] Adventure Tale:desktop [jpackageImage]" />
+        <item itemvalue="Gradle.[ProPTIT] Adventure Tale [desktop:dist]" />
+        <item itemvalue="Gradle.[ProPTIT] Adventure Tale [./gradlew :desktop:dist]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-4caba194b151-23eed401" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f4e5d2c4-0866-4a49-aa3b-028e9e1b7f03" name="Changes" comment="" />
+      <created>1715973955853</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715973955853</updated>
+    </task>
+    <task id="LOCAL-00001" summary="feat: display press button &amp; focus to the current character icon">
+      <option name="closed" value="true" />
+      <created>1716015808258</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716015808258</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: display press button &amp; focus to the current character icon">
+      <option name="closed" value="true" />
+      <created>1716058948826</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716058948826</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: display press button &amp; focus to the current character icon">
+      <option name="closed" value="true" />
+      <created>1716059482241</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1716059482241</updated>
+    </task>
+    <task id="LOCAL-00004" summary="merge 35 - 26">
+      <option name="closed" value="true" />
+      <created>1716061293062</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716061293062</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: button press and focus on current character">
+      <option name="closed" value="true" />
+      <created>1716062372471</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716062372471</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: button press and focus on current character">
+      <option name="closed" value="true" />
+      <created>1716062381311</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716062381311</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Merge pull request #6 from NguyenBui256/NHOM8-26&#10;&#10;Nhom8 26">
+      <option name="closed" value="true" />
+      <created>1716063024851</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716063024851</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Merge pull request #6 from NguyenBui256/NHOM8-26">
+      <option name="closed" value="true" />
+      <created>1716064615772</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1716064615772</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat: new map assets">
+      <option name="closed" value="true" />
+      <created>1716346697996</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1716346697996</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat: BachTuoc's movement &amp; clean up Class Player">
+      <option name="closed" value="true" />
+      <created>1716378677737</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1716378677737</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat: Constant values, characters' ability, HUD stays front">
+      <option name="closed" value="true" />
+      <created>1716409071261</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1716409071261</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: Constant values, characters' ability, HUD stays front">
+      <option name="closed" value="true" />
+      <created>1716409115713</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716409115713</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: End game codition">
+      <option name="closed" value="true" />
+      <created>1717317521667</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1717317521667</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix: BachTuoc can jump diagonally when standing in corner.">
+      <option name="closed" value="true" />
+      <created>1717778723797</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1717778723797</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat: UI update, focus button, camera stays inside map, transition effect between screens">
+      <option name="closed" value="true" />
+      <created>1718172201598</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1718172201598</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat: UI update, focus button, camera stays inside map, transition effect between screens">
+      <option name="closed" value="true" />
+      <created>1718176197266</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1718176197266</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: bubble effect">
+      <option name="closed" value="true" />
+      <created>1718183240266</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1718183240266</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feat: bubble effect">
+      <option name="closed" value="true" />
+      <created>1718183330972</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1718183330972</updated>
+    </task>
+    <task id="LOCAL-00019" summary="feat: game 80%, merge feature from NHOM8-17">
+      <option name="closed" value="true" />
+      <created>1718214520838</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1718214520839</updated>
+    </task>
+    <task id="LOCAL-00020" summary="feat: sound, variables fix">
+      <option name="closed" value="true" />
+      <created>1718334859936</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1718334859936</updated>
+    </task>
+    <task id="LOCAL-00021" summary="feat: sound, variables fix">
+      <option name="closed" value="true" />
+      <created>1718334898297</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1718334898297</updated>
+    </task>
+    <task id="LOCAL-00022" summary="feat: sound, variables fix">
+      <option name="closed" value="true" />
+      <created>1718337869608</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1718337869608</updated>
+    </task>
+    <task id="LOCAL-00023" summary="merge: 40+41: game 90%">
+      <option name="closed" value="true" />
+      <created>1718343441611</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1718343441611</updated>
+    </task>
+    <task id="LOCAL-00024" summary="merge: 40+41: game 90%">
+      <option name="closed" value="true" />
+      <created>1718343605832</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1718343605832</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feat: game 99%">
+      <option name="closed" value="true" />
+      <created>1718494421399</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1718494421399</updated>
+    </task>
+    <task id="LOCAL-00026" summary="feat: sound update, zoom button, cursor, save current level">
+      <option name="closed" value="true" />
+      <created>1718522968493</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1718522968493</updated>
+    </task>
+    <task id="LOCAL-00027" summary="feat: sound update, zoom button, cursor, save current level">
+      <option name="closed" value="true" />
+      <created>1718523073492</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1718523073492</updated>
+    </task>
+    <task id="LOCAL-00028" summary="fix: sound bug">
+      <option name="closed" value="true" />
+      <created>1718549061663</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1718549061664</updated>
+    </task>
+    <task id="LOCAL-00029" summary="fix: final">
+      <option name="closed" value="true" />
+      <created>1718550077381</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1718550077381</updated>
+    </task>
+    <task id="LOCAL-00030" summary="final">
+      <option name="closed" value="true" />
+      <created>1718553798987</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1718553798987</updated>
+    </task>
+    <task id="LOCAL-00031" summary="fix: update README">
+      <option name="closed" value="true" />
+      <created>1718557394911</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1718557394911</updated>
+    </task>
+    <task id="LOCAL-00032" summary="feat: Esc button &amp; clean up">
+      <option name="closed" value="true" />
+      <created>1718895427182</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1718895427182</updated>
+    </task>
+    <task id="LOCAL-00033" summary="feat: Esc button &amp; clean up">
+      <option name="closed" value="true" />
+      <created>1718904587820</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1718904587820</updated>
+    </task>
+    <task id="LOCAL-00034" summary="fix: release config">
+      <option name="closed" value="true" />
+      <created>1720636526134</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1720636526134</updated>
+    </task>
+    <task id="LOCAL-00035" summary="fix: release config">
+      <option name="closed" value="true" />
+      <created>1720688882529</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1720688882529</updated>
+    </task>
+    <task id="LOCAL-00036" summary="fix: release config">
+      <option name="closed" value="true" />
+      <created>1720688902891</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1720688902891</updated>
+    </task>
+    <task id="LOCAL-00037" summary="release update">
+      <option name="closed" value="true" />
+      <created>1720689152644</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1720689152644</updated>
+    </task>
+    <task id="LOCAL-00038" summary="release publish">
+      <option name="closed" value="true" />
+      <created>1720690202142</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1720690202143</updated>
+    </task>
+    <task id="LOCAL-00039" summary="fix: release config">
+      <option name="closed" value="true" />
+      <created>1720691932669</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1720691932669</updated>
+    </task>
+    <task id="LOCAL-00040" summary="fix: release config">
+      <option name="closed" value="true" />
+      <created>1720692244658</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1720692244658</updated>
+    </task>
+    <task id="LOCAL-00041" summary="fix: release config">
+      <option name="closed" value="true" />
+      <created>1720692464108</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1720692464108</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge pull request #6 from NguyenBui256/NHOM8-26&#10;&#10;Nhom8 26" />
+    <MESSAGE value="Merge pull request #6 from NguyenBui256/NHOM8-26" />
+    <MESSAGE value="feat: new map assets" />
+    <MESSAGE value="feat: BachTuoc's movement &amp; clean up Class Player" />
+    <MESSAGE value="feat: Constant values, characters' ability, HUD stays front" />
+    <MESSAGE value="feat: End game codition" />
+    <MESSAGE value="fix: BachTuoc can jump diagonally when standing in corner." />
+    <MESSAGE value="feat: UI update, focus button, camera stays inside map, transition effect between screens" />
+    <MESSAGE value="feat: bubble effect" />
+    <MESSAGE value="feat: game 80%, merge feature from NHOM8-17" />
+    <MESSAGE value="feat: sound, variables fix" />
+    <MESSAGE value="merge: 40+41: game 90%" />
+    <MESSAGE value="feat: game 99%" />
+    <MESSAGE value="feat: sound update, zoom button, cursor, save current level" />
+    <MESSAGE value="feat: game 99.99%" />
+    <MESSAGE value="fix: sound bug" />
+    <MESSAGE value="fix: final" />
+    <MESSAGE value="Merge pull request #9 from NguyenBui256/NHOM8-36&#10;&#10;feat: update door animation" />
+    <MESSAGE value="final" />
+    <MESSAGE value="fix: update README" />
+    <MESSAGE value="feat: Esc button &amp; clean up" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/develop' into develop" />
+    <MESSAGE value="release update" />
+    <MESSAGE value="release publish" />
+    <MESSAGE value="fix: release config" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: release config" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

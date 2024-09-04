@@ -10,41 +10,31 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 import static helper.Constants.*;
 
 public class Main extends Game {
-    public MenuScreen menuScreen;
-    public LevelScreen levelScreen;
-    public GameScreen gameScreen;
-    public SpriteBatch batch;
-    public BitmapFont font;
+    public static MenuScreen menuScreen;
+    public static LevelScreen levelScreen;
+    public static GameScreen gameScreen;
+    public static SpriteBatch batch;
+    public static BitmapFont font;
     public Image blackFade;
     public Stage stage;
     public TransitionScreen transitionScreen;
     public static int level;
     public static int chooseLevel;
-    public FileWriter fw;
-    public Scanner reader;
 
     public Main() throws IOException {
-        reader = new Scanner(new File(SAVE_FILE_PATH));
     }
     @Override
     public void create() {
-        if(reader.hasNext()){
-            level = reader.nextInt();
-            System.out.println("dau vao:" + level);
-        }else level = 1;
-
+        level = 1;
         batch = new SpriteBatch();
         font = new BitmapFont();
 
-        Pixmap pixmap = new Pixmap((Gdx.files.internal("cursor.png")));
+        Pixmap pixmap = new Pixmap((Gdx.files.internal(CURSOR_ICON)));
+
         int xHotspot = 15, yHotspot = 15;
         Cursor cursor = Gdx.graphics.newCursor(pixmap,xHotspot,yHotspot);
         pixmap.dispose();
@@ -53,12 +43,12 @@ public class Main extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont();
         menuScreen = new MenuScreen(this);
-        transitionScreen = new TransitionScreen(this);
+        transitionScreen = new TransitionScreen();
         this.setScreen(menuScreen);
 
         stage = new Stage(new StretchViewport(APP_WIDTH, APP_HEIGHT));
         Gdx.input.setInputProcessor(stage);
-        blackFade = new Image(new Texture(Gdx.files.internal("blackFade.png")));
+        blackFade = new Image(new Texture(Gdx.files.internal(BLACK_SCENE)));
         blackFade.setOrigin(blackFade.getWidth() / 2, blackFade.getHeight() / 2);
 
         stage.addActor(blackFade);
