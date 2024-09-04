@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -18,12 +17,7 @@ import helper.TileMapHelper;
 import helper.WorldContactListener;
 import objects.box.*;
 import objects.player.Player;
-
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
 import static helper.Constants.*;
 
 public class GameScreen implements Screen {
@@ -65,9 +59,9 @@ public class GameScreen implements Screen {
         this.fireList = new ArrayList<>();
         this.glassList = new ArrayList<>();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-//        box2DDebugRenderer.setDrawJoints(false);
-//        box2DDebugRenderer.setDrawBodies(false);
-//        box2DDebugRenderer.setDrawContacts(false);
+        box2DDebugRenderer.setDrawJoints(false);
+        box2DDebugRenderer.setDrawBodies(false);
+        box2DDebugRenderer.setDrawContacts(false);
         this.tileMapHelper = new TileMapHelper(this);
         this.renderer = tileMapHelper.setupMap();
 

@@ -1,3 +1,7 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Main-Class: com.mygdx.game.desktop.DesktopLauncher
+=======
+Main-Class: com.mygdx.game.DesktopLauncher
+>>>>>>> main
 

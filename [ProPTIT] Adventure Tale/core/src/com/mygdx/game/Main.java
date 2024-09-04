@@ -10,11 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 import static helper.Constants.*;
 
 public class Main extends Game {
@@ -33,12 +29,12 @@ public class Main extends Game {
     }
     @Override
     public void create() {
-        level = 12;
-
+        level = 1;
         batch = new SpriteBatch();
         font = new BitmapFont();
 
         Pixmap pixmap = new Pixmap((Gdx.files.internal(CURSOR_ICON)));
+
         int xHotspot = 15, yHotspot = 15;
         Cursor cursor = Gdx.graphics.newCursor(pixmap,xHotspot,yHotspot);
         pixmap.dispose();

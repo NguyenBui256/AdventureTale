@@ -57,7 +57,6 @@ public class Menu {
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
                 exitButton.setVisible(true);
                 exitClickButton.setVisible(false);
                 Gdx.app.exit();
@@ -123,8 +122,6 @@ public class Menu {
                 controlBoard.setVisible(false);
             }
         });
-
-
         background.setVisible(true);
         MusicOnButton.setVisible(true); MusicOnClickButton.setVisible(false);
         MusicOffButton.setVisible(false); MusicOffClickButton.setVisible(false);
@@ -185,7 +182,6 @@ public class Menu {
         stage.addActor(exitButton); //index 9
         stage.addActor(exitClickButton); //index 10
         stage.addActor(controlBoard); // index 11
-
     }
     public void update() {
     }

@@ -123,7 +123,4 @@ public class Constants {
             MENU_BG_MUSIC = "sound/menuBGM.ogg",
             INGAME_BG_MUSIC = "sound/ingameBGM.ogg",
             GLASS_SOUND = "sound/glassbreak.ogg";
-
-    //Audios
-
 }

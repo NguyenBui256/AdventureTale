@@ -25,7 +25,7 @@ public class LevelScreen implements Screen {
 
     public LevelScreen(Main main) {
         this.main = main;
-        drawText = new DrawText(main);
+        drawText = new DrawText();
         level = new Texture(LEVEL_ICON_BG);
         levelClick = new Texture(LEVEL_ICON_HOVER_BG);
         lock = new Texture(LEVEL_LOCK_ICON);

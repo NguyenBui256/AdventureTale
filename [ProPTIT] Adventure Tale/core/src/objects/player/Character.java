@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import static helper.Constants.BACHTUOC_TEXTURE_PATH;
 
-
 public class Character {
     public Texture IdleRight, IdleLeft, RunningLeft, RunningRight, JumpingLeft, JumpingRight;
     public ArrayList<Texture> list = new ArrayList<>();

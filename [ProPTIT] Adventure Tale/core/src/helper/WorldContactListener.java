@@ -9,7 +9,6 @@ import objects.box.Bubble;
 import helper.Constants.*;
 import objects.box.Button;
 import objects.player.Player;
-
 public class WorldContactListener implements ContactListener {
     protected World world;
     protected GameScreen screen;
@@ -35,7 +34,6 @@ public class WorldContactListener implements ContactListener {
                 index = index * 10 + sensorDirectionB.toString().charAt(6) - '0';
             }
         }
-
         if((sensorDirectionA == VatThe.MAPBOUND && sensorDirectionB == NhanVat.MAIN)
                 || (sensorDirectionB == VatThe.MAPBOUND && sensorDirectionA == NhanVat.MAIN)
                 || (sensorDirectionA == VatThe.FIRE && sensorDirectionB == NhanVat.MAIN)

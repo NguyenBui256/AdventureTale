@@ -7,10 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import helper.TileMapHelper;
 import objects.player.Player;
 
 import static helper.Constants.*;
@@ -204,7 +202,6 @@ public class Hud {
                 level = true;
             }
         });
-
         //CuCai is default character
         CuCaiButton.setVisible(true); BachTuocButton.setVisible(false); CucDaButton.setVisible(false);
         RestartButton.setVisible(true); PauseButton.setVisible(true);
@@ -242,7 +239,6 @@ public class Hud {
         stage.addActor(LevelClickButton); //index 21
         stage.addActor(RestartButton2); //index 22
         stage.addActor(RestartClickButton2); //index 23
-
         stage.getActors().get(3).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
         stage.getActors().get(3).setPosition(APP_WIDTH - SMALL_BUTTON_SIZE * 2 - BUTTON_DISTANCE, BUTTON_POS_Y2);
         stage.getActors().get(4).setSize(SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE);
